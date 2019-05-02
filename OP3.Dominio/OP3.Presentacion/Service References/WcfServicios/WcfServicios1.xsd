@@ -15,4 +15,41 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ArrayOfDTOUsuario" nillable="true" type="tns:ArrayOfDTOUsuario" />
+  <xs:complexType name="ArrayOfDTOBarrio">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="DTOBarrio" nillable="true" type="tns:DTOBarrio" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfDTOBarrio" nillable="true" type="tns:ArrayOfDTOBarrio" />
+  <xs:complexType name="DTOBarrio">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Descripcion" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Nombre" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="DTOBarrio" nillable="true" type="tns:DTOBarrio" />
+  <xs:complexType name="ArrayOfDTOVivienda">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="DTOVivienda" nillable="true" type="tns:DTOVivienda" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfDTOVivienda" nillable="true" type="tns:ArrayOfDTOVivienda" />
+  <xs:complexType name="DTOVivienda">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Anio" type="xs:int" />
+      <xs:element minOccurs="0" name="Banios" type="xs:int" />
+      <xs:element minOccurs="0" name="Barrio" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Calle" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Descripcion" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Dormitorios" type="xs:int" />
+      <xs:element minOccurs="0" name="Habilitada" type="xs:int" />
+      <xs:element minOccurs="0" name="Id" type="xs:int" />
+      <xs:element minOccurs="0" name="Metraje" type="xs:int" />
+      <xs:element minOccurs="0" name="Numero" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PBaseXMetroCuadrado" type="xs:double" />
+      <xs:element minOccurs="0" name="PrecioFinal" type="xs:double" />
+      <xs:element minOccurs="0" name="Tipo" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="DTOVivienda" nillable="true" type="tns:DTOVivienda" />
 </xs:schema>

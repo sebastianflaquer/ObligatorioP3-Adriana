@@ -66,6 +66,8 @@ namespace OP3.Dominio
                 cmd.Parameters.Add(new SqlParameter("@Metraje", this.Metraje));
                 cmd.Parameters.Add(new SqlParameter("@Anio", this.Anio));
                 cmd.Parameters.Add(new SqlParameter("@PBaseXMetroCuadrado", this.PBaseXMetroCuadrado));
+                cmd.Parameters.Add(new SqlParameter("@PrecioFinal", this.PrecioFinal));
+
 
                 cmd.Parameters.Add(new SqlParameter("@id", this.Id));
                 string texto = "UPDATE Vivienda SET Habilitada =" + this.Habilitada + ", Tipo = " + this.Tipo + ", Calle =" + this.Calle + ", Numero = " + this.Numero + ", Barrio = " + this.Barrio + ", Descripcion = " + this.Descripcion + ", Banios = " + this.Banios + ", Dormitorios =" + this.Dormitorios + ", Metraje =" + this.Metraje + ", Anio =" + this.Anio + ", PBaseXMetroCuadrado =" + this.PBaseXMetroCuadrado + " WHERE Id =" + this.Id + ";";  

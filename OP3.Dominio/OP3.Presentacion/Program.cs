@@ -585,11 +585,21 @@ namespace OP3.Presentacion
             Console.WriteLine("=================");
             Console.WriteLine("Lista de Barrios");
             Console.WriteLine("=================");
-            var lista = repoBar.FindAll();
-            foreach (Barrio elem in lista)
+
+            using (WcfServicios.WfServiciosClient client = new WcfServicios.WfServiciosClient())
             {
-                Console.WriteLine(elem.Nombre.ToString() + " - " + elem.Descripcion.ToString());
+                var Lista = client.GetTodosLosBarrios();
+                if (Lista != null) {
+                    foreach (var elem in Lista)
+                    {
+                        Console.WriteLine(elem.Nombre.ToString() + " - " + elem.Descripcion.ToString());
+                    }
+                }
+                else {
+                    Console.WriteLine("No hay Barrios ingresados:");
+                }
             }
+
             Console.WriteLine("//////////////////////////////////////");
             ListoVovler();
         }
@@ -1138,22 +1148,33 @@ namespace OP3.Presentacion
             Console.WriteLine("=================");
             Console.WriteLine("Lista de Viviendas");
             Console.WriteLine("=================");
-            var lista = repoViv.FindAll();
-            foreach (Vivienda elem in lista)
+
+            using (WcfServicios.WfServiciosClient client = new WcfServicios.WfServiciosClient())
             {
-                Console.WriteLine(elem.Id.ToString() + " - "
-                    + elem.Calle.ToString() + " "
-                    + elem.Numero.ToString() + ", "
-                    + elem.Barrio.ToString()
-                    + " - Descripcion: " + elem.Descripcion.ToString()
-                    + " - Baños: " + elem.Banios.ToString()
-                    + " - Dormitorios: " + elem.Dormitorios.ToString()
-                    + " - Metraje: " + elem.Metraje.ToString()
-                    + " - Precio Base M2: $ " + elem.PBaseXMetroCuadrado.ToString()
-                    + " - Precio final: "
-                    + " - Impuestos: "
-                    + " - Cuota: "
-                );
+                var Lista = client.GetTodasLasViviendas();
+                if (Lista != null)
+                {
+                    foreach (var elem in Lista)
+                    {
+                        Console.WriteLine(elem.Id.ToString()
+                            + " - " + elem.Calle.ToString()
+                            + " " + elem.Numero.ToString()
+                            + ", " + elem.Barrio.ToString()
+                            + " - Descripcion: " + elem.Descripcion.ToString()
+                            + " - Baños: " + elem.Banios.ToString()
+                            + " - Dormitorios: " + elem.Dormitorios.ToString()
+                            + " - Metraje: " + elem.Metraje.ToString()
+                            + " - Precio Base M2: $ " + elem.PBaseXMetroCuadrado.ToString()
+                            + " - Precio final: "
+                            + " - Impuestos: "
+                            + " - Cuota: "
+                        );
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("No hay Barrios ingresados:");
+                }
             }
             Console.WriteLine("//////////////////////////////////////");
             ListoVovler();
@@ -1325,8 +1346,36 @@ namespace OP3.Presentacion
             ListoVovler();
         }
 
-        
+        //MENU SERVICIO USUARIO
+        private static void MenuServicioUsuario()
+        {
 
+            Console.Clear();
+            Console.WriteLine("Servicio Usuario");
+            Console.WriteLine("Ingrese id del Usuario:");
+            Console.WriteLine("=================");
+            string id = Console.ReadLine();
+
+            using (WcfServicios.WfServiciosClient client = new WcfServicios.WfServiciosClient())
+            {
+                var usuario = client.ObtenerUsuario(Convert.ToInt32(id));
+
+                if (usuario.Email != null)
+                {
+                    Console.WriteLine("El usuario Existe");
+                    Console.WriteLine("Id: " + usuario.id + " Email: " + usuario.Email + " Tipo: " + usuario.Tipo + " Pass: " + usuario.Pass + ".");
+                }
+                else
+                {
+                    Console.WriteLine("No FUNCIONA");
+                }
+                //Usuario unUsu = new Usuario();
+                //DTOUsuario DTOUsu = new DTOUsuario();
+            }
+            Console.WriteLine("//////////////////////////////////////");
+            ListoVovler();
+        }
+        
         //BUSCAR USUARIO POR MAIL
         private static int buscarUsuarioPorMail(string emailUsuario){
 
@@ -1395,56 +1444,17 @@ namespace OP3.Presentacion
                 Pass = vPass
             });
         }
-        
-        //MENU MODIFICAR USUARIO
-        private static void MenuServicioUsuario()
-        {
-            
-            Console.Clear();
-            Console.WriteLine("Servicio Usuario");
-            Console.WriteLine("Ingrese id del Usuario:");
-            Console.WriteLine("=================");
-            string id = Console.ReadLine();
 
-            //funciona = datosPersonas(Convert.ToInt32(id));
-
-            using (WcfServicios.WfServiciosClient client = new WcfServicios.WfServiciosClient())
-            {
-                var usuario = client.ObtenerUsuario(Convert.ToInt32(id));
-
-                if (usuario.Email != null)
-                {
-                    Console.WriteLine("El usuario Existe");
-                    Console.WriteLine("Id: " + usuario.id + " Email: " + usuario.Email + " Tipo: " + usuario.Tipo + " Pass: " + usuario.Pass + ".");
-                }
-                else
-                {
-                    Console.WriteLine("No FUNCIONA");
-                }
-                //Usuario unUsu = new Usuario();
-                //DTOUsuario DTOUsu = new DTOUsuario();
-            }
-
-
-            Console.WriteLine("//////////////////////////////////////");
-            ListoVovler();
-        }
-
-
-        //MENU MODIFICAR USUARIO
+        //LISTAR USUARIOS
         private static void ListarUsuario()
         {
-
             Console.WriteLine("=================");
             Console.WriteLine("Lista de Usuarios");
             Console.WriteLine("=================");
-
             var lista = repoUsu.FindAll();
             using (WcfServicios.WfServiciosClient client = new WcfServicios.WfServiciosClient())
             {
-
                 var ListaUsuarios = client.GetTodosLosUsuarios();
-                
                 if (ListaUsuarios != null)
                 {
                     foreach (var elem in ListaUsuarios)
@@ -1458,13 +1468,10 @@ namespace OP3.Presentacion
                     Console.WriteLine("No hay usuarios ingresados:");
                 }
             }
-
-
             Console.WriteLine("//////////////////////////////////////");
             ListoVovler();
         }
-
-
+        
 
     }
 }

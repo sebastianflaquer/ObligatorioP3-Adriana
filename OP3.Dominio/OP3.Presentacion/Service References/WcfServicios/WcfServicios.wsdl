@@ -19,6 +19,18 @@
   <wsdl:message name="IWfServicios_GetTodosLosUsuarios_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetTodosLosUsuariosResponse" />
   </wsdl:message>
+  <wsdl:message name="IWfServicios_GetTodosLosBarrios_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetTodosLosBarrios" />
+  </wsdl:message>
+  <wsdl:message name="IWfServicios_GetTodosLosBarrios_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetTodosLosBarriosResponse" />
+  </wsdl:message>
+  <wsdl:message name="IWfServicios_GetTodasLasViviendas_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetTodasLasViviendas" />
+  </wsdl:message>
+  <wsdl:message name="IWfServicios_GetTodasLasViviendas_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetTodasLasViviendasResponse" />
+  </wsdl:message>
   <wsdl:portType name="IWfServicios">
     <wsdl:operation name="ObtenerUsuario">
       <wsdl:input wsaw:Action="http://tempuri.org/IWfServicios/ObtenerUsuario" message="tns:IWfServicios_ObtenerUsuario_InputMessage" />
@@ -27,6 +39,14 @@
     <wsdl:operation name="GetTodosLosUsuarios">
       <wsdl:input wsaw:Action="http://tempuri.org/IWfServicios/GetTodosLosUsuarios" message="tns:IWfServicios_GetTodosLosUsuarios_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IWfServicios/GetTodosLosUsuariosResponse" message="tns:IWfServicios_GetTodosLosUsuarios_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetTodosLosBarrios">
+      <wsdl:input wsaw:Action="http://tempuri.org/IWfServicios/GetTodosLosBarrios" message="tns:IWfServicios_GetTodosLosBarrios_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IWfServicios/GetTodosLosBarriosResponse" message="tns:IWfServicios_GetTodosLosBarrios_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetTodasLasViviendas">
+      <wsdl:input wsaw:Action="http://tempuri.org/IWfServicios/GetTodasLasViviendas" message="tns:IWfServicios_GetTodasLasViviendas_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IWfServicios/GetTodasLasViviendasResponse" message="tns:IWfServicios_GetTodasLasViviendas_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IWfServicios" type="tns:IWfServicios">
@@ -42,6 +62,24 @@
     </wsdl:operation>
     <wsdl:operation name="GetTodosLosUsuarios">
       <soap:operation soapAction="http://tempuri.org/IWfServicios/GetTodosLosUsuarios" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetTodosLosBarrios">
+      <soap:operation soapAction="http://tempuri.org/IWfServicios/GetTodosLosBarrios" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetTodasLasViviendas">
+      <soap:operation soapAction="http://tempuri.org/IWfServicios/GetTodasLasViviendas" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

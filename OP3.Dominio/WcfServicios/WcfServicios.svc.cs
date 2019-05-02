@@ -20,10 +20,70 @@ namespace WcfServicios
         IRepositorioViviendas repoViv = new RepositorioViviendaAdo();
         IRepositorioUsuarios repoUsu = new RepositorioUsuarioAdo();
 
+        //VIVIENDAS
+        //////////////////////////////////////////////////////////////////////////////////////////
+        //LISTAR TODAS LAS VIVIENDAS
+        public IEnumerable<DTOVivienda> GetTodasLasViviendas()
+        {
+            IEnumerable<Vivienda> ListaViviendas = repoViv.FindAll();
+
+            if (ListaViviendas != null)
+            {
+                List<DTOVivienda> losViviendas = new List<DTOVivienda>();
+                foreach (Vivienda viv in ListaViviendas)
+                {
+                    losViviendas.Add(new DTOVivienda
+                    {   
+                        Id = viv.Id,
+                        Tipo = viv.Tipo,
+                        Habilitada = viv.Habilitada,
+                        Calle = viv.Calle,
+                        Numero = viv.Numero,
+                        Barrio = viv.Barrio,
+                        Descripcion = viv.Descripcion,
+                        Banios = viv.Banios,
+                        Dormitorios = viv.Dormitorios,
+                        Metraje = viv.Metraje,
+                        Anio = viv.Anio,
+                        PBaseXMetroCuadrado = viv.PBaseXMetroCuadrado,
+                        PrecioFinal = viv.PrecioFinal
+                    });
+                }
+                return losViviendas;
+            }
+            return null;
+        }
+        
+        //BARRIOS
+        //////////////////////////////////////////////////////////////////////////////////////////
+
+        //LISTAR TODOS LOS BARRIOS
+        public IEnumerable<DTOBarrio> GetTodosLosBarrios()
+        {
+            IEnumerable<Barrio> ListaBarrios = repoBar.FindAll();
+
+            if (ListaBarrios != null)
+            {
+                List<DTOBarrio> losBarrios = new List<DTOBarrio>();
+                foreach (Barrio bar in ListaBarrios)
+                {
+                    losBarrios.Add(new DTOBarrio
+                    {
+                        Nombre = bar.Nombre,
+                        Descripcion = bar.Descripcion
+                    });
+                }
+                return losBarrios;
+            }
+            return null;
+        }
+        
+        //USUARIOS
+        //////////////////////////////////////////////////////////////////////////////////////////
+        
         //LISTAR TODOS LOS USUARIOS
         public IEnumerable<DTOUsuario> GetTodosLosUsuarios()
         {
-
             IEnumerable<Usuario> ListaUsuarios = repoUsu.FindAll();
 
             if (ListaUsuarios != null)
@@ -42,7 +102,6 @@ namespace WcfServicios
                 return losUsuarios;
             }
             return null;
-
         }
 
         //OBTENER USUARIO POR ID
@@ -62,5 +121,7 @@ namespace WcfServicios
             return DTOUsu;
 
         }
+
+        
     }
 }

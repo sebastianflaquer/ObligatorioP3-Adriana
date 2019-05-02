@@ -27,4 +27,28 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="GetTodosLosBarrios">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetTodosLosBarriosResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/WcfServicios" minOccurs="0" name="GetTodosLosBarriosResult" nillable="true" type="q3:ArrayOfDTOBarrio" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetTodasLasViviendas">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetTodasLasViviendasResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/WcfServicios" minOccurs="0" name="GetTodasLasViviendasResult" nillable="true" type="q4:ArrayOfDTOVivienda" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
 </xs:schema>

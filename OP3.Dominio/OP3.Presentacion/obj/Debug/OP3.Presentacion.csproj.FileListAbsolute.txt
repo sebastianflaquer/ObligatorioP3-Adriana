@@ -6,3 +6,19 @@ C:\Users\sflaquer\Dropbox\ORT\Programacion 3 - Adriana\ObligatorioP3\Obligatorio
 C:\Users\sflaquer\Dropbox\ORT\Programacion 3 - Adriana\ObligatorioP3\ObligatorioP3-Alt\OP3.Dominio\OP3.Presentacion\bin\Debug\OP3.Dominio.pdb
 C:\Users\sflaquer\Dropbox\ORT\Programacion 3 - Adriana\ObligatorioP3\ObligatorioP3-Alt\OP3.Dominio\OP3.Presentacion\obj\Debug\OP3.Presentacion.exe
 C:\Users\sflaquer\Dropbox\ORT\Programacion 3 - Adriana\ObligatorioP3\ObligatorioP3-Alt\OP3.Dominio\OP3.Presentacion\obj\Debug\OP3.Presentacion.pdb
+C:\Users\sflaquer\Dropbox\ORT\Programacion 3 - Adriana\ObligatorioP3\REPOOP3Adriana\ObligatorioP3-Adriana\OP3.Dominio\OP3.Presentacion\bin\Debug\OP3.Presentacion.exe.config
+C:\Users\sflaquer\Dropbox\ORT\Programacion 3 - Adriana\ObligatorioP3\REPOOP3Adriana\ObligatorioP3-Adriana\OP3.Dominio\OP3.Presentacion\obj\Debug\OP3.Presentacion.exe
+C:\Users\sflaquer\Dropbox\ORT\Programacion 3 - Adriana\ObligatorioP3\REPOOP3Adriana\ObligatorioP3-Adriana\OP3.Dominio\OP3.Presentacion\obj\Debug\OP3.Presentacion.pdb
+C:\Users\sflaquer\Dropbox\ORT\Programacion 3 - Adriana\ObligatorioP3\REPOOP3Adriana\ObligatorioP3-Adriana\OP3.Dominio\OP3.Presentacion\bin\Debug\OP3.Presentacion.exe
+C:\Users\sflaquer\Dropbox\ORT\Programacion 3 - Adriana\ObligatorioP3\REPOOP3Adriana\ObligatorioP3-Adriana\OP3.Dominio\OP3.Presentacion\bin\Debug\OP3.Presentacion.pdb
+C:\Users\sflaquer\Dropbox\ORT\Programacion 3 - Adriana\ObligatorioP3\REPOOP3Adriana\ObligatorioP3-Adriana\OP3.Dominio\OP3.Presentacion\bin\Debug\OP3.Dominio.dll
+C:\Users\sflaquer\Dropbox\ORT\Programacion 3 - Adriana\ObligatorioP3\REPOOP3Adriana\ObligatorioP3-Adriana\OP3.Dominio\OP3.Presentacion\bin\Debug\OP3.Dominio.pdb
+C:\Users\sflaquer\Dropbox\ORT\Programacion 3 - Adriana\ObligatorioP3\REPOOP3Adriana\ObligatorioP3-Adriana\OP3.Dominio\OP3.Presentacion\obj\Debug\OP3.Presentacion.csprojResolveAssemblyReference.cache
+C:\xampp\htdocs\REPOOP3Adriana\ObligatorioP3-Adriana\OP3.Dominio\OP3.Presentacion\obj\Debug\OP3.Presentacion.csprojResolveAssemblyReference.cache
+C:\xampp\htdocs\REPOOP3Adriana\ObligatorioP3-Adriana\OP3.Dominio\OP3.Presentacion\bin\Debug\OP3.Presentacion.exe.config
+C:\xampp\htdocs\REPOOP3Adriana\ObligatorioP3-Adriana\OP3.Dominio\OP3.Presentacion\bin\Debug\OP3.Presentacion.exe
+C:\xampp\htdocs\REPOOP3Adriana\ObligatorioP3-Adriana\OP3.Dominio\OP3.Presentacion\bin\Debug\OP3.Presentacion.pdb
+C:\xampp\htdocs\REPOOP3Adriana\ObligatorioP3-Adriana\OP3.Dominio\OP3.Presentacion\bin\Debug\OP3.Dominio.dll
+C:\xampp\htdocs\REPOOP3Adriana\ObligatorioP3-Adriana\OP3.Dominio\OP3.Presentacion\bin\Debug\OP3.Dominio.pdb
+C:\xampp\htdocs\REPOOP3Adriana\ObligatorioP3-Adriana\OP3.Dominio\OP3.Presentacion\obj\Debug\OP3.Presentacion.exe
+C:\xampp\htdocs\REPOOP3Adriana\ObligatorioP3-Adriana\OP3.Dominio\OP3.Presentacion\obj\Debug\OP3.Presentacion.pdb

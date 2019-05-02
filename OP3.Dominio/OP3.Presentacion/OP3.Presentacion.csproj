@@ -88,7 +88,13 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Properties\app.manifest" />
+    <None Include="Service References\WcfServicios\OP3.Presentacion.WcfServicios.DTOBarrio.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Service References\WcfServicios\OP3.Presentacion.WcfServicios.DTOUsuario.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WcfServicios\OP3.Presentacion.WcfServicios.DTOVivienda.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\WcfServicios\WcfServicios.wsdl" />
