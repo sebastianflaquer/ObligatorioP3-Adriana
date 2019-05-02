@@ -1,0 +1,4 @@
+C:\Users\sflaquer\Dropbox\ORT\Programacion 3 - Adriana\ObligatorioP3\ObligatorioP3-Alt\OP3.Dominio\OP3.Dominio\bin\Debug\OP3.Dominio.dll
+C:\Users\sflaquer\Dropbox\ORT\Programacion 3 - Adriana\ObligatorioP3\ObligatorioP3-Alt\OP3.Dominio\OP3.Dominio\bin\Debug\OP3.Dominio.pdb
+C:\Users\sflaquer\Dropbox\ORT\Programacion 3 - Adriana\ObligatorioP3\ObligatorioP3-Alt\OP3.Dominio\OP3.Dominio\obj\Debug\OP3.Dominio.dll
+C:\Users\sflaquer\Dropbox\ORT\Programacion 3 - Adriana\ObligatorioP3\ObligatorioP3-Alt\OP3.Dominio\OP3.Dominio\obj\Debug\OP3.Dominio.pdb
