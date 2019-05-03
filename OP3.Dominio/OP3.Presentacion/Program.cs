@@ -604,7 +604,7 @@ namespace OP3.Presentacion
             ListoVovler();
         }
 
-        //LISTAR BARRIO POR NOMBRE
+        //BUSCAR BARRIO POR NOMBRE
         private static void BuscarBarrioXNombre()
         {
             Console.WriteLine("=================");
@@ -612,8 +612,21 @@ namespace OP3.Presentacion
             Console.WriteLine("=================");
             Console.WriteLine("Ingrese Nombre del Barrio:");
             string Nombre = Console.ReadLine();
-            Barrio Bar = repoBar.FindById(Nombre);
-            Console.WriteLine(Bar.Nombre.ToString() + " - " + Bar.Descripcion.ToString());
+
+
+            using (WcfServicios.WfServiciosClient client = new WcfServicios.WfServiciosClient())
+            {
+                var Bar = client.BuscarBarrioPorNombre(Nombre);
+                if (Bar != null)
+                {
+                    Console.WriteLine(Bar.Nombre.ToString() + " - " + Bar.Descripcion.ToString());
+                }
+                else
+                {
+                    Console.WriteLine("No Existe un Barrio con ese Nombre:");
+                }
+            }
+            Console.WriteLine("//////////////////////////////////////");
             ListoVovler();
         }
 

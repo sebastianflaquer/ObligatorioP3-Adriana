@@ -25,6 +25,30 @@
   <wsdl:message name="IWfServicios_GetTodosLosBarrios_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetTodosLosBarriosResponse" />
   </wsdl:message>
+  <wsdl:message name="IWfServicios_BuscarBarrioPorNombre_InputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarBarrioPorNombre" />
+  </wsdl:message>
+  <wsdl:message name="IWfServicios_BuscarBarrioPorNombre_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarBarrioPorNombreResponse" />
+  </wsdl:message>
+  <wsdl:message name="IWfServicios_AgregarUsuario_InputMessage">
+    <wsdl:part name="parameters" element="tns:AgregarUsuario" />
+  </wsdl:message>
+  <wsdl:message name="IWfServicios_AgregarUsuario_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AgregarUsuarioResponse" />
+  </wsdl:message>
+  <wsdl:message name="IWfServicios_ModificarUsuario_InputMessage">
+    <wsdl:part name="parameters" element="tns:ModificarUsuario" />
+  </wsdl:message>
+  <wsdl:message name="IWfServicios_ModificarUsuario_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ModificarUsuarioResponse" />
+  </wsdl:message>
+  <wsdl:message name="IWfServicios_EliminarUsuario_InputMessage">
+    <wsdl:part name="parameters" element="tns:EliminarUsuario" />
+  </wsdl:message>
+  <wsdl:message name="IWfServicios_EliminarUsuario_OutputMessage">
+    <wsdl:part name="parameters" element="tns:EliminarUsuarioResponse" />
+  </wsdl:message>
   <wsdl:message name="IWfServicios_GetTodasLasViviendas_InputMessage">
     <wsdl:part name="parameters" element="tns:GetTodasLasViviendas" />
   </wsdl:message>
@@ -43,6 +67,22 @@
     <wsdl:operation name="GetTodosLosBarrios">
       <wsdl:input wsaw:Action="http://tempuri.org/IWfServicios/GetTodosLosBarrios" message="tns:IWfServicios_GetTodosLosBarrios_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IWfServicios/GetTodosLosBarriosResponse" message="tns:IWfServicios_GetTodosLosBarrios_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BuscarBarrioPorNombre">
+      <wsdl:input wsaw:Action="http://tempuri.org/IWfServicios/BuscarBarrioPorNombre" message="tns:IWfServicios_BuscarBarrioPorNombre_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IWfServicios/BuscarBarrioPorNombreResponse" message="tns:IWfServicios_BuscarBarrioPorNombre_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AgregarUsuario">
+      <wsdl:input wsaw:Action="http://tempuri.org/IWfServicios/AgregarUsuario" message="tns:IWfServicios_AgregarUsuario_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IWfServicios/AgregarUsuarioResponse" message="tns:IWfServicios_AgregarUsuario_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ModificarUsuario">
+      <wsdl:input wsaw:Action="http://tempuri.org/IWfServicios/ModificarUsuario" message="tns:IWfServicios_ModificarUsuario_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IWfServicios/ModificarUsuarioResponse" message="tns:IWfServicios_ModificarUsuario_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="EliminarUsuario">
+      <wsdl:input wsaw:Action="http://tempuri.org/IWfServicios/EliminarUsuario" message="tns:IWfServicios_EliminarUsuario_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IWfServicios/EliminarUsuarioResponse" message="tns:IWfServicios_EliminarUsuario_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="GetTodasLasViviendas">
       <wsdl:input wsaw:Action="http://tempuri.org/IWfServicios/GetTodasLasViviendas" message="tns:IWfServicios_GetTodasLasViviendas_InputMessage" />
@@ -71,6 +111,42 @@
     </wsdl:operation>
     <wsdl:operation name="GetTodosLosBarrios">
       <soap:operation soapAction="http://tempuri.org/IWfServicios/GetTodosLosBarrios" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BuscarBarrioPorNombre">
+      <soap:operation soapAction="http://tempuri.org/IWfServicios/BuscarBarrioPorNombre" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AgregarUsuario">
+      <soap:operation soapAction="http://tempuri.org/IWfServicios/AgregarUsuario" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ModificarUsuario">
+      <soap:operation soapAction="http://tempuri.org/IWfServicios/ModificarUsuario" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EliminarUsuario">
+      <soap:operation soapAction="http://tempuri.org/IWfServicios/EliminarUsuario" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

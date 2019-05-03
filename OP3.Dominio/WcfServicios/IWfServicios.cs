@@ -23,6 +23,18 @@ namespace WcfServicios
         [OperationContract]
         IEnumerable<DTOBarrio> GetTodosLosBarrios();
 
+        [OperationContract]
+        DTOBarrio BuscarBarrioPorNombre(string nombre);
+
+        [OperationContract]
+        DTOBarrio AgregarUsuario();
+
+        [OperationContract]
+        DTOBarrio ModificarUsuario();
+
+        [OperationContract]
+        DTOBarrio EliminarUsuario(int id);
+
         //VIVIENDAS
         [OperationContract]
         IEnumerable<DTOVivienda> GetTodasLasViviendas();

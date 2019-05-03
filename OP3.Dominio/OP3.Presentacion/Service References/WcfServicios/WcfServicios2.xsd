@@ -39,6 +39,58 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="BuscarBarrioPorNombre">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="nombre" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="BuscarBarrioPorNombreResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/WcfServicios" minOccurs="0" name="BuscarBarrioPorNombreResult" nillable="true" type="q4:DTOBarrio" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AgregarUsuario">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AgregarUsuarioResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/WcfServicios" minOccurs="0" name="AgregarUsuarioResult" nillable="true" type="q5:DTOBarrio" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ModificarUsuario">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ModificarUsuarioResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/WcfServicios" minOccurs="0" name="ModificarUsuarioResult" nillable="true" type="q6:DTOBarrio" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="EliminarUsuario">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="id" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="EliminarUsuarioResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/WcfServicios" minOccurs="0" name="EliminarUsuarioResult" nillable="true" type="q7:DTOBarrio" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
   <xs:element name="GetTodasLasViviendas">
     <xs:complexType>
       <xs:sequence />
@@ -47,7 +99,7 @@
   <xs:element name="GetTodasLasViviendasResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/WcfServicios" minOccurs="0" name="GetTodasLasViviendasResult" nillable="true" type="q4:ArrayOfDTOVivienda" />
+        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/WcfServicios" minOccurs="0" name="GetTodasLasViviendasResult" nillable="true" type="q8:ArrayOfDTOVivienda" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

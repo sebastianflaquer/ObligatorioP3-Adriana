@@ -77,10 +77,44 @@ namespace WcfServicios
             }
             return null;
         }
+
+        public DTOBarrio BuscarBarrioPorNombre(string nombre) {
+
+            var barrrio = repoBar.FindById(nombre);
+            if (barrrio != null)
+            {
+
+                DTOBarrio DTObar = new DTOBarrio
+                {
+                    Nombre = barrrio.Nombre,
+                    Descripcion = barrrio.Descripcion
+                };
+                return DTObar;
+            }
+            else {
+                return null;
+            }
+        }
         
+        public DTOBarrio AgregarUsuario()
+        {
+            throw new NotImplementedException();
+        }
+
+        public DTOBarrio ModificarUsuario()
+        {
+            throw new NotImplementedException();
+        }
+
+        public DTOBarrio EliminarUsuario(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+
         //USUARIOS
         //////////////////////////////////////////////////////////////////////////////////////////
-        
+
         //LISTAR TODOS LOS USUARIOS
         public IEnumerable<DTOUsuario> GetTodosLosUsuarios()
         {

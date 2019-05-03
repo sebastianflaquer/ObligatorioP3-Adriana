@@ -19,6 +19,7 @@ C:\Users\sflaquer\Dropbox\ORT\Programacion 3 - Adriana\ObligatorioP3\Obligatorio
 C:\Users\sflaquer\Dropbox\ORT\Programacion 3 - Adriana\ObligatorioP3\ObligatorioP3-Alt\OP3.Dominio\WcfServicios\obj\Debug\WcfServicios.pdb
 C:\Users\sflaquer\Dropbox\ORT\Programacion 3 - Adriana\ObligatorioP3\ObligatorioP3-Alt\OP3.Dominio\WcfServicios\bin\OP3.Dominio.dll
 C:\Users\sflaquer\Dropbox\ORT\Programacion 3 - Adriana\ObligatorioP3\ObligatorioP3-Alt\OP3.Dominio\WcfServicios\bin\OP3.Dominio.pdb
+C:\xampp\htdocs\REPOOP3Adriana\ObligatorioP3-Adriana\OP3.Dominio\WcfServicios\obj\Debug\WcfServicios.csprojResolveAssemblyReference.cache
 C:\xampp\htdocs\REPOOP3Adriana\ObligatorioP3-Adriana\OP3.Dominio\WcfServicios\bin\ApplicationInsights.config
 C:\xampp\htdocs\REPOOP3Adriana\ObligatorioP3-Adriana\OP3.Dominio\WcfServicios\bin\WcfServicios.dll.config
 C:\xampp\htdocs\REPOOP3Adriana\ObligatorioP3-Adriana\OP3.Dominio\WcfServicios\bin\WcfServicios.dll
@@ -42,6 +43,5 @@ C:\xampp\htdocs\REPOOP3Adriana\ObligatorioP3-Adriana\OP3.Dominio\WcfServicios\bi
 C:\xampp\htdocs\REPOOP3Adriana\ObligatorioP3-Adriana\OP3.Dominio\WcfServicios\bin\Microsoft.ApplicationInsights.xml
 C:\xampp\htdocs\REPOOP3Adriana\ObligatorioP3-Adriana\OP3.Dominio\WcfServicios\bin\Microsoft.AspNet.TelemetryCorrelation.xml
 C:\xampp\htdocs\REPOOP3Adriana\ObligatorioP3-Adriana\OP3.Dominio\WcfServicios\bin\System.Diagnostics.DiagnosticSource.xml
-C:\xampp\htdocs\REPOOP3Adriana\ObligatorioP3-Adriana\OP3.Dominio\WcfServicios\obj\Debug\WcfServicios.csprojResolveAssemblyReference.cache
 C:\xampp\htdocs\REPOOP3Adriana\ObligatorioP3-Adriana\OP3.Dominio\WcfServicios\obj\Debug\WcfServicios.dll
 C:\xampp\htdocs\REPOOP3Adriana\ObligatorioP3-Adriana\OP3.Dominio\WcfServicios\obj\Debug\WcfServicios.pdb
