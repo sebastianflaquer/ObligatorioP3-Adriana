@@ -6,4 +6,3 @@ C:\xampp\htdocs\REPOOP3Adriana\ObligatorioP3-Adriana\OP3.Dominio\OP3.Dominio\bin
 C:\xampp\htdocs\REPOOP3Adriana\ObligatorioP3-Adriana\OP3.Dominio\OP3.Dominio\bin\Debug\OP3.Dominio.pdb
 C:\xampp\htdocs\REPOOP3Adriana\ObligatorioP3-Adriana\OP3.Dominio\OP3.Dominio\obj\Debug\OP3.Dominio.dll
 C:\xampp\htdocs\REPOOP3Adriana\ObligatorioP3-Adriana\OP3.Dominio\OP3.Dominio\obj\Debug\OP3.Dominio.pdb
-C:\xampp\htdocs\REPOOP3Adriana\ObligatorioP3-Adriana\OP3.Dominio\OP3.Dominio\obj\Debug\OP3.Dominio.csprojResolveAssemblyReference.cache

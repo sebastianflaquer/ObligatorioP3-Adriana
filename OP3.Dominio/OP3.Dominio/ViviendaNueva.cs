@@ -79,52 +79,6 @@ namespace OP3.Dominio
             precioFinal = this.Metraje * this.PBaseXMetroCuadrado;
             return precioFinal;
         }
-
-        //CALCULAR NUMEROS VIVIENDA
-        internal int calcularNumerosVivienda() {
-
-            //cotizacionUI = valor#cotizacionUSD=valor#topeMts=valor#plazoNueva=valor#plazoUsada=valor           
-            //monto final
-            //cf = c(1+i)*t
-            //cf = C(1 + i)*t;
-            //CALCULO
-            //t = this.AniosFinanciacionVivN; // 5 años
-            //i = this.TasaInteres / 100;
-
-            //CALCULO
-
-
-            //string porcentajeInteres = obtenerVariable("Interes Anual");
-            double resInteres = 8 / 100;
-
-            //calcular Monto interes Compuesto
-
-            //cf = PrecioFinal x(1 + resInteres);
-
-
-            //VIVIENDA NUEVA
-            //Precio base en pesos
-            //En unidades indexadas y la cotizacion es una dato en la base
-            //Las viviendas nuevas debeern tener un tope de metraje (tambien es un dato en la base y hay que chekear)
-            //Maximo 2 años de antiguedad
-
-
-            //VIVIENDA USADA
-            //Precio final en dolares. la cotizacion es contra la UI, tambien es una variable en la base. 
-            //Pagan un porcentaje de impuestos tambien se define en una variable. es un porcentaje
-            //Monto de contribucion inmobiliaria
-
-
-            //Por ejemplo, el monto con intereses para un capital de 1200000 que se pague al cabo de 5 años y a una
-            //tasa de interés compuesto anual del 8 %, se calculará:
-            //i = 8 / 100 = 0,08
-            //t = 5
-            //C = 120000
-            //por lo tanto Cf = 120000 x(1 + 0, 08) 5
-
-            return 10;
-        }
-
         
     }
 }

@@ -55,21 +55,152 @@ namespace WcfServicios
         }
 
         //AGREGAR USUARIO
-        public DTOVivienda AgregarVivienda()
+        public DTOVivienda AgregarVivienda(bool tipo, int HabilitadaBit, string vCalle, string vNumero, string vBarrio, string vDescripcion, int vBanios, int vDormitorios, int vMetraje, int vAnio, double vPBaseXMetroCuadrado)
         {
-            throw new NotImplementedException();
+            bool agrego;
+
+            if (tipo == true)
+            {
+                agrego = repoViv.Add(new ViviendaNueva
+                {
+                    Habilitada = HabilitadaBit,
+                    Calle = vCalle,
+                    Numero = vNumero,
+                    Barrio = vBarrio,
+                    Descripcion = vDescripcion,
+                    Banios = vBanios,
+                    Dormitorios = vDormitorios,
+                    Metraje = vMetraje,
+                    Anio = vAnio,
+                    PBaseXMetroCuadrado = vPBaseXMetroCuadrado
+                });
+            }
+            else
+            {
+                agrego = repoViv.Add(new ViviendaUsada
+                {
+                    Habilitada = HabilitadaBit,
+                    Calle = vCalle,
+                    Numero = vNumero,
+                    Barrio = vBarrio,
+                    Descripcion = vDescripcion,
+                    Banios = vBanios,
+                    Dormitorios = vDormitorios,
+                    Metraje = vMetraje,
+                    Anio = vAnio,
+                    PBaseXMetroCuadrado = vPBaseXMetroCuadrado
+                });
+            }
+
+            if (agrego)
+            {
+                DTOVivienda DTOviv = new DTOVivienda
+                {
+                    Habilitada = HabilitadaBit,
+                    Calle = vCalle,
+                    Numero = vNumero,
+                    Barrio = vBarrio,
+                    Descripcion = vDescripcion,
+                    Banios = vBanios,
+                    Dormitorios = vDormitorios,
+                    Metraje = vMetraje,
+                    Anio = vAnio,
+                    PBaseXMetroCuadrado = vPBaseXMetroCuadrado
+                };
+
+                return DTOviv;
+            }
+            else
+            {
+                return null;
+            }
         }
 
-        //MODIFICAR USUARIO
-        public DTOVivienda ModificarVivinda()
+        //MODIFICAR USUARIO                     
+        public DTOVivienda ModificarVivinda(int vid, bool tipo, int HabilitadaBit, string vCalle, string vNumero, string vBarrio, string vDescripcion, int vBanios, int vDormitorios, int vMetraje, int vAnio, double vPBaseXMetroCuadrado)
         {
-            throw new NotImplementedException();
+            bool modifico;
+
+            if (tipo == true)
+            {
+                modifico = repoViv.Update(new ViviendaNueva
+                {
+                    Id = vid,
+                    Habilitada = HabilitadaBit,
+                    Tipo = "N",
+                    Calle = vCalle,
+                    Numero = vNumero,
+                    Barrio = vBarrio,
+                    Descripcion = vDescripcion,
+                    Banios = vBanios,
+                    Dormitorios = vDormitorios,
+                    Metraje = vMetraje,
+                    Anio = vAnio,
+                    PBaseXMetroCuadrado = vPBaseXMetroCuadrado
+                });
+            }
+            else
+            {
+                modifico = repoViv.Update(new ViviendaUsada
+                {
+                    Id = vid,
+                    Habilitada = HabilitadaBit,
+                    Tipo = "U",
+                    Calle = vCalle,
+                    Numero = vNumero,
+                    Barrio = vBarrio,
+                    Descripcion = vDescripcion,
+                    Banios = vBanios,
+                    Dormitorios = vDormitorios,
+                    Metraje = vMetraje,
+                    Anio = vAnio,
+                    PBaseXMetroCuadrado = vPBaseXMetroCuadrado
+                });
+            }
+
+
+            if (modifico)
+            {
+                DTOVivienda DTOviv = new DTOVivienda
+                {
+                    Habilitada = HabilitadaBit,
+                    Calle = vCalle,
+                    Numero = vNumero,
+                    Barrio = vBarrio,
+                    Descripcion = vDescripcion,
+                    Banios = vBanios,
+                    Dormitorios = vDormitorios,
+                    Metraje = vMetraje,
+                    Anio = vAnio,
+                    PBaseXMetroCuadrado = vPBaseXMetroCuadrado
+                };
+
+                return DTOviv;
+            }
+            else
+            {
+                return null;
+            }
         }
 
         //ELIMINAR USUARIO
-        public DTOVivienda EliminarVivienda(int id)
+        public DTOVivienda EliminarVivienda(int vid)
         {
-            throw new NotImplementedException();
+            bool elimino;
+            elimino = repoViv.Delete(new ViviendaNueva{
+
+                Id = vid
+            });
+
+            if (elimino) {
+                DTOVivienda DTOviv = new DTOVivienda{
+                    Id = vid
+                };
+                return DTOviv;
+
+            } else {
+                return null;
+            }
         }
 
         //BARRIOS
@@ -119,9 +250,9 @@ namespace WcfServicios
         public DTOBarrio AgregarBarrio(string vNombre, string vDescripcion)
         {
             bool agrego = repoBar.Add(new Barrio
-            {
-                Descripcion = vDescripcion,
-                Nombre = vNombre
+            {   
+                Nombre = vNombre,
+                Descripcion = vDescripcion
             });
 
 
@@ -130,7 +261,7 @@ namespace WcfServicios
                 DTOBarrio DTObar = new DTOBarrio
                 {
                     Nombre = vNombre,
-                    Descripcion = vNombre
+                    Descripcion = vDescripcion
                 };
 
                 return DTObar;
@@ -141,15 +272,52 @@ namespace WcfServicios
         }
 
         //MODIFICAR USUARIO
-        public DTOBarrio ModificarBarrio()
+        public DTOBarrio ModificarBarrio(string nombre, string descripcion)
         {
-            throw new NotImplementedException();
+            bool modifico = repoBar.Update(new Barrio
+            {
+                Descripcion = descripcion,
+                Nombre = nombre
+            });
+
+
+            if (modifico)
+            {
+                DTOBarrio DTObar = new DTOBarrio
+                {
+                    Nombre = nombre,
+                    Descripcion = descripcion
+                };
+
+                return DTObar;
+            }
+            else
+            {
+                return null;
+            }
         }
 
         //ELIMINAR USUARIO
-        public DTOBarrio EliminarBarrio(int id)
+        public DTOBarrio EliminarBarrio(string vNombre)
         {
-            throw new NotImplementedException();
+            bool elimino = repoBar.Delete(new Barrio
+            {
+                Nombre = vNombre
+            });
+
+            if (elimino)
+            {
+                DTOBarrio DTObar = new DTOBarrio
+                {
+                    Nombre = vNombre
+                };
+
+                return DTObar;
+            }
+            else
+            {
+                return null;
+            }
         }
 
 
@@ -214,5 +382,6 @@ namespace WcfServicios
         {
             throw new NotImplementedException();
         }
+
     }
 }

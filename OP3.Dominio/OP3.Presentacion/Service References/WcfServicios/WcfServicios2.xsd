@@ -108,7 +108,10 @@
   </xs:element>
   <xs:element name="ModificarBarrio">
     <xs:complexType>
-      <xs:sequence />
+      <xs:sequence>
+        <xs:element minOccurs="0" name="nombre" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="descripcion" nillable="true" type="xs:string" />
+      </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="ModificarBarrioResponse">
@@ -121,7 +124,7 @@
   <xs:element name="EliminarBarrio">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" name="id" type="xs:int" />
+        <xs:element minOccurs="0" name="nombre" nillable="true" type="xs:string" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -146,7 +149,19 @@
   </xs:element>
   <xs:element name="AgregarVivienda">
     <xs:complexType>
-      <xs:sequence />
+      <xs:sequence>
+        <xs:element minOccurs="0" name="tipo" type="xs:boolean" />
+        <xs:element minOccurs="0" name="HabilitadaBit" type="xs:int" />
+        <xs:element minOccurs="0" name="vCalle" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="vNumero" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="vBarrio" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="vDescripcion" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="vBanios" type="xs:int" />
+        <xs:element minOccurs="0" name="vDormitorios" type="xs:int" />
+        <xs:element minOccurs="0" name="vMetraje" type="xs:int" />
+        <xs:element minOccurs="0" name="vAnio" type="xs:int" />
+        <xs:element minOccurs="0" name="vPBaseXMetroCuadrado" type="xs:double" />
+      </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="AgregarViviendaResponse">
@@ -158,7 +173,20 @@
   </xs:element>
   <xs:element name="ModificarVivinda">
     <xs:complexType>
-      <xs:sequence />
+      <xs:sequence>
+        <xs:element minOccurs="0" name="vid" type="xs:int" />
+        <xs:element minOccurs="0" name="tipo" type="xs:boolean" />
+        <xs:element minOccurs="0" name="HabilitadaBit" type="xs:int" />
+        <xs:element minOccurs="0" name="vCalle" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="vNumero" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="vBarrio" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="vDescripcion" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="vBanios" type="xs:int" />
+        <xs:element minOccurs="0" name="vDormitorios" type="xs:int" />
+        <xs:element minOccurs="0" name="vMetraje" type="xs:int" />
+        <xs:element minOccurs="0" name="vAnio" type="xs:int" />
+        <xs:element minOccurs="0" name="vPBaseXMetroCuadrado" type="xs:double" />
+      </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="ModificarVivindaResponse">

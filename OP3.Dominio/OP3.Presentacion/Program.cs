@@ -231,7 +231,7 @@ namespace OP3.Presentacion
             Console.ReadKey();
         }
 
-        //PARAR PANTALLA
+        //LISTO VOLVER
         private static void ListoVovler()
         {
             Console.WriteLine("Listo, presionar tecla para volver");
@@ -241,6 +241,7 @@ namespace OP3.Presentacion
         ///////////////////////////////////////////////////
         //USUARIOS             
         ///////////////////////////////////////////////////
+        //MENU OPCIONES USUARIOS
         private static void MenuOpcionesUsuarios()
         {
             Console.Clear();
@@ -303,6 +304,7 @@ namespace OP3.Presentacion
         ///////////////////////////////////////////////////
         //VIVIENDAS                
         ///////////////////////////////////////////////////
+        //MENU OPCIONES VIVIENDA
         private static void MenuOpcionesViviendas()
         {
             Console.Clear();
@@ -370,6 +372,7 @@ namespace OP3.Presentacion
         ///////////////////////////////////////////////////
         //BARIOS                
         ///////////////////////////////////////////////////
+        //MENU OPCIONES BARRIOS
         private static void MenuOpcionesBarrio(){
 
             Console.Clear();
@@ -421,6 +424,7 @@ namespace OP3.Presentacion
         ///////////////////////////////////////////////////
         //GENERAR ARCHIVOS                
         ///////////////////////////////////////////////////
+        //MENU OPCIONES GENERAR
         private static void MenuOpcionesGenerar()
         {
 
@@ -601,12 +605,18 @@ namespace OP3.Presentacion
         //ACCION
         //VALIDAR BARRIO
         public static bool ValidarBarrio(string Nombre) {
-            Barrio Bar = repoBar.FindById(Nombre);
-            if (Bar.Nombre != null)
+
+            using (WcfServicios.WfServiciosClient client = new WcfServicios.WfServiciosClient())
             {
-                return true;
+                var nuevoBarrio = client.BuscarBarrioPorNombre(Nombre);
+
+                if (nuevoBarrio.Nombre != null)
+                {
+                    return true;
+                }
+
+                return false;
             }
-            return false;
         }
 
         //AGREGAR BARRIO
@@ -615,25 +625,8 @@ namespace OP3.Presentacion
             using (WcfServicios.WfServiciosClient client = new WcfServicios.WfServiciosClient())
             {
                 var nuevoBarrio = client.AgregarBarrio(vNombre, vDescripcion);
-
-                //if (Lista != null)
-                //{
-                //    foreach (var elem in Lista)
-                //    {
-                //        Console.WriteLine(elem.Nombre.ToString() + " - " + elem.Descripcion.ToString());
-                //    }
-                //}
-                //else
-                //{
-                //    Console.WriteLine("No hay Barrios ingresados:");
-                //}
             }
-
-                //repoBar.Add(new Barrio
-                //{
-                //    Nombre = vNombre,
-                //    Descripcion = vDescripcion
-                //});
+            
             Console.WriteLine("Barrio Agregado");
             ListoVovler();
             DibujarMenu();
@@ -642,10 +635,12 @@ namespace OP3.Presentacion
         //ELIMINAR BARRIO
         private static void EliminarBarrio(string vNombre)
         {
-            repoBar.Delete(new Barrio
+
+            using (WcfServicios.WfServiciosClient client = new WcfServicios.WfServiciosClient())
             {
-                Nombre = vNombre
-            });
+                var nuevoBarrio = client.EliminarBarrio(vNombre);
+            }
+            
             Console.WriteLine("Barrio Eliminado");
             ListoVovler();
             DibujarMenu();
@@ -654,7 +649,11 @@ namespace OP3.Presentacion
         //MODIFICAR BARRIO
         private static void ModificarBarrio(string vNombre, string vDescripcion)
         {
-            repoBar.Update(new Barrio { Nombre = vNombre, Descripcion = vDescripcion });
+
+            using (WcfServicios.WfServiciosClient client = new WcfServicios.WfServiciosClient())
+            {
+                var nuevoBarrio = client.ModificarBarrio(vNombre, vDescripcion);
+            }
 
             Console.WriteLine("Barrio Modificado");
             ListoVovler();
@@ -833,7 +832,7 @@ namespace OP3.Presentacion
             //CANTIDAD DE METRAJE
             int vMetraje;
             string vMetrajeN;
-            int TopeMetraje = repoViv.getTope();
+            int TopeMetraje = Convert.ToInt32(repoViv.obtenerVariable("topeMts"));
             bool esMetraje;
 
             bool estaOk = false;
@@ -918,7 +917,10 @@ namespace OP3.Presentacion
                 }
             }
 
-            EliminarVivienda(Convert.ToInt32(vIdN));
+            using (WcfServicios.WfServiciosClient client = new WcfServicios.WfServiciosClient())
+            {
+                var nuevoBarrio = client.EliminarVivienda(Convert.ToInt32(vIdN));
+            }
 
 
         }
@@ -1116,46 +1118,44 @@ namespace OP3.Presentacion
         //ACCION
         //AGREGAR VIVIENDA
         private static void AgregarVivienda(bool tipo, int HabilitadaBit, string vCalle, string vNumero, string vBarrio, string vDescripcion, int vBanios, int vDormitorios, int vMetraje, int vAnio, double vPBaseXMetroCuadrado) {
-            if (tipo == true) {
-                repoViv.Add(new ViviendaNueva
+            
+            using (WcfServicios.WfServiciosClient client = new WcfServicios.WfServiciosClient())
+            {
+                var nuevoVivienda = client.AgregarVivienda(tipo, HabilitadaBit, vCalle, vNumero, vBarrio, vDescripcion, vBanios, vDormitorios, vMetraje, vAnio, vPBaseXMetroCuadrado);
+                if (nuevoVivienda != null)
                 {
-                    Habilitada = HabilitadaBit,
-                    Calle = vCalle,
-                    Numero = vNumero,
-                    Barrio = vBarrio,
-                    Descripcion = vDescripcion,
-                    Banios = vBanios,
-                    Dormitorios = vDormitorios,
-                    Metraje = vMetraje,
-                    Anio = vAnio,
-                    PBaseXMetroCuadrado = vPBaseXMetroCuadrado
-                });
+                    Console.WriteLine("//////////////////////////////////////");
+                    Console.WriteLine("Vivienda Agregada");
+                }
+                else {
+                    Console.WriteLine("//////////////////////////////////////");
+                    Console.WriteLine("Error al intentar agregar una Vivienda");
+                }
             }
-            else {
-                repoViv.Add(new ViviendaUsada
-                {
-                    Habilitada = HabilitadaBit,
-                    Calle = vCalle,
-                    Numero = vNumero,
-                    Barrio = vBarrio,
-                    Descripcion = vDescripcion,
-                    Banios = vBanios,
-                    Dormitorios = vDormitorios,
-                    Metraje = vMetraje,
-                    Anio = vAnio,
-                    PBaseXMetroCuadrado = vPBaseXMetroCuadrado
-                });
-            }
-            Console.WriteLine("//////////////////////////////////////");
-            Console.WriteLine("Vivienda Agregado");
+            
+            ListoVovler();
             DibujarMenu();
         }
 
         //ELIMINAR VIVIENDA
         private static void EliminarVivienda(int vid) {
-            repoViv.Delete(new ViviendaNueva {
-                Id = vid
-            });
+
+            using (WcfServicios.WfServiciosClient client = new WcfServicios.WfServiciosClient()) {
+
+                var nuevoVivienda = client.EliminarVivienda(vid);
+                if (nuevoVivienda != null)
+                {
+                    Console.WriteLine("//////////////////////////////////////");
+                    Console.WriteLine("Vivienda Eliminada");
+                }
+                else
+                {
+                    Console.WriteLine("//////////////////////////////////////");
+                    Console.WriteLine("Error al intentar Eliminar la Vivienda");
+                }
+            }
+
+               
             Console.WriteLine("//////////////////////////////////////");
             Console.WriteLine("Vivienda Eliminada");
             ListoVovler();
@@ -1165,6 +1165,22 @@ namespace OP3.Presentacion
         //MODIFICAR VIVIENDA
         private static void ModificarVivienda(int vid, bool tipo, int HabilitadaBit, string vCalle, string vNumero, string vBarrio, string vDescripcion, int vBanios, int vDormitorios, int vMetraje, int vAnio, double vPBaseXMetroCuadrado)
         {
+
+            using (WcfServicios.WfServiciosClient client = new WcfServicios.WfServiciosClient())
+            {
+                var nuevoVivienda = client.ModificarVivinda(vid, tipo, HabilitadaBit, vCalle, vNumero, vBarrio, vDescripcion, vBanios, vDormitorios, vMetraje, vAnio, vPBaseXMetroCuadrado);
+                if (nuevoVivienda != null)
+                {
+                    Console.WriteLine("//////////////////////////////////////");
+                    Console.WriteLine("Vivienda Modificada");
+                }
+                else
+                {
+                    Console.WriteLine("//////////////////////////////////////");
+                    Console.WriteLine("Error al intentar modificar la Vivienda");
+                }
+            }
+
             if (tipo == true)
             {
                 repoViv.Update(new ViviendaNueva
@@ -1218,18 +1234,29 @@ namespace OP3.Presentacion
             var lista = repoViv.FindByBarrio(Nombre);
             foreach (Vivienda elem in lista)
             {
-                Console.WriteLine(elem.Id.ToString() + " - "
-                    + elem.Calle.ToString() + " "
-                    + elem.Numero.ToString() + ", "
-                    + elem.Barrio.ToString()
+
+                string moneda;
+                if (elem.Tipo == "N")
+                    moneda = "UI";
+                else
+                    moneda = "USD";
+
+                decimal precioFinal = calcularPrecioFinalVivienda(elem.Metraje.ToString(), elem.PBaseXMetroCuadrado.ToString(), elem.Tipo.ToString());
+
+                Console.WriteLine(
+                    elem.Id.ToString()
+                    + " - " + elem.Calle.ToString()
+                    + " - " + elem.Tipo.ToString()
+                    + " " + elem.Numero.ToString()
+                    + ", " + elem.Barrio.ToString()
                     + " - Descripcion: " + elem.Descripcion.ToString()
                     + " - Baños: " + elem.Banios.ToString()
                     + " - Dormitorios: " + elem.Dormitorios.ToString()
                     + " - Metraje: " + elem.Metraje.ToString()
                     + " - Precio Base M2: $ " + elem.PBaseXMetroCuadrado.ToString()
-                    + " - Precio final: "
-                    + " - Impuestos: "
-                    + " - Cuota: "
+                    + " - Precio final " + moneda + ": " + precioFinal
+                    + " - Impuestos ITP: " + calcularImpuestos(elem.Tipo.ToString(), precioFinal)
+                    + " - Cantidad Cuota: " + calcularCuotas(elem.Tipo.ToString())
                 );
             }
             Console.WriteLine("//////////////////////////////////////");
@@ -1253,8 +1280,16 @@ namespace OP3.Presentacion
                     {
 
                         //double resultado = calcularPrecioFinalVivienda("hola", "hola");
+                        string moneda;
+                        if (elem.Tipo == "N")
+                            moneda = "UI";
+                        else
+                            moneda = "USD";
 
-                        Console.WriteLine(elem.Id.ToString()
+                        decimal precioFinal = calcularPrecioFinalVivienda(elem.Metraje.ToString(), elem.PBaseXMetroCuadrado.ToString(), elem.Tipo.ToString());
+
+                        Console.WriteLine(
+                            elem.Id.ToString()
                             + " - " + elem.Calle.ToString()
                             + " - " + elem.Tipo.ToString()
                             + " " + elem.Numero.ToString()
@@ -1264,9 +1299,9 @@ namespace OP3.Presentacion
                             + " - Dormitorios: " + elem.Dormitorios.ToString()
                             + " - Metraje: " + elem.Metraje.ToString()
                             + " - Precio Base M2: $ " + elem.PBaseXMetroCuadrado.ToString()
-                            + " - Precio final: " + calcularPrecioFinalVivienda(elem.Metraje.ToString(), elem.PBaseXMetroCuadrado.ToString() , elem.Tipo.ToString())
-                            + " - Impuestos: "
-                            + " - Cuota: "
+                            + " - Precio final " + moneda + ": " + precioFinal
+                            + " - Impuestos ITP($): " + calcularImpuestos(elem.Tipo.ToString(), precioFinal)
+                            + " - Cantidad Cuota: " + calcularCuotas(elem.Tipo.ToString())
                         );
                     }
                 }
@@ -1279,9 +1314,49 @@ namespace OP3.Presentacion
             ListoVovler();
         }
 
+        //CALCULAR IMPUESTOS
+        private static string calcularImpuestos(string tipo, decimal precioFinal)
+        {
+            decimal impuestos;
+            decimal MontoImpuestos = decimal.Parse(repoViv.obtenerVariable("MontoImpuestos")) / 100;
+
+            if (tipo == "N")
+            {
+                impuestos = 0;
+            }
+            else
+            {
+                impuestos = precioFinal * MontoImpuestos;
+                impuestos = impuestos / decimal.Parse(repoViv.obtenerVariable("cotizacionUSD"));
+            }
+            return impuestos.ToString();
+        }
+
+        //CALCULAR CUOTAS
+        private static string calcularCuotas(string tipo)
+        {
+            decimal cantCuotas;
+            if (tipo == "N")
+            {
+                decimal plazoNueva = decimal.Parse(repoViv.obtenerVariable("plazoNueva"));
+                cantCuotas = plazoNueva*12;
+            }
+            else {
+                decimal plazoUsada = decimal.Parse(repoViv.obtenerVariable("plazoUsada"));
+                cantCuotas = plazoUsada*12;
+
+            }
+
+            return cantCuotas.ToString();
+        }
+
         //VALIDAR VIVIENDA
         public static bool ValidarVivienda(int id)
         {
+
+
+
+
             Vivienda Viv = repoViv.FindById(id);
             if (Viv.Numero != null)
             {
@@ -1300,29 +1375,50 @@ namespace OP3.Presentacion
         public static decimal calcularPrecioFinalVivienda(string metrosCuadrados, string precioMetroCuadrado, string Tipo)
         {
             decimal precioFinal;
-
-            if (Tipo == "N") {
-
-                decimal ui = decimal.Parse(repoViv.obtenerVariable("ui"));
-
+            decimal Cf;
+            decimal retorno = 0;
+            
+            if (Tipo == "N"){
                 //debe retornar el precio en UI
-                precioFinal = Convert.ToInt32(metrosCuadrados) * Convert.ToInt32(precioMetroCuadrado);
-                precioFinal = precioFinal/ ui;
+                //Precio en ui
+                decimal PorcentajeFinanciacion = decimal.Parse(repoViv.obtenerVariable("PorcentajeFinanciacion"));
+                decimal ui = decimal.Parse(repoViv.obtenerVariable("cotizacionUI"));
+                decimal plazoNueva = decimal.Parse(repoViv.obtenerVariable("plazoNueva"));
+                decimal calculoInteres = 1 + (PorcentajeFinanciacion / 100);
 
+                double res = Math.Pow(Convert.ToDouble(calculoInteres), Convert.ToDouble(plazoNueva));
+                precioFinal = Convert.ToInt32(metrosCuadrados) * Convert.ToInt32(precioMetroCuadrado);
+                Cf = precioFinal*Convert.ToDecimal(res);
+                
+                Cf = Cf/ui;
+                retorno = Math.Round(Cf, 2);
             }
             else {
+
+
+                //debe retornar el precio en UI
+                //Precio en ui
+                decimal PorcentajeFinanciacion = decimal.Parse(repoViv.obtenerVariable("PorcentajeFinanciacion"));
+                decimal usd = decimal.Parse(repoViv.obtenerVariable("cotizacionUSD"));
+                decimal plazoNueva = decimal.Parse(repoViv.obtenerVariable("plazoNueva"));
+                decimal calculoInteres = 1 + (PorcentajeFinanciacion / 100);
+                decimal MontoImpuestos = 1 + decimal.Parse(repoViv.obtenerVariable("MontoImpuestos")) / 100;
+
+                double res = Math.Pow(Convert.ToDouble(calculoInteres), Convert.ToDouble(plazoNueva));
                 precioFinal = Convert.ToInt32(metrosCuadrados) * Convert.ToInt32(precioMetroCuadrado);
+                Cf = precioFinal * Convert.ToDecimal(res);
+                Cf = Cf * MontoImpuestos;
+
+                Cf = Cf / usd;
+                retorno = Math.Round(Cf, 2);
+
+                //precio en dolares
+                precioFinal = Convert.ToInt32(metrosCuadrados) * Convert.ToInt32(precioMetroCuadrado);
+
             }
 
-            return Math.Round(precioFinal,2);
+            return retorno;
         }
-
-        //OBTENER VARIABLE
-        //private static string obtenerVariable(string nombre){
-        //    string valor = repoViv.obtenerVariable(nombre);
-        //    return valor;
-        //}
-        //
 
         //------------------------------------------------- USUARIOS
         //MENU
@@ -1474,7 +1570,6 @@ namespace OP3.Presentacion
         //MENU SERVICIO USUARIO
         private static void MenuServicioUsuario()
         {
-
             Console.Clear();
             Console.WriteLine("Servicio Usuario");
             Console.WriteLine("Ingrese id del Usuario:");
@@ -1494,8 +1589,6 @@ namespace OP3.Presentacion
                 {
                     Console.WriteLine("No FUNCIONA");
                 }
-                //Usuario unUsu = new Usuario();
-                //DTOUsuario DTOUsu = new DTOUsuario();
             }
             Console.WriteLine("//////////////////////////////////////");
             ListoVovler();
@@ -1596,9 +1689,7 @@ namespace OP3.Presentacion
             Console.WriteLine("//////////////////////////////////////");
             ListoVovler();
         }
-
-
-
+        
         //------------------------------------------------- GENERAR ARCHIVOS
 
         //GENERAR ARCHIVO

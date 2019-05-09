@@ -303,6 +303,9 @@ namespace OP3.Dominio.Repositorios.Ado
                     valor = dr["Valor"].ToString();
                 }
             }
+            else {
+                valor = "Error";
+            }
 
             UtilidadesBD.CerrarConexion(cn);
 
