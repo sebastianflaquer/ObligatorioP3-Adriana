@@ -8,6 +8,7 @@ using OP3;
 using OP3.Dominio;
 using OP3.Dominio.Repositorios.Ado;
 using System.Text.RegularExpressions;
+using System.IO;
 
 namespace OP3.Presentacion
 {
@@ -51,6 +52,10 @@ namespace OP3.Presentacion
             else if (opcion == 3)
             {
                 MenuOpcionesUsuarios();
+            }
+            else if (opcion == 4)
+            {
+                MenuOpcionesGenerar();
             }
         }
 
@@ -216,8 +221,7 @@ namespace OP3.Presentacion
             Console.WriteLine("1 - Opciones de Barrio");
             Console.WriteLine("2 - Opciones de Viviendas");
             Console.WriteLine("3 - Opciones de Usuarios");
-
-            //Console.WriteLine("3 - Mostrar el iva");
+            Console.WriteLine("4 - Opciones de Generar Archivos");
             Console.WriteLine("Ingrese una opción - 0 para salir");
         }
 
@@ -377,6 +381,7 @@ namespace OP3.Presentacion
             Console.WriteLine("4 - Listar todos los Barrios");
             Console.WriteLine("5 - Buscar Barrio por Nombre");
             Console.WriteLine("6 - Ir Atras");
+            Console.WriteLine("=================");
             Console.WriteLine("Ingrese una opción - 0 para salir");
 
             int tope = 6;
@@ -412,7 +417,68 @@ namespace OP3.Presentacion
                 DibujarMenu();
             }
         }
-        
+
+        ///////////////////////////////////////////////////
+        //GENERAR ARCHIVOS                
+        ///////////////////////////////////////////////////
+        private static void MenuOpcionesGenerar()
+        {
+
+            Console.Clear();
+            Console.WriteLine("Opcione Generar Archivos");
+            Console.WriteLine("=================");
+            Console.WriteLine("1 - Generar todos los archivos");
+            Console.WriteLine("2 - Generar Barrios");
+            Console.WriteLine("3 - Generar Viviendas");
+            Console.WriteLine("4 - Generar Parametros");
+            Console.WriteLine("5 - Ir Atras");
+            Console.WriteLine("=================");
+            Console.WriteLine("Ingrese una opción - 0 para salir");
+
+            int tope = 5;
+            int opcion = -1;
+            bool esNumero = false;
+            char caracter;
+            do
+            {
+                caracter = Console.ReadKey().KeyChar;
+                esNumero = int.TryParse(caracter.ToString(), out opcion);
+                if (!esNumero || opcion < 0 || opcion > tope)
+                {
+                    Console.WriteLine("Ingrese nuevamente, la opción debe estar entre 0 y {0}", tope);
+                }
+            } while (!esNumero || opcion < 0 || opcion > tope);
+
+            if (opcion == 0)
+            {
+                PararPantalla();
+            }
+            else if (opcion == 1)
+            {
+                GenerarArchivos();
+            }
+            else if (opcion == 2)
+            {
+                GenerarArchivoBarrios();
+            }
+            else if (opcion == 3)
+            {
+                GenerarArchivoViviendas();
+            }
+            else if (opcion == 4)
+            {
+                GenerarArchivoParametros();
+            }
+            else if (opcion == 5)
+            {
+                DibujarMenu();
+            }
+            else
+            {
+                DibujarMenu();
+            }
+        }
+
 
         //MENU
         //------------------------------------------------- BARRIOS
@@ -546,12 +612,28 @@ namespace OP3.Presentacion
         //AGREGAR BARRIO
         private static void AgregarBarrio(string vNombre, string vDescripcion)
         {
-
-            repoBar.Add(new Barrio
+            using (WcfServicios.WfServiciosClient client = new WcfServicios.WfServiciosClient())
             {
-                Nombre = vNombre,
-                Descripcion = vDescripcion
-            });
+                var nuevoBarrio = client.AgregarBarrio(vNombre, vDescripcion);
+
+                //if (Lista != null)
+                //{
+                //    foreach (var elem in Lista)
+                //    {
+                //        Console.WriteLine(elem.Nombre.ToString() + " - " + elem.Descripcion.ToString());
+                //    }
+                //}
+                //else
+                //{
+                //    Console.WriteLine("No hay Barrios ingresados:");
+                //}
+            }
+
+                //repoBar.Add(new Barrio
+                //{
+                //    Nombre = vNombre,
+                //    Descripcion = vDescripcion
+                //});
             Console.WriteLine("Barrio Agregado");
             ListoVovler();
             DibujarMenu();
@@ -1169,8 +1251,12 @@ namespace OP3.Presentacion
                 {
                     foreach (var elem in Lista)
                     {
+
+                        //double resultado = calcularPrecioFinalVivienda("hola", "hola");
+
                         Console.WriteLine(elem.Id.ToString()
                             + " - " + elem.Calle.ToString()
+                            + " - " + elem.Tipo.ToString()
                             + " " + elem.Numero.ToString()
                             + ", " + elem.Barrio.ToString()
                             + " - Descripcion: " + elem.Descripcion.ToString()
@@ -1178,7 +1264,7 @@ namespace OP3.Presentacion
                             + " - Dormitorios: " + elem.Dormitorios.ToString()
                             + " - Metraje: " + elem.Metraje.ToString()
                             + " - Precio Base M2: $ " + elem.PBaseXMetroCuadrado.ToString()
-                            + " - Precio final: "
+                            + " - Precio final: " + calcularPrecioFinalVivienda(elem.Metraje.ToString(), elem.PBaseXMetroCuadrado.ToString() , elem.Tipo.ToString())
                             + " - Impuestos: "
                             + " - Cuota: "
                         );
@@ -1209,9 +1295,35 @@ namespace OP3.Presentacion
             Vivienda Viv = repoViv.FindById(id);
             return Viv;
         }
+
+        //CALCULAR PRECIO FINAL VIVIENDA
+        public static decimal calcularPrecioFinalVivienda(string metrosCuadrados, string precioMetroCuadrado, string Tipo)
+        {
+            decimal precioFinal;
+
+            if (Tipo == "N") {
+
+                decimal ui = decimal.Parse(repoViv.obtenerVariable("ui"));
+
+                //debe retornar el precio en UI
+                precioFinal = Convert.ToInt32(metrosCuadrados) * Convert.ToInt32(precioMetroCuadrado);
+                precioFinal = precioFinal/ ui;
+
+            }
+            else {
+                precioFinal = Convert.ToInt32(metrosCuadrados) * Convert.ToInt32(precioMetroCuadrado);
+            }
+
+            return Math.Round(precioFinal,2);
+        }
+
+        //OBTENER VARIABLE
+        //private static string obtenerVariable(string nombre){
+        //    string valor = repoViv.obtenerVariable(nombre);
+        //    return valor;
+        //}
         //
 
-        
         //------------------------------------------------- USUARIOS
         //MENU
         //MENU AGREGAR USUARIO
@@ -1484,7 +1596,118 @@ namespace OP3.Presentacion
             Console.WriteLine("//////////////////////////////////////");
             ListoVovler();
         }
-        
+
+
+
+        //------------------------------------------------- GENERAR ARCHIVOS
+
+        //GENERAR ARCHIVO
+        private static void GenerarArchivos() {
+            Console.Write(Environment.NewLine);
+            Console.Write("GENERAR ARCHIVOS" + Environment.NewLine);
+            GenerarArchivoBarrios();
+            GenerarArchivoViviendas();
+            GenerarArchivoParametros();
+            Console.ReadKey();
+        }
+
+        //GENERAR ARCHIVO BARRIOS
+        private static void GenerarArchivoBarrios()
+        {
+
+            string barrios = "";
+            string path = "../Barrios.txt";
+            IEnumerable<Barrio> ListaBarrios = repoBar.FindAll();
+
+            foreach (Barrio elem in ListaBarrios) {
+                barrios += elem.Nombre.ToString() + "#" + elem.Descripcion.ToString() + Environment.NewLine;
+            }
+            
+            try
+            {
+                if (File.Exists(path))
+                {
+                    File.Delete(path);
+                }
+                FileStream fs = new FileStream(path, FileMode.Append);
+                byte[] bdata = Encoding.Default.GetBytes(barrios);
+                fs.Write(bdata, 0, bdata.Length);
+                fs.Close();
+                Console.Write("Se creo el arhivo Barrios.txt" + Environment.NewLine);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Error al intentar crear el archivo Barrios.txt", e.ToString());
+            }
+        }
+
+        //GENERAR ARCHIVO VIVIENDAS
+        private static void GenerarArchivoViviendas()
+        {
+            //Id#calle#numeroPuerta#nombreBarrio#descripcion#baños#dormitorios#metraje#año#preciofinal#tipo#montoContribucion
+            string viviendas = "";
+            string path = "../Viviendas.txt";
+            IEnumerable<Vivienda> ListaViviendas = repoViv.FindAll();
+
+            foreach (Vivienda elem in ListaViviendas)
+            {
+                viviendas += elem.Id.ToString() + "#"
+                          + elem.Numero.ToString() + "#"
+                          + elem.Barrio.ToString() + "#"
+                          + elem.Descripcion.ToString() + "#"
+                          + elem.Banios.ToString() + "#"
+                          + elem.Dormitorios.ToString() + "#"
+                          + elem.Metraje.ToString() + "#"
+                          + elem.Anio.ToString() + "#"
+                          + elem.PrecioFinal.ToString() + "#"
+                          + elem.Tipo.ToString() + Environment.NewLine;
+                          //+ elem.montoContribucion.ToString();
+            }
+
+            //viviendas = viviendas.Remove(viviendas.Length - 1);
+
+            try
+            {
+                if (File.Exists(path))
+                {
+                    File.Delete(path);
+                }
+                FileStream fs = new FileStream("../Viviendas.txt", FileMode.Append);
+                byte[] bdata = Encoding.Default.GetBytes(viviendas);
+                fs.Write(bdata, 0, bdata.Length);
+                fs.Close();
+                Console.Write("Se creo el arhivo Viviendas.txt" + Environment.NewLine);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Error al intentar crear el archivo Viviendas.txt", e.ToString());
+            }
+        }
+
+        //GENERAR ARCHIVO PARAMETROS
+        private static void GenerarArchivoParametros()
+        {
+            string parametros = "";
+            string path = "../Parametros.txt";
+            parametros = repoViv.GetParametros();
+
+            try
+            {
+                if (File.Exists(path))
+                {
+                    File.Delete(path);
+                }
+                FileStream fs = new FileStream("../Parametros.txt", FileMode.Append);
+                byte[] bdata = Encoding.Default.GetBytes(parametros);
+                fs.Write(bdata, 0, bdata.Length);
+                fs.Close();
+                Console.Write("Se creo el arhivo Parametros.txt" + Environment.NewLine);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Error al intentar crear el archivo Parametros.txt", e.ToString());
+            }
+        }
 
     }
 }

@@ -12,6 +12,8 @@ namespace WcfServicios
     [ServiceContract]
     public interface IWfServicios
     {
+
+        ////////////////////////////////////////
         //USUARIOS
         [OperationContract]
         DTOUsuario ObtenerUsuario(int id);
@@ -19,6 +21,18 @@ namespace WcfServicios
         [OperationContract]
         IEnumerable<DTOUsuario> GetTodosLosUsuarios();
 
+        [OperationContract]
+        DTOUsuario AgregarUsuario();
+
+        [OperationContract]
+        DTOUsuario ModificarUsuario();
+
+        [OperationContract]
+        DTOUsuario EliminarUsuario(int id);
+
+
+
+        ////////////////////////////////////////
         //BARRIOS
         [OperationContract]
         IEnumerable<DTOBarrio> GetTodosLosBarrios();
@@ -27,18 +41,30 @@ namespace WcfServicios
         DTOBarrio BuscarBarrioPorNombre(string nombre);
 
         [OperationContract]
-        DTOBarrio AgregarUsuario();
+        DTOBarrio AgregarBarrio(string nombre, string descripcion);
 
         [OperationContract]
-        DTOBarrio ModificarUsuario();
+        DTOBarrio ModificarBarrio();
 
         [OperationContract]
-        DTOBarrio EliminarUsuario(int id);
+        DTOBarrio EliminarBarrio(int id);
+        
 
+
+        ////////////////////////////////////////
         //VIVIENDAS
         [OperationContract]
         IEnumerable<DTOVivienda> GetTodasLasViviendas();
 
+        [OperationContract]
+        DTOVivienda AgregarVivienda();
+
+        [OperationContract]
+        DTOVivienda ModificarVivinda();
+
+        [OperationContract]
+        DTOVivienda EliminarVivienda(int id);
+        
     }
 
     [DataContract]

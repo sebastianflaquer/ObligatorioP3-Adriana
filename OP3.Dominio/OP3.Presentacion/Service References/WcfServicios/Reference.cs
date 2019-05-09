@@ -420,6 +420,24 @@ namespace OP3.Presentacion.WcfServicios {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWfServicios/GetTodosLosUsuarios", ReplyAction="http://tempuri.org/IWfServicios/GetTodosLosUsuariosResponse")]
         System.Threading.Tasks.Task<OP3.Presentacion.WcfServicios.DTOUsuario[]> GetTodosLosUsuariosAsync();
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWfServicios/AgregarUsuario", ReplyAction="http://tempuri.org/IWfServicios/AgregarUsuarioResponse")]
+        OP3.Presentacion.WcfServicios.DTOUsuario AgregarUsuario();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWfServicios/AgregarUsuario", ReplyAction="http://tempuri.org/IWfServicios/AgregarUsuarioResponse")]
+        System.Threading.Tasks.Task<OP3.Presentacion.WcfServicios.DTOUsuario> AgregarUsuarioAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWfServicios/ModificarUsuario", ReplyAction="http://tempuri.org/IWfServicios/ModificarUsuarioResponse")]
+        OP3.Presentacion.WcfServicios.DTOUsuario ModificarUsuario();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWfServicios/ModificarUsuario", ReplyAction="http://tempuri.org/IWfServicios/ModificarUsuarioResponse")]
+        System.Threading.Tasks.Task<OP3.Presentacion.WcfServicios.DTOUsuario> ModificarUsuarioAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWfServicios/EliminarUsuario", ReplyAction="http://tempuri.org/IWfServicios/EliminarUsuarioResponse")]
+        OP3.Presentacion.WcfServicios.DTOUsuario EliminarUsuario(int id);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWfServicios/EliminarUsuario", ReplyAction="http://tempuri.org/IWfServicios/EliminarUsuarioResponse")]
+        System.Threading.Tasks.Task<OP3.Presentacion.WcfServicios.DTOUsuario> EliminarUsuarioAsync(int id);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWfServicios/GetTodosLosBarrios", ReplyAction="http://tempuri.org/IWfServicios/GetTodosLosBarriosResponse")]
         OP3.Presentacion.WcfServicios.DTOBarrio[] GetTodosLosBarrios();
         
@@ -432,29 +450,47 @@ namespace OP3.Presentacion.WcfServicios {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWfServicios/BuscarBarrioPorNombre", ReplyAction="http://tempuri.org/IWfServicios/BuscarBarrioPorNombreResponse")]
         System.Threading.Tasks.Task<OP3.Presentacion.WcfServicios.DTOBarrio> BuscarBarrioPorNombreAsync(string nombre);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWfServicios/AgregarUsuario", ReplyAction="http://tempuri.org/IWfServicios/AgregarUsuarioResponse")]
-        OP3.Presentacion.WcfServicios.DTOBarrio AgregarUsuario();
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWfServicios/AgregarBarrio", ReplyAction="http://tempuri.org/IWfServicios/AgregarBarrioResponse")]
+        OP3.Presentacion.WcfServicios.DTOBarrio AgregarBarrio(string nombre, string descripcion);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWfServicios/AgregarUsuario", ReplyAction="http://tempuri.org/IWfServicios/AgregarUsuarioResponse")]
-        System.Threading.Tasks.Task<OP3.Presentacion.WcfServicios.DTOBarrio> AgregarUsuarioAsync();
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWfServicios/AgregarBarrio", ReplyAction="http://tempuri.org/IWfServicios/AgregarBarrioResponse")]
+        System.Threading.Tasks.Task<OP3.Presentacion.WcfServicios.DTOBarrio> AgregarBarrioAsync(string nombre, string descripcion);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWfServicios/ModificarUsuario", ReplyAction="http://tempuri.org/IWfServicios/ModificarUsuarioResponse")]
-        OP3.Presentacion.WcfServicios.DTOBarrio ModificarUsuario();
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWfServicios/ModificarBarrio", ReplyAction="http://tempuri.org/IWfServicios/ModificarBarrioResponse")]
+        OP3.Presentacion.WcfServicios.DTOBarrio ModificarBarrio();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWfServicios/ModificarUsuario", ReplyAction="http://tempuri.org/IWfServicios/ModificarUsuarioResponse")]
-        System.Threading.Tasks.Task<OP3.Presentacion.WcfServicios.DTOBarrio> ModificarUsuarioAsync();
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWfServicios/ModificarBarrio", ReplyAction="http://tempuri.org/IWfServicios/ModificarBarrioResponse")]
+        System.Threading.Tasks.Task<OP3.Presentacion.WcfServicios.DTOBarrio> ModificarBarrioAsync();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWfServicios/EliminarUsuario", ReplyAction="http://tempuri.org/IWfServicios/EliminarUsuarioResponse")]
-        OP3.Presentacion.WcfServicios.DTOBarrio EliminarUsuario(int id);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWfServicios/EliminarBarrio", ReplyAction="http://tempuri.org/IWfServicios/EliminarBarrioResponse")]
+        OP3.Presentacion.WcfServicios.DTOBarrio EliminarBarrio(int id);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWfServicios/EliminarUsuario", ReplyAction="http://tempuri.org/IWfServicios/EliminarUsuarioResponse")]
-        System.Threading.Tasks.Task<OP3.Presentacion.WcfServicios.DTOBarrio> EliminarUsuarioAsync(int id);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWfServicios/EliminarBarrio", ReplyAction="http://tempuri.org/IWfServicios/EliminarBarrioResponse")]
+        System.Threading.Tasks.Task<OP3.Presentacion.WcfServicios.DTOBarrio> EliminarBarrioAsync(int id);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWfServicios/GetTodasLasViviendas", ReplyAction="http://tempuri.org/IWfServicios/GetTodasLasViviendasResponse")]
         OP3.Presentacion.WcfServicios.DTOVivienda[] GetTodasLasViviendas();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWfServicios/GetTodasLasViviendas", ReplyAction="http://tempuri.org/IWfServicios/GetTodasLasViviendasResponse")]
         System.Threading.Tasks.Task<OP3.Presentacion.WcfServicios.DTOVivienda[]> GetTodasLasViviendasAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWfServicios/AgregarVivienda", ReplyAction="http://tempuri.org/IWfServicios/AgregarViviendaResponse")]
+        OP3.Presentacion.WcfServicios.DTOVivienda AgregarVivienda();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWfServicios/AgregarVivienda", ReplyAction="http://tempuri.org/IWfServicios/AgregarViviendaResponse")]
+        System.Threading.Tasks.Task<OP3.Presentacion.WcfServicios.DTOVivienda> AgregarViviendaAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWfServicios/ModificarVivinda", ReplyAction="http://tempuri.org/IWfServicios/ModificarVivindaResponse")]
+        OP3.Presentacion.WcfServicios.DTOVivienda ModificarVivinda();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWfServicios/ModificarVivinda", ReplyAction="http://tempuri.org/IWfServicios/ModificarVivindaResponse")]
+        System.Threading.Tasks.Task<OP3.Presentacion.WcfServicios.DTOVivienda> ModificarVivindaAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWfServicios/EliminarVivienda", ReplyAction="http://tempuri.org/IWfServicios/EliminarViviendaResponse")]
+        OP3.Presentacion.WcfServicios.DTOVivienda EliminarVivienda(int id);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWfServicios/EliminarVivienda", ReplyAction="http://tempuri.org/IWfServicios/EliminarViviendaResponse")]
+        System.Threading.Tasks.Task<OP3.Presentacion.WcfServicios.DTOVivienda> EliminarViviendaAsync(int id);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -500,6 +536,30 @@ namespace OP3.Presentacion.WcfServicios {
             return base.Channel.GetTodosLosUsuariosAsync();
         }
         
+        public OP3.Presentacion.WcfServicios.DTOUsuario AgregarUsuario() {
+            return base.Channel.AgregarUsuario();
+        }
+        
+        public System.Threading.Tasks.Task<OP3.Presentacion.WcfServicios.DTOUsuario> AgregarUsuarioAsync() {
+            return base.Channel.AgregarUsuarioAsync();
+        }
+        
+        public OP3.Presentacion.WcfServicios.DTOUsuario ModificarUsuario() {
+            return base.Channel.ModificarUsuario();
+        }
+        
+        public System.Threading.Tasks.Task<OP3.Presentacion.WcfServicios.DTOUsuario> ModificarUsuarioAsync() {
+            return base.Channel.ModificarUsuarioAsync();
+        }
+        
+        public OP3.Presentacion.WcfServicios.DTOUsuario EliminarUsuario(int id) {
+            return base.Channel.EliminarUsuario(id);
+        }
+        
+        public System.Threading.Tasks.Task<OP3.Presentacion.WcfServicios.DTOUsuario> EliminarUsuarioAsync(int id) {
+            return base.Channel.EliminarUsuarioAsync(id);
+        }
+        
         public OP3.Presentacion.WcfServicios.DTOBarrio[] GetTodosLosBarrios() {
             return base.Channel.GetTodosLosBarrios();
         }
@@ -516,28 +576,28 @@ namespace OP3.Presentacion.WcfServicios {
             return base.Channel.BuscarBarrioPorNombreAsync(nombre);
         }
         
-        public OP3.Presentacion.WcfServicios.DTOBarrio AgregarUsuario() {
-            return base.Channel.AgregarUsuario();
+        public OP3.Presentacion.WcfServicios.DTOBarrio AgregarBarrio(string nombre, string descripcion) {
+            return base.Channel.AgregarBarrio(nombre, descripcion);
         }
         
-        public System.Threading.Tasks.Task<OP3.Presentacion.WcfServicios.DTOBarrio> AgregarUsuarioAsync() {
-            return base.Channel.AgregarUsuarioAsync();
+        public System.Threading.Tasks.Task<OP3.Presentacion.WcfServicios.DTOBarrio> AgregarBarrioAsync(string nombre, string descripcion) {
+            return base.Channel.AgregarBarrioAsync(nombre, descripcion);
         }
         
-        public OP3.Presentacion.WcfServicios.DTOBarrio ModificarUsuario() {
-            return base.Channel.ModificarUsuario();
+        public OP3.Presentacion.WcfServicios.DTOBarrio ModificarBarrio() {
+            return base.Channel.ModificarBarrio();
         }
         
-        public System.Threading.Tasks.Task<OP3.Presentacion.WcfServicios.DTOBarrio> ModificarUsuarioAsync() {
-            return base.Channel.ModificarUsuarioAsync();
+        public System.Threading.Tasks.Task<OP3.Presentacion.WcfServicios.DTOBarrio> ModificarBarrioAsync() {
+            return base.Channel.ModificarBarrioAsync();
         }
         
-        public OP3.Presentacion.WcfServicios.DTOBarrio EliminarUsuario(int id) {
-            return base.Channel.EliminarUsuario(id);
+        public OP3.Presentacion.WcfServicios.DTOBarrio EliminarBarrio(int id) {
+            return base.Channel.EliminarBarrio(id);
         }
         
-        public System.Threading.Tasks.Task<OP3.Presentacion.WcfServicios.DTOBarrio> EliminarUsuarioAsync(int id) {
-            return base.Channel.EliminarUsuarioAsync(id);
+        public System.Threading.Tasks.Task<OP3.Presentacion.WcfServicios.DTOBarrio> EliminarBarrioAsync(int id) {
+            return base.Channel.EliminarBarrioAsync(id);
         }
         
         public OP3.Presentacion.WcfServicios.DTOVivienda[] GetTodasLasViviendas() {
@@ -546,6 +606,30 @@ namespace OP3.Presentacion.WcfServicios {
         
         public System.Threading.Tasks.Task<OP3.Presentacion.WcfServicios.DTOVivienda[]> GetTodasLasViviendasAsync() {
             return base.Channel.GetTodasLasViviendasAsync();
+        }
+        
+        public OP3.Presentacion.WcfServicios.DTOVivienda AgregarVivienda() {
+            return base.Channel.AgregarVivienda();
+        }
+        
+        public System.Threading.Tasks.Task<OP3.Presentacion.WcfServicios.DTOVivienda> AgregarViviendaAsync() {
+            return base.Channel.AgregarViviendaAsync();
+        }
+        
+        public OP3.Presentacion.WcfServicios.DTOVivienda ModificarVivinda() {
+            return base.Channel.ModificarVivinda();
+        }
+        
+        public System.Threading.Tasks.Task<OP3.Presentacion.WcfServicios.DTOVivienda> ModificarVivindaAsync() {
+            return base.Channel.ModificarVivindaAsync();
+        }
+        
+        public OP3.Presentacion.WcfServicios.DTOVivienda EliminarVivienda(int id) {
+            return base.Channel.EliminarVivienda(id);
+        }
+        
+        public System.Threading.Tasks.Task<OP3.Presentacion.WcfServicios.DTOVivienda> EliminarViviendaAsync(int id) {
+            return base.Channel.EliminarViviendaAsync(id);
         }
     }
 }

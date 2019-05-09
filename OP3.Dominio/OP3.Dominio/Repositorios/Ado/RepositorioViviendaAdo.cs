@@ -273,17 +273,6 @@ namespace OP3.Dominio.Repositorios.Ado
             return this.TopMetraje;
         }
 
-        ////GET COTIZACION UI
-        //public double getCotizacionUI()
-        //{
-        //    return this.CotizacionUI;
-        //}
-
-        ////GET MAX ANIOSVivN
-        //public int getMaxAnionsVivN() {
-        //    return this.MaxAniosViviendasNuevas;
-        //}
-
         //CALCULA COSTO VIVIENDA
         public string CalcularCostoVivienda(Vivienda Viv) {
             string retorno = "";
@@ -291,6 +280,67 @@ namespace OP3.Dominio.Repositorios.Ado
             //CALCULA EL PRECIO DE LA VIVIENDA
             return retorno;
         }
+
+        //OBSERVAR VARIABLE
+        public string obtenerVariable(string nombre)
+        {
+            
+            string valor = "";
+
+            SqlConnection cn = UtilidadesBD.CrearConexion();
+            string consulta = @"SELECT * FROM VARIABLES where Nombre = @nombre";
+
+            SqlCommand cmd = new SqlCommand(consulta, cn);
+            cmd.Parameters.Add(new SqlParameter("@nombre", nombre));
+
+            UtilidadesBD.AbrirConexion(cn);
+            SqlDataReader dr = cmd.ExecuteReader();
+
+            if (dr.HasRows)
+            {
+                while (dr.Read())
+                {
+                    valor = dr["Valor"].ToString();
+                }
+            }
+
+            UtilidadesBD.CerrarConexion(cn);
+
+            return valor;
+
+        }
+
+
+        //GET PARAMETROS
+        public string GetParametros()
+        {
+
+            string valor = "";
+
+            SqlConnection cn = UtilidadesBD.CrearConexion();
+            string consulta = @"SELECT * FROM VARIABLES";
+
+            SqlCommand cmd = new SqlCommand(consulta, cn);
+
+            UtilidadesBD.AbrirConexion(cn);
+            SqlDataReader dr = cmd.ExecuteReader();
+
+            if (dr.HasRows)
+            {
+                while (dr.Read())
+                {
+                    //valor += Convert.ToInt32(dr["Id"]);
+                    valor += dr["Nombre"].ToString() + "=" + dr["Valor"].ToString() + "#";
+                }
+            }
+
+            valor = valor.Remove(valor.Length - 1);
+
+            UtilidadesBD.CerrarConexion(cn);
+            return valor;
+        }
+
+
 
     }
 }

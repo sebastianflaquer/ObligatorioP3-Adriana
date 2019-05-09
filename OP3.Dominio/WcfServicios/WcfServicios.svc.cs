@@ -53,7 +53,25 @@ namespace WcfServicios
             }
             return null;
         }
-        
+
+        //AGREGAR USUARIO
+        public DTOVivienda AgregarVivienda()
+        {
+            throw new NotImplementedException();
+        }
+
+        //MODIFICAR USUARIO
+        public DTOVivienda ModificarVivinda()
+        {
+            throw new NotImplementedException();
+        }
+
+        //ELIMINAR USUARIO
+        public DTOVivienda EliminarVivienda(int id)
+        {
+            throw new NotImplementedException();
+        }
+
         //BARRIOS
         //////////////////////////////////////////////////////////////////////////////////////////
 
@@ -78,6 +96,7 @@ namespace WcfServicios
             return null;
         }
 
+        //BUSCAR BARRIO POR NOMBRE
         public DTOBarrio BuscarBarrioPorNombre(string nombre) {
 
             var barrrio = repoBar.FindById(nombre);
@@ -96,17 +115,39 @@ namespace WcfServicios
             }
         }
         
-        public DTOBarrio AgregarUsuario()
+        //AGREGAR USUARIO
+        public DTOBarrio AgregarBarrio(string vNombre, string vDescripcion)
+        {
+            bool agrego = repoBar.Add(new Barrio
+            {
+                Descripcion = vDescripcion,
+                Nombre = vNombre
+            });
+
+
+            if (agrego)
+            {
+                DTOBarrio DTObar = new DTOBarrio
+                {
+                    Nombre = vNombre,
+                    Descripcion = vNombre
+                };
+
+                return DTObar;
+            }
+            else {
+                return null;
+            }
+        }
+
+        //MODIFICAR USUARIO
+        public DTOBarrio ModificarBarrio()
         {
             throw new NotImplementedException();
         }
 
-        public DTOBarrio ModificarUsuario()
-        {
-            throw new NotImplementedException();
-        }
-
-        public DTOBarrio EliminarUsuario(int id)
+        //ELIMINAR USUARIO
+        public DTOBarrio EliminarBarrio(int id)
         {
             throw new NotImplementedException();
         }
@@ -156,6 +197,22 @@ namespace WcfServicios
 
         }
 
-        
+        //AGREGAR USUARIO
+        public DTOUsuario AgregarUsuario()
+        {
+            throw new NotImplementedException();
+        }
+
+        //MODIFICAR USUARIO
+        public DTOUsuario ModificarUsuario()
+        {
+            throw new NotImplementedException();
+        }
+
+        //ELIMINAR USUARIO
+        public DTOUsuario EliminarUsuario(int id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
