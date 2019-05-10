@@ -474,6 +474,12 @@ namespace OP3.Presentacion.WcfServicios {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWfServicios/GetTodasLasViviendas", ReplyAction="http://tempuri.org/IWfServicios/GetTodasLasViviendasResponse")]
         System.Threading.Tasks.Task<OP3.Presentacion.WcfServicios.DTOVivienda[]> GetTodasLasViviendasAsync();
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWfServicios/BuscarViviendaPorBarrios", ReplyAction="http://tempuri.org/IWfServicios/BuscarViviendaPorBarriosResponse")]
+        OP3.Presentacion.WcfServicios.DTOVivienda[] BuscarViviendaPorBarrios(string nombreBarrio);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWfServicios/BuscarViviendaPorBarrios", ReplyAction="http://tempuri.org/IWfServicios/BuscarViviendaPorBarriosResponse")]
+        System.Threading.Tasks.Task<OP3.Presentacion.WcfServicios.DTOVivienda[]> BuscarViviendaPorBarriosAsync(string nombreBarrio);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWfServicios/AgregarVivienda", ReplyAction="http://tempuri.org/IWfServicios/AgregarViviendaResponse")]
         OP3.Presentacion.WcfServicios.DTOVivienda AgregarVivienda(bool tipo, int HabilitadaBit, string vCalle, string vNumero, string vBarrio, string vDescripcion, int vBanios, int vDormitorios, int vMetraje, int vAnio, double vPBaseXMetroCuadrado);
         
@@ -491,6 +497,24 @@ namespace OP3.Presentacion.WcfServicios {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWfServicios/EliminarVivienda", ReplyAction="http://tempuri.org/IWfServicios/EliminarViviendaResponse")]
         System.Threading.Tasks.Task<OP3.Presentacion.WcfServicios.DTOVivienda> EliminarViviendaAsync(int id);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWfServicios/FindById", ReplyAction="http://tempuri.org/IWfServicios/FindByIdResponse")]
+        OP3.Presentacion.WcfServicios.DTOVivienda FindById(int id);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWfServicios/FindById", ReplyAction="http://tempuri.org/IWfServicios/FindByIdResponse")]
+        System.Threading.Tasks.Task<OP3.Presentacion.WcfServicios.DTOVivienda> FindByIdAsync(int id);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWfServicios/tieneVivienda", ReplyAction="http://tempuri.org/IWfServicios/tieneViviendaResponse")]
+        bool tieneVivienda(string nombre);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWfServicios/tieneVivienda", ReplyAction="http://tempuri.org/IWfServicios/tieneViviendaResponse")]
+        System.Threading.Tasks.Task<bool> tieneViviendaAsync(string nombre);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWfServicios/obtenerVariable", ReplyAction="http://tempuri.org/IWfServicios/obtenerVariableResponse")]
+        string obtenerVariable(string nombre);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWfServicios/obtenerVariable", ReplyAction="http://tempuri.org/IWfServicios/obtenerVariableResponse")]
+        System.Threading.Tasks.Task<string> obtenerVariableAsync(string nombre);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -608,6 +632,14 @@ namespace OP3.Presentacion.WcfServicios {
             return base.Channel.GetTodasLasViviendasAsync();
         }
         
+        public OP3.Presentacion.WcfServicios.DTOVivienda[] BuscarViviendaPorBarrios(string nombreBarrio) {
+            return base.Channel.BuscarViviendaPorBarrios(nombreBarrio);
+        }
+        
+        public System.Threading.Tasks.Task<OP3.Presentacion.WcfServicios.DTOVivienda[]> BuscarViviendaPorBarriosAsync(string nombreBarrio) {
+            return base.Channel.BuscarViviendaPorBarriosAsync(nombreBarrio);
+        }
+        
         public OP3.Presentacion.WcfServicios.DTOVivienda AgregarVivienda(bool tipo, int HabilitadaBit, string vCalle, string vNumero, string vBarrio, string vDescripcion, int vBanios, int vDormitorios, int vMetraje, int vAnio, double vPBaseXMetroCuadrado) {
             return base.Channel.AgregarVivienda(tipo, HabilitadaBit, vCalle, vNumero, vBarrio, vDescripcion, vBanios, vDormitorios, vMetraje, vAnio, vPBaseXMetroCuadrado);
         }
@@ -630,6 +662,30 @@ namespace OP3.Presentacion.WcfServicios {
         
         public System.Threading.Tasks.Task<OP3.Presentacion.WcfServicios.DTOVivienda> EliminarViviendaAsync(int id) {
             return base.Channel.EliminarViviendaAsync(id);
+        }
+        
+        public OP3.Presentacion.WcfServicios.DTOVivienda FindById(int id) {
+            return base.Channel.FindById(id);
+        }
+        
+        public System.Threading.Tasks.Task<OP3.Presentacion.WcfServicios.DTOVivienda> FindByIdAsync(int id) {
+            return base.Channel.FindByIdAsync(id);
+        }
+        
+        public bool tieneVivienda(string nombre) {
+            return base.Channel.tieneVivienda(nombre);
+        }
+        
+        public System.Threading.Tasks.Task<bool> tieneViviendaAsync(string nombre) {
+            return base.Channel.tieneViviendaAsync(nombre);
+        }
+        
+        public string obtenerVariable(string nombre) {
+            return base.Channel.obtenerVariable(nombre);
+        }
+        
+        public System.Threading.Tasks.Task<string> obtenerVariableAsync(string nombre) {
+            return base.Channel.obtenerVariableAsync(nombre);
         }
     }
 }

@@ -73,6 +73,12 @@
   <wsdl:message name="IWfServicios_GetTodasLasViviendas_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetTodasLasViviendasResponse" />
   </wsdl:message>
+  <wsdl:message name="IWfServicios_BuscarViviendaPorBarrios_InputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarViviendaPorBarrios" />
+  </wsdl:message>
+  <wsdl:message name="IWfServicios_BuscarViviendaPorBarrios_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarViviendaPorBarriosResponse" />
+  </wsdl:message>
   <wsdl:message name="IWfServicios_AgregarVivienda_InputMessage">
     <wsdl:part name="parameters" element="tns:AgregarVivienda" />
   </wsdl:message>
@@ -90,6 +96,24 @@
   </wsdl:message>
   <wsdl:message name="IWfServicios_EliminarVivienda_OutputMessage">
     <wsdl:part name="parameters" element="tns:EliminarViviendaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IWfServicios_FindById_InputMessage">
+    <wsdl:part name="parameters" element="tns:FindById" />
+  </wsdl:message>
+  <wsdl:message name="IWfServicios_FindById_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FindByIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="IWfServicios_tieneVivienda_InputMessage">
+    <wsdl:part name="parameters" element="tns:tieneVivienda" />
+  </wsdl:message>
+  <wsdl:message name="IWfServicios_tieneVivienda_OutputMessage">
+    <wsdl:part name="parameters" element="tns:tieneViviendaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IWfServicios_obtenerVariable_InputMessage">
+    <wsdl:part name="parameters" element="tns:obtenerVariable" />
+  </wsdl:message>
+  <wsdl:message name="IWfServicios_obtenerVariable_OutputMessage">
+    <wsdl:part name="parameters" element="tns:obtenerVariableResponse" />
   </wsdl:message>
   <wsdl:portType name="IWfServicios">
     <wsdl:operation name="ObtenerUsuario">
@@ -136,6 +160,10 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IWfServicios/GetTodasLasViviendas" message="tns:IWfServicios_GetTodasLasViviendas_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IWfServicios/GetTodasLasViviendasResponse" message="tns:IWfServicios_GetTodasLasViviendas_OutputMessage" />
     </wsdl:operation>
+    <wsdl:operation name="BuscarViviendaPorBarrios">
+      <wsdl:input wsaw:Action="http://tempuri.org/IWfServicios/BuscarViviendaPorBarrios" message="tns:IWfServicios_BuscarViviendaPorBarrios_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IWfServicios/BuscarViviendaPorBarriosResponse" message="tns:IWfServicios_BuscarViviendaPorBarrios_OutputMessage" />
+    </wsdl:operation>
     <wsdl:operation name="AgregarVivienda">
       <wsdl:input wsaw:Action="http://tempuri.org/IWfServicios/AgregarVivienda" message="tns:IWfServicios_AgregarVivienda_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IWfServicios/AgregarViviendaResponse" message="tns:IWfServicios_AgregarVivienda_OutputMessage" />
@@ -147,6 +175,18 @@
     <wsdl:operation name="EliminarVivienda">
       <wsdl:input wsaw:Action="http://tempuri.org/IWfServicios/EliminarVivienda" message="tns:IWfServicios_EliminarVivienda_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IWfServicios/EliminarViviendaResponse" message="tns:IWfServicios_EliminarVivienda_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="FindById">
+      <wsdl:input wsaw:Action="http://tempuri.org/IWfServicios/FindById" message="tns:IWfServicios_FindById_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IWfServicios/FindByIdResponse" message="tns:IWfServicios_FindById_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="tieneVivienda">
+      <wsdl:input wsaw:Action="http://tempuri.org/IWfServicios/tieneVivienda" message="tns:IWfServicios_tieneVivienda_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IWfServicios/tieneViviendaResponse" message="tns:IWfServicios_tieneVivienda_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="obtenerVariable">
+      <wsdl:input wsaw:Action="http://tempuri.org/IWfServicios/obtenerVariable" message="tns:IWfServicios_obtenerVariable_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IWfServicios/obtenerVariableResponse" message="tns:IWfServicios_obtenerVariable_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IWfServicios" type="tns:IWfServicios">
@@ -250,6 +290,15 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="BuscarViviendaPorBarrios">
+      <soap:operation soapAction="http://tempuri.org/IWfServicios/BuscarViviendaPorBarrios" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="AgregarVivienda">
       <soap:operation soapAction="http://tempuri.org/IWfServicios/AgregarVivienda" style="document" />
       <wsdl:input>
@@ -270,6 +319,33 @@
     </wsdl:operation>
     <wsdl:operation name="EliminarVivienda">
       <soap:operation soapAction="http://tempuri.org/IWfServicios/EliminarVivienda" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FindById">
+      <soap:operation soapAction="http://tempuri.org/IWfServicios/FindById" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="tieneVivienda">
+      <soap:operation soapAction="http://tempuri.org/IWfServicios/tieneVivienda" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="obtenerVariable">
+      <soap:operation soapAction="http://tempuri.org/IWfServicios/obtenerVariable" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

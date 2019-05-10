@@ -17,6 +17,7 @@ namespace OP3.Presentacion
         static RepositorioBarrioAdo repoBar = new RepositorioBarrioAdo();
         static RepositorioViviendaAdo repoViv = new RepositorioViviendaAdo();
         static RepositorioUsuarioAdo repoUsu = new RepositorioUsuarioAdo();
+
         static bool logeado = false;
 
         //MAIN STATIC
@@ -484,6 +485,8 @@ namespace OP3.Presentacion
         }
 
 
+
+        //////////////////////////////////////////////////////////////////////////////////////////////
         //MENU
         //------------------------------------------------- BARRIOS
         //MENU AGREGAR BARRIO
@@ -573,33 +576,39 @@ namespace OP3.Presentacion
         //MENU ELIMINAR BARRIO
         private static void MenuEliminarBarrio() {
 
-            bool existe = false;
-            bool tieneViviendas = false;
+            using (WcfServicios.WfServiciosClient client = new WcfServicios.WfServiciosClient())
+            {
+                bool existe = false;
+                bool tieneViviendas = false;
 
-            Console.Clear();
-            Console.WriteLine("Eliminar Barrio");
-            Console.WriteLine("=================");
-            Console.WriteLine("Ingrese Nombre:");
-            string Nombre = Console.ReadLine();
+                Console.Clear();
+                Console.WriteLine("Eliminar Barrio");
+                Console.WriteLine("=================");
+                Console.WriteLine("Ingrese Nombre:");
+                string Nombre = Console.ReadLine();
 
-            existe = ValidarBarrio(Nombre);
-            tieneViviendas = repoViv.tieneVivienda(Nombre);
-
-            while (existe == false || tieneViviendas == true) {
-                if (!existe) {
-                    Console.WriteLine("El Barrio " + Nombre + " no existe, Ingrese Nombre Diferente:");
-                    Nombre = Console.ReadLine();
-                } else {
-                    Console.WriteLine("Debe eliminar las viviendas que existen en este barrio antes de poder eliminar el barrio");
-                    Console.WriteLine("Ingrese el nombre de otro barrio:");
-                    Nombre = Console.ReadLine();
-                }
                 existe = ValidarBarrio(Nombre);
-                tieneViviendas = repoViv.tieneVivienda(Nombre);
+                tieneViviendas = client.tieneVivienda(Nombre);
+
+                while (existe == false || tieneViviendas == true)
+                {
+                    if (!existe)
+                    {
+                        Console.WriteLine("El Barrio " + Nombre + " no existe, Ingrese Nombre Diferente:");
+                        Nombre = Console.ReadLine();
+                    }
+                    else
+                    {
+                        Console.WriteLine("Debe eliminar las viviendas que existen en este barrio antes de poder eliminar el barrio");
+                        Console.WriteLine("Ingrese el nombre de otro barrio:");
+                        Nombre = Console.ReadLine();
+                    }
+                    existe = ValidarBarrio(Nombre);
+                    tieneViviendas = client.tieneVivienda(Nombre);
+                }
+
+                EliminarBarrio(Nombre);
             }
-
-            EliminarBarrio(Nombre);
-
         }
 
         //ACCION
@@ -711,6 +720,9 @@ namespace OP3.Presentacion
             ListoVovler();
         }
 
+
+
+        //////////////////////////////////////////////////////////////////////////////////////////////
         //MENU
         //------------------------------------------------- VIVIENDAS
         //MENU AGREGAR VIVIENDA
@@ -774,7 +786,6 @@ namespace OP3.Presentacion
             }
 
             //BARRIO
-
             Console.WriteLine("Ingrese Barrio:");
             string Barrio = Console.ReadLine();
             while (Barrio == "")
@@ -832,32 +843,41 @@ namespace OP3.Presentacion
             //CANTIDAD DE METRAJE
             int vMetraje;
             string vMetrajeN;
-            int TopeMetraje = Convert.ToInt32(repoViv.obtenerVariable("topeMts"));
-            bool esMetraje;
 
-            bool estaOk = false;
-
-            Console.WriteLine("Ingrese Cantidad de Metros Cuadrados:");
-            vMetrajeN = Console.ReadLine();
-            esMetraje = int.TryParse(vMetrajeN, out vMetraje);
-
-            while (!esMetraje && estaOk)
+            using (WcfServicios.WfServiciosClient client = new WcfServicios.WfServiciosClient())
             {
-                if (!esMetraje) {
-                    Console.WriteLine("Debe Ingresar la Cantidad de Metros Cuadrados:");
-                    vMetrajeN = Console.ReadLine();
-                    esMetraje = int.TryParse(vMetrajeN, out vMetraje);
-                }
+               
+                int TopeMetraje = Convert.ToInt32(client.obtenerVariable("topeMts"));
+                bool esMetraje;
 
-                if (estaOk) {
-                    if( TipoCasa || (vMetraje > TopeMetraje)) {
-                        Console.WriteLine("El Metraje no puede superar los " + TopeMetraje + " Metros en viviendas Nuevas :");
+                bool estaOk = false;
+
+                Console.WriteLine("Ingrese Cantidad de Metros Cuadrados:");
+                vMetrajeN = Console.ReadLine();
+                esMetraje = int.TryParse(vMetrajeN, out vMetraje);
+
+                while (!esMetraje && estaOk)
+                {
+                    if (!esMetraje)
+                    {
+                        Console.WriteLine("Debe Ingresar la Cantidad de Metros Cuadrados:");
                         vMetrajeN = Console.ReadLine();
                         esMetraje = int.TryParse(vMetrajeN, out vMetraje);
                     }
-                }
-            }
 
+                    if (estaOk)
+                    {
+                        if (TipoCasa || (vMetraje > TopeMetraje))
+                        {
+                            Console.WriteLine("El Metraje no puede superar los " + TopeMetraje + " Metros en viviendas Nuevas :");
+                            vMetrajeN = Console.ReadLine();
+                            esMetraje = int.TryParse(vMetrajeN, out vMetraje);
+                        }
+                    }
+                }
+
+            }
+            
             //CANTIDAD DE AÑOS
             int vAnio;
             string vAnioN;
@@ -896,223 +916,227 @@ namespace OP3.Presentacion
         //MENU ELIMINAR VIVIENDA
         private static void MenuEliminarVivienda() {
 
-            int vId;
-            string vIdN;
-            bool esId;
-            bool existeViv = false;
-
-            Console.Clear();
-            Console.WriteLine("Eliminar Vivienda");
-            Console.WriteLine("=================");
-            Console.WriteLine("Ingrese el Id de la vivienda que desea eliminar:");
-            vIdN = Console.ReadLine();
-            esId = int.TryParse(vIdN, out vId);
-
-            while (!existeViv && !esId) {
-                Console.WriteLine("El Id de vivienda no es valido o no existe, intente con otro ID:");
-                vIdN = Console.ReadLine();
-                esId = int.TryParse(vIdN, out vId);
-                if (esId) {
-                    existeViv = ValidarVivienda(Convert.ToInt32(vIdN));
-                }
-            }
-
             using (WcfServicios.WfServiciosClient client = new WcfServicios.WfServiciosClient())
             {
-                var nuevoBarrio = client.EliminarVivienda(Convert.ToInt32(vIdN));
+                int vId;
+                string vIdN;
+                bool esId;
+
+                Console.Clear();
+                Console.WriteLine("Eliminar Vivienda");
+                Console.WriteLine("=================");
+                Console.WriteLine("Ingrese el Id de la vivienda que desea eliminar:");
+                vIdN = Console.ReadLine();
+                esId = int.TryParse(vIdN, out vId);
+                var existeViv = client.FindById(Convert.ToInt32(vIdN));
+
+                while (existeViv != null && !esId) {
+                    Console.WriteLine("El Id de vivienda no es valido o no existe, intente con otro ID:");
+                    vIdN = Console.ReadLine();
+                    esId = int.TryParse(vIdN, out vId);
+                    if (esId) {
+                        existeViv = client.FindById(Convert.ToInt32(vIdN));
+                    }
+                }
+
+                if (existeViv != null) {
+                    var nuevoBarrio = client.EliminarVivienda(Convert.ToInt32(vIdN));
+                }
             }
-
-
         }
 
         //MODIFICAR VIVIENDA
         private static void MenuModificarVivienda() {
 
-            bool TipoCasa = false;
-            bool existeBarrio = false;
-
-            int vId;
-            string vIdN;
-            bool esId;
-            bool existeViv = false;
-
-            Console.Clear();
-            Console.WriteLine("Modificar Vivienda");
-            Console.WriteLine("=================");
-            Console.WriteLine("Ingrese el Id de la vivienda que desea modificar:");
-            vIdN = Console.ReadLine();
-            esId = int.TryParse(vIdN, out vId);
-
-            while (!existeViv && !esId)
+            using (WcfServicios.WfServiciosClient client = new WcfServicios.WfServiciosClient())
             {
-                Console.WriteLine("El Id de vivienda no es valido o no existe, intente con otro ID:");
+
+                bool TipoCasa = false;
+                bool existeBarrio = false;
+
+                int vId;
+                string vIdN;
+                bool esId;
+                
+                Console.Clear();
+                Console.WriteLine("Modificar Vivienda");
+                Console.WriteLine("=================");
+                Console.WriteLine("Ingrese el Id de la vivienda que desea modificar:");
                 vIdN = Console.ReadLine();
                 esId = int.TryParse(vIdN, out vId);
-                if (esId)
+                var existeViv = client.FindById(Convert.ToInt32(vIdN));
+
+                while (existeViv != null && !esId)
                 {
-                    existeViv = ValidarVivienda(Convert.ToInt32(vIdN));
+                    Console.WriteLine("El Id de vivienda no es valido o no existe, intente con otro ID:");
+                    vIdN = Console.ReadLine();
+                    esId = int.TryParse(vIdN, out vId);
+                    if (esId)
+                    {
+                        existeViv = client.FindById(Convert.ToInt32(vIdN));
+                    }
                 }
-            }
 
-            Console.WriteLine("La vivienda es Nueva(N) o Usada(U)");
-            string Tipo = Console.ReadLine();
+                Console.WriteLine("La vivienda es Nueva(N) o Usada(U)");
+                string Tipo = Console.ReadLine();
 
-            while (Tipo != "N" && Tipo != "U" && Tipo != "n" && Tipo != "u")
-            {
-                Console.WriteLine("Debe seleccionar si la vivienda es Nueva(N) o Usada(U)");
-                Console.WriteLine("Ingrese N o U:");
-                Tipo = Console.ReadLine();
-            }
+                while (Tipo != "N" && Tipo != "U" && Tipo != "n" && Tipo != "u")
+                {
+                    Console.WriteLine("Debe seleccionar si la vivienda es Nueva(N) o Usada(U)");
+                    Console.WriteLine("Ingrese N o U:");
+                    Tipo = Console.ReadLine();
+                }
 
-            if (Tipo == "N")
-            {
-                TipoCasa = true;
-            }
-            else if (Tipo == "U")
-            {
-                TipoCasa = false;
-            }
+                if (Tipo == "N")
+                {
+                    TipoCasa = true;
+                }
+                else if (Tipo == "U")
+                {
+                    TipoCasa = false;
+                }
 
-            //HABILITADA
-            int HabilitadaBit = 0;
-            Console.WriteLine("La vivienda esta habilidada para la venta? (S o N):");
-            string Habilitada = Console.ReadLine();
-            Habilitada = Habilitada.ToUpper();
+                //HABILITADA
+                int HabilitadaBit = 0;
+                Console.WriteLine("La vivienda esta habilidada para la venta? (S o N):");
+                string Habilitada = Console.ReadLine();
+                Habilitada = Habilitada.ToUpper();
 
-            while (Habilitada != "S" && Habilitada != "N")
-            {
-                Console.WriteLine("Debe ingresar S o N:");
-                Habilitada = Console.ReadLine();
-            }
+                while (Habilitada != "S" && Habilitada != "N")
+                {
+                    Console.WriteLine("Debe ingresar S o N:");
+                    Habilitada = Console.ReadLine();
+                }
 
-            if (Habilitada == "S")
-            {
-                HabilitadaBit = 1;
-            }
+                if (Habilitada == "S")
+                {
+                    HabilitadaBit = 1;
+                }
 
-            //CALLE
-            Console.WriteLine("Ingrese Nombre de Calle:");
-            string Calle = Console.ReadLine();
+                //CALLE
+                Console.WriteLine("Ingrese Nombre de Calle:");
+                string Calle = Console.ReadLine();
 
-            while (Calle == "")
-            {
-                Console.WriteLine("La Calle debe contener minimo 1 caracter:");
-                Calle = Console.ReadLine();
-            }
+                while (Calle == "")
+                {
+                    Console.WriteLine("La Calle debe contener minimo 1 caracter:");
+                    Calle = Console.ReadLine();
+                }
 
-            //NUMERO DE PUERTA
-            Console.WriteLine("Ingrese Numero de puerta:");
-            string Numero = Console.ReadLine();
-            while (Numero == "")
-            {
-                Console.WriteLine("Debe Ingresar un Numero de puerta");
-                Numero = Console.ReadLine();
-            }
+                //NUMERO DE PUERTA
+                Console.WriteLine("Ingrese Numero de puerta:");
+                string Numero = Console.ReadLine();
+                while (Numero == "")
+                {
+                    Console.WriteLine("Debe Ingresar un Numero de puerta");
+                    Numero = Console.ReadLine();
+                }
 
-            //BARRIO
+                //BARRIO
 
-            Console.WriteLine("Ingrese Barrio:");
-            string Barrio = Console.ReadLine();
-            while (Barrio == "")
-            {
-                Console.WriteLine("La Barrio debe contener minimo 1 caracter:");
-                Barrio = Console.ReadLine();
-            }
+                Console.WriteLine("Ingrese Barrio:");
+                string Barrio = Console.ReadLine();
+                while (Barrio == "")
+                {
+                    Console.WriteLine("La Barrio debe contener minimo 1 caracter:");
+                    Barrio = Console.ReadLine();
+                }
 
-            existeBarrio = ValidarBarrio(Barrio);
-            while (!existeBarrio)
-            {
-                Console.WriteLine("El Barrio ingresado no existe en el sistema, agreguelo antes de ingresar esta vivienda o ingrese otro barrio:");
-                Barrio = Console.ReadLine();
                 existeBarrio = ValidarBarrio(Barrio);
-            }
+                while (!existeBarrio)
+                {
+                    Console.WriteLine("El Barrio ingresado no existe en el sistema, agreguelo antes de ingresar esta vivienda o ingrese otro barrio:");
+                    Barrio = Console.ReadLine();
+                    existeBarrio = ValidarBarrio(Barrio);
+                }
 
-            //DESCRIPCION
-            Console.WriteLine("Ingrese Descripcion:");
-            string Descripcion = Console.ReadLine();
-            while (Descripcion == "")
-            {
-                Console.WriteLine("La Descripcion debe contener minimo 1 caracter:");
-                Descripcion = Console.ReadLine();
-            }
+                //DESCRIPCION
+                Console.WriteLine("Ingrese Descripcion:");
+                string Descripcion = Console.ReadLine();
+                while (Descripcion == "")
+                {
+                    Console.WriteLine("La Descripcion debe contener minimo 1 caracter:");
+                    Descripcion = Console.ReadLine();
+                }
 
-            // NUMERO DE BAÑOS
-            int vBanio;
-            string vBanioN;
-            bool esBanio;
-            Console.WriteLine("Ingrese Numero de Baños:");
-            vBanioN = Console.ReadLine();
-            esBanio = int.TryParse(vBanioN, out vBanio);
-
-            while (!esBanio)
-            {
-                Console.WriteLine("Debe Ingresar un Numero:");
+                // NUMERO DE BAÑOS
+                int vBanio;
+                string vBanioN;
+                bool esBanio;
+                Console.WriteLine("Ingrese Numero de Baños:");
                 vBanioN = Console.ReadLine();
                 esBanio = int.TryParse(vBanioN, out vBanio);
-            }
 
-            //CANTIDAD DE DORMITORIOS
-            int vDormitorio;
-            string vDormitorioN;
-            bool esDormitorio;
-            Console.WriteLine("Ingrese Numero de Dormitorios:");
-            vDormitorioN = Console.ReadLine();
-            esDormitorio = int.TryParse(vDormitorioN, out vDormitorio);
+                while (!esBanio)
+                {
+                    Console.WriteLine("Debe Ingresar un Numero:");
+                    vBanioN = Console.ReadLine();
+                    esBanio = int.TryParse(vBanioN, out vBanio);
+                }
 
-            while (!esDormitorio)
-            {
-                Console.WriteLine("Debe Ingresar un Numero de Dormitorios:");
+                //CANTIDAD DE DORMITORIOS
+                int vDormitorio;
+                string vDormitorioN;
+                bool esDormitorio;
+                Console.WriteLine("Ingrese Numero de Dormitorios:");
                 vDormitorioN = Console.ReadLine();
                 esDormitorio = int.TryParse(vDormitorioN, out vDormitorio);
-            }
 
-            //CANTIDAD DE METRAJE
-            int vMetraje;
-            string vMetrajeN;
-            bool esMetraje;
-            Console.WriteLine("Ingrese Cantidad de Metros Cuadrados:");
-            vMetrajeN = Console.ReadLine();
-            esMetraje = int.TryParse(vMetrajeN, out vMetraje);
+                while (!esDormitorio)
+                {
+                    Console.WriteLine("Debe Ingresar un Numero de Dormitorios:");
+                    vDormitorioN = Console.ReadLine();
+                    esDormitorio = int.TryParse(vDormitorioN, out vDormitorio);
+                }
 
-            while (!esBanio)
-            {
-                Console.WriteLine("Debe Ingresar la Cantidad de Metros Cuadrados:");
+                //CANTIDAD DE METRAJE
+                int vMetraje;
+                string vMetrajeN;
+                bool esMetraje;
+                Console.WriteLine("Ingrese Cantidad de Metros Cuadrados:");
                 vMetrajeN = Console.ReadLine();
                 esMetraje = int.TryParse(vMetrajeN, out vMetraje);
-            }
 
-            //CANTIDAD DE AÑOS
-            int vAnio;
-            string vAnioN;
-            bool esAnio;
-            Console.WriteLine("Ingrese Año de construccion:");
-            vAnioN = Console.ReadLine();
-            esAnio = int.TryParse(vAnioN, out vAnio);
+                while (!esBanio)
+                {
+                    Console.WriteLine("Debe Ingresar la Cantidad de Metros Cuadrados:");
+                    vMetrajeN = Console.ReadLine();
+                    esMetraje = int.TryParse(vMetrajeN, out vMetraje);
+                }
 
-            while (!esAnio)
-            {
-                Console.WriteLine("Debe Ingresar el Año de construccion:");
+                //CANTIDAD DE AÑOS
+                int vAnio;
+                string vAnioN;
+                bool esAnio;
+                Console.WriteLine("Ingrese Año de construccion:");
                 vAnioN = Console.ReadLine();
                 esAnio = int.TryParse(vAnioN, out vAnio);
-            }
 
-            //PRECIO BASE
-            //double vPBaseMetro;
-            string vPBaseMetroN;
+                while (!esAnio)
+                {
+                    Console.WriteLine("Debe Ingresar el Año de construccion:");
+                    vAnioN = Console.ReadLine();
+                    esAnio = int.TryParse(vAnioN, out vAnio);
+                }
 
-            double outcome;
+                //PRECIO BASE
+                //double vPBaseMetro;
+                string vPBaseMetroN;
 
-            Console.WriteLine("Ingrese Precio Base por Metro Cuadrado:");
-            vPBaseMetroN = Console.ReadLine();
+                double outcome;
 
-            while (!double.TryParse(vPBaseMetroN, out outcome) || outcome < 0)
-            {
-                Console.WriteLine("Debe Ingresar el Precio Base:");
+                Console.WriteLine("Ingrese Precio Base por Metro Cuadrado:");
                 vPBaseMetroN = Console.ReadLine();
+
+                while (!double.TryParse(vPBaseMetroN, out outcome) || outcome < 0)
+                {
+                    Console.WriteLine("Debe Ingresar el Precio Base:");
+                    vPBaseMetroN = Console.ReadLine();
+                }
+
+                ModificarVivienda(Convert.ToInt32(vIdN), TipoCasa, HabilitadaBit, Calle, Numero, Barrio, Descripcion, Int32.Parse(vBanioN), Int32.Parse(vDormitorioN), Int32.Parse(vMetrajeN), Int32.Parse(vAnioN), double.Parse(vPBaseMetroN));
+                
             }
-
-            ModificarVivienda(Convert.ToInt32(vIdN), TipoCasa, HabilitadaBit, Calle, Numero, Barrio, Descripcion, Int32.Parse(vBanioN), Int32.Parse(vDormitorioN), Int32.Parse(vMetrajeN), Int32.Parse(vAnioN), double.Parse(vPBaseMetroN));
-
         }
 
         //ACCION
@@ -1181,44 +1205,9 @@ namespace OP3.Presentacion
                 }
             }
 
-            if (tipo == true)
-            {
-                repoViv.Update(new ViviendaNueva
-                {
-                    Id = vid,
-                    Habilitada = HabilitadaBit,
-                    Tipo = "N",
-                    Calle = vCalle,
-                    Numero = vNumero,
-                    Barrio = vBarrio,
-                    Descripcion = vDescripcion,
-                    Banios = vBanios,
-                    Dormitorios = vDormitorios,
-                    Metraje = vMetraje,
-                    Anio = vAnio,
-                    PBaseXMetroCuadrado = vPBaseXMetroCuadrado
-                });
-            }
-            else
-            {
-                repoViv.Update(new ViviendaUsada
-                {
-                    Id = vid,
-                    Habilitada = HabilitadaBit,
-                    Tipo = "U",
-                    Calle = vCalle,
-                    Numero = vNumero,
-                    Barrio = vBarrio,
-                    Descripcion = vDescripcion,
-                    Banios = vBanios,
-                    Dormitorios = vDormitorios,
-                    Metraje = vMetraje,
-                    Anio = vAnio,
-                    PBaseXMetroCuadrado = vPBaseXMetroCuadrado
-                });
-            }
+            
             Console.WriteLine("//////////////////////////////////////");
-            Console.WriteLine("Vivienda Actualizada");
+            Console.WriteLine("Vivienda Modificada");
             ListoVovler();
             DibujarMenu();
         }
@@ -1231,34 +1220,44 @@ namespace OP3.Presentacion
             Console.WriteLine("=================");
             Console.WriteLine("Ingrese Barrio:");
             string Nombre = Console.ReadLine();
-            var lista = repoViv.FindByBarrio(Nombre);
-            foreach (Vivienda elem in lista)
+
+            using (WcfServicios.WfServiciosClient client = new WcfServicios.WfServiciosClient())
             {
+                var Lista = client.BuscarViviendaPorBarrios(Nombre);
+                if (Lista.Length > 0)
+                {
+                    foreach (var elem in Lista)
+                    {
+                        string moneda;
+                        if (elem.Tipo == "N")
+                            moneda = "UI";
+                        else
+                            moneda = "USD";
 
-                string moneda;
-                if (elem.Tipo == "N")
-                    moneda = "UI";
+                        decimal precioFinal = calcularPrecioFinalVivienda(elem.Metraje.ToString(), elem.PBaseXMetroCuadrado.ToString(), elem.Tipo.ToString());
+                        Console.WriteLine(
+                            elem.Id.ToString()
+                            + " - " + elem.Calle.ToString()
+                            + " - " + elem.Tipo.ToString()
+                            + " " + elem.Numero.ToString()
+                            + ", " + elem.Barrio.ToString()
+                            + " - Descripcion: " + elem.Descripcion.ToString()
+                            + " - Baños: " + elem.Banios.ToString()
+                            + " - Dormitorios: " + elem.Dormitorios.ToString()
+                            + " - Metraje: " + elem.Metraje.ToString()
+                            + " - Precio Base M2: $ " + elem.PBaseXMetroCuadrado.ToString()
+                            + " - Precio final " + moneda + ": " + precioFinal
+                            + " - Impuestos ITP($): " + calcularImpuestos(elem.Tipo.ToString(), precioFinal)
+                            + " - Cantidad Cuota: " + calcularCuotas(elem.Tipo.ToString())
+                        );
+                    }
+                }
                 else
-                    moneda = "USD";
-
-                decimal precioFinal = calcularPrecioFinalVivienda(elem.Metraje.ToString(), elem.PBaseXMetroCuadrado.ToString(), elem.Tipo.ToString());
-
-                Console.WriteLine(
-                    elem.Id.ToString()
-                    + " - " + elem.Calle.ToString()
-                    + " - " + elem.Tipo.ToString()
-                    + " " + elem.Numero.ToString()
-                    + ", " + elem.Barrio.ToString()
-                    + " - Descripcion: " + elem.Descripcion.ToString()
-                    + " - Baños: " + elem.Banios.ToString()
-                    + " - Dormitorios: " + elem.Dormitorios.ToString()
-                    + " - Metraje: " + elem.Metraje.ToString()
-                    + " - Precio Base M2: $ " + elem.PBaseXMetroCuadrado.ToString()
-                    + " - Precio final " + moneda + ": " + precioFinal
-                    + " - Impuestos ITP: " + calcularImpuestos(elem.Tipo.ToString(), precioFinal)
-                    + " - Cantidad Cuota: " + calcularCuotas(elem.Tipo.ToString())
-                );
+                {
+                    Console.WriteLine("No hay Barrios ingresados con ese Nombre:");
+                }
             }
+
             Console.WriteLine("//////////////////////////////////////");
             ListoVovler();
             PararPantalla();
@@ -1278,8 +1277,6 @@ namespace OP3.Presentacion
                 {
                     foreach (var elem in Lista)
                     {
-
-                        //double resultado = calcularPrecioFinalVivienda("hola", "hola");
                         string moneda;
                         if (elem.Tipo == "N")
                             moneda = "UI";
@@ -1317,59 +1314,56 @@ namespace OP3.Presentacion
         //CALCULAR IMPUESTOS
         private static string calcularImpuestos(string tipo, decimal precioFinal)
         {
-            decimal impuestos;
-            decimal MontoImpuestos = decimal.Parse(repoViv.obtenerVariable("MontoImpuestos")) / 100;
+            using (WcfServicios.WfServiciosClient client = new WcfServicios.WfServiciosClient())
+            {
+                decimal impuestos;
+                decimal MontoImpuestos = decimal.Parse(client.obtenerVariable("MontoImpuestos")) / 100;
 
-            if (tipo == "N")
-            {
-                impuestos = 0;
+                if (tipo == "N")
+                {
+                    impuestos = 0;
+                }
+                else
+                {
+                    impuestos = precioFinal * MontoImpuestos;
+                    impuestos = impuestos / decimal.Parse(client.obtenerVariable("cotizacionUSD"));
+                }
+                return impuestos.ToString();
             }
-            else
-            {
-                impuestos = precioFinal * MontoImpuestos;
-                impuestos = impuestos / decimal.Parse(repoViv.obtenerVariable("cotizacionUSD"));
-            }
-            return impuestos.ToString();
         }
 
         //CALCULAR CUOTAS
         private static string calcularCuotas(string tipo)
         {
-            decimal cantCuotas;
-            if (tipo == "N")
+            using (WcfServicios.WfServiciosClient client = new WcfServicios.WfServiciosClient())
             {
-                decimal plazoNueva = decimal.Parse(repoViv.obtenerVariable("plazoNueva"));
-                cantCuotas = plazoNueva*12;
-            }
-            else {
-                decimal plazoUsada = decimal.Parse(repoViv.obtenerVariable("plazoUsada"));
-                cantCuotas = plazoUsada*12;
+                decimal cantCuotas;
+                if (tipo == "N")
+                {
+                    decimal plazoNueva = decimal.Parse(client.obtenerVariable("plazoNueva"));
+                    cantCuotas = plazoNueva * 12;
+                }
+                else
+                {
+                    decimal plazoUsada = decimal.Parse(client.obtenerVariable("plazoUsada"));
+                    cantCuotas = plazoUsada * 12;
 
+                }
+                return cantCuotas.ToString();
             }
-
-            return cantCuotas.ToString();
         }
-
-        //VALIDAR VIVIENDA
-        public static bool ValidarVivienda(int id)
-        {
-
-
-
-
-            Vivienda Viv = repoViv.FindById(id);
-            if (Viv.Numero != null)
-            {
-                return true;
-            }
-            return false;
-        }
-
+        
         //BUSCAR VIVIENDA
-        public static Vivienda buscarVivienda(int id) {
-            Vivienda Viv = repoViv.FindById(id);
-            return Viv;
-        }
+        //public static Vivienda buscarVivienda(int id) {
+
+        //    //Vivienda Viv = repoViv.FindById(id);
+        //    using (WcfServicios.WfServiciosClient client = new WcfServicios.WfServiciosClient()) {
+
+        //        var Viv = client.FindById(id);
+        //    }
+
+        //    //return Viv;
+        //}
 
         //CALCULAR PRECIO FINAL VIVIENDA
         public static decimal calcularPrecioFinalVivienda(string metrosCuadrados, string precioMetroCuadrado, string Tipo)
@@ -1377,49 +1371,55 @@ namespace OP3.Presentacion
             decimal precioFinal;
             decimal Cf;
             decimal retorno = 0;
-            
-            if (Tipo == "N"){
-                //debe retornar el precio en UI
-                //Precio en ui
-                decimal PorcentajeFinanciacion = decimal.Parse(repoViv.obtenerVariable("PorcentajeFinanciacion"));
-                decimal ui = decimal.Parse(repoViv.obtenerVariable("cotizacionUI"));
-                decimal plazoNueva = decimal.Parse(repoViv.obtenerVariable("plazoNueva"));
-                decimal calculoInteres = 1 + (PorcentajeFinanciacion / 100);
 
-                double res = Math.Pow(Convert.ToDouble(calculoInteres), Convert.ToDouble(plazoNueva));
-                precioFinal = Convert.ToInt32(metrosCuadrados) * Convert.ToInt32(precioMetroCuadrado);
-                Cf = precioFinal*Convert.ToDecimal(res);
-                
-                Cf = Cf/ui;
-                retorno = Math.Round(Cf, 2);
+            using (WcfServicios.WfServiciosClient client = new WcfServicios.WfServiciosClient())
+            {
+
+                if (Tipo == "N")
+                {
+                    //debe retornar el precio en UI
+                    //Precio en ui
+                    decimal PorcentajeFinanciacion = decimal.Parse(client.obtenerVariable("PorcentajeFinanciacion"));
+                    decimal ui = decimal.Parse(client.obtenerVariable("cotizacionUI"));
+                    decimal plazoNueva = decimal.Parse(client.obtenerVariable("plazoNueva"));
+                    decimal calculoInteres = 1 + (PorcentajeFinanciacion / 100);
+
+                    double res = Math.Pow(Convert.ToDouble(calculoInteres), Convert.ToDouble(plazoNueva));
+                    precioFinal = Convert.ToInt32(metrosCuadrados) * Convert.ToInt32(precioMetroCuadrado);
+                    Cf = precioFinal * Convert.ToDecimal(res);
+
+                    Cf = Cf / ui;
+                    retorno = Math.Round(Cf, 2);
+                }
+                else
+                {
+                    //debe retornar el precio en UI
+                    //Precio en ui
+                    decimal PorcentajeFinanciacion = decimal.Parse(client.obtenerVariable("PorcentajeFinanciacion"));
+                    decimal usd = decimal.Parse(client.obtenerVariable("cotizacionUSD"));
+                    decimal plazoNueva = decimal.Parse(client.obtenerVariable("plazoNueva"));
+                    decimal calculoInteres = 1 + (PorcentajeFinanciacion / 100);
+                    decimal MontoImpuestos = 1 + decimal.Parse(client.obtenerVariable("MontoImpuestos")) / 100;
+
+                    double res = Math.Pow(Convert.ToDouble(calculoInteres), Convert.ToDouble(plazoNueva));
+                    precioFinal = Convert.ToInt32(metrosCuadrados) * Convert.ToInt32(precioMetroCuadrado);
+                    Cf = precioFinal * Convert.ToDecimal(res);
+                    Cf = Cf * MontoImpuestos;
+
+                    Cf = Cf / usd;
+                    retorno = Math.Round(Cf, 2);
+
+                    //precio en dolares
+                    precioFinal = Convert.ToInt32(metrosCuadrados) * Convert.ToInt32(precioMetroCuadrado);
+
+                }
             }
-            else {
-
-
-                //debe retornar el precio en UI
-                //Precio en ui
-                decimal PorcentajeFinanciacion = decimal.Parse(repoViv.obtenerVariable("PorcentajeFinanciacion"));
-                decimal usd = decimal.Parse(repoViv.obtenerVariable("cotizacionUSD"));
-                decimal plazoNueva = decimal.Parse(repoViv.obtenerVariable("plazoNueva"));
-                decimal calculoInteres = 1 + (PorcentajeFinanciacion / 100);
-                decimal MontoImpuestos = 1 + decimal.Parse(repoViv.obtenerVariable("MontoImpuestos")) / 100;
-
-                double res = Math.Pow(Convert.ToDouble(calculoInteres), Convert.ToDouble(plazoNueva));
-                precioFinal = Convert.ToInt32(metrosCuadrados) * Convert.ToInt32(precioMetroCuadrado);
-                Cf = precioFinal * Convert.ToDecimal(res);
-                Cf = Cf * MontoImpuestos;
-
-                Cf = Cf / usd;
-                retorno = Math.Round(Cf, 2);
-
-                //precio en dolares
-                precioFinal = Convert.ToInt32(metrosCuadrados) * Convert.ToInt32(precioMetroCuadrado);
-
-            }
-
             return retorno;
         }
+        
 
+
+        //////////////////////////////////////////////////////////////////////////////////////////////
         //------------------------------------------------- USUARIOS
         //MENU
         //MENU AGREGAR USUARIO
@@ -1669,7 +1669,7 @@ namespace OP3.Presentacion
             Console.WriteLine("=================");
             Console.WriteLine("Lista de Usuarios");
             Console.WriteLine("=================");
-            var lista = repoUsu.FindAll();
+
             using (WcfServicios.WfServiciosClient client = new WcfServicios.WfServiciosClient())
             {
                 var ListaUsuarios = client.GetTodosLosUsuarios();
@@ -1679,7 +1679,6 @@ namespace OP3.Presentacion
                     {
                         Console.WriteLine("Id:" + elem.id.ToString() + " - Mail: " + elem.Email.ToString() + " - Password: " + elem.Pass.ToString());
                     }
-                    Console.WriteLine("Lista de Usuarios: " + ListaUsuarios + ".");
                 }
                 else
                 {

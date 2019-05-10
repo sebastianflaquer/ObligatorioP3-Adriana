@@ -147,6 +147,20 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="BuscarViviendaPorBarrios">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="nombreBarrio" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="BuscarViviendaPorBarriosResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/WcfServicios" minOccurs="0" name="BuscarViviendaPorBarriosResult" nillable="true" type="q12:ArrayOfDTOVivienda" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
   <xs:element name="AgregarVivienda">
     <xs:complexType>
       <xs:sequence>
@@ -167,7 +181,7 @@
   <xs:element name="AgregarViviendaResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/WcfServicios" minOccurs="0" name="AgregarViviendaResult" nillable="true" type="q12:DTOVivienda" />
+        <xs:element xmlns:q13="http://schemas.datacontract.org/2004/07/WcfServicios" minOccurs="0" name="AgregarViviendaResult" nillable="true" type="q13:DTOVivienda" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -192,7 +206,7 @@
   <xs:element name="ModificarVivindaResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q13="http://schemas.datacontract.org/2004/07/WcfServicios" minOccurs="0" name="ModificarVivindaResult" nillable="true" type="q13:DTOVivienda" />
+        <xs:element xmlns:q14="http://schemas.datacontract.org/2004/07/WcfServicios" minOccurs="0" name="ModificarVivindaResult" nillable="true" type="q14:DTOVivienda" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -206,7 +220,49 @@
   <xs:element name="EliminarViviendaResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q14="http://schemas.datacontract.org/2004/07/WcfServicios" minOccurs="0" name="EliminarViviendaResult" nillable="true" type="q14:DTOVivienda" />
+        <xs:element xmlns:q15="http://schemas.datacontract.org/2004/07/WcfServicios" minOccurs="0" name="EliminarViviendaResult" nillable="true" type="q15:DTOVivienda" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="FindById">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="id" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="FindByIdResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q16="http://schemas.datacontract.org/2004/07/WcfServicios" minOccurs="0" name="FindByIdResult" nillable="true" type="q16:DTOVivienda" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="tieneVivienda">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="nombre" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="tieneViviendaResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="tieneViviendaResult" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="obtenerVariable">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="nombre" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="obtenerVariableResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="obtenerVariableResult" nillable="true" type="xs:string" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

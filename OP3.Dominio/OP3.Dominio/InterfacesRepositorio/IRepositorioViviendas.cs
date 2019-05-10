@@ -13,7 +13,8 @@ namespace OP3.Dominio.InterfacesRepositorio
         bool Update(Vivienda viv);
         Vivienda FindById(int Nombre);
         IEnumerable<Vivienda> FindAll();
-        IEnumerable<Vivienda> FindByName(string nom);
-
+        //IEnumerable<Vivienda> FindByName(string nom);
+        bool tieneVivienda(string NombreBarrio);
+        string obtenerVariable(string nombre);
     }
 }

@@ -54,6 +54,43 @@ namespace WcfServicios
             return null;
         }
 
+        //LISTAR VIVIENDAS POR BARRIO
+        public IEnumerable<DTOVivienda> BuscarViviendaPorBarrios(string nombreBarrio)
+        {
+            IEnumerable<Vivienda> ListaViviendas = repoViv.FindAll();
+
+            if (ListaViviendas != null)
+            {
+                List<DTOVivienda> losViviendas = new List<DTOVivienda>();
+                foreach (Vivienda viv in ListaViviendas)
+                {
+                    if (viv.Barrio == nombreBarrio)
+                    {
+                        losViviendas.Add(new DTOVivienda
+                        {
+                            Id = viv.Id,
+                            Tipo = viv.Tipo,
+                            Habilitada = viv.Habilitada,
+                            Calle = viv.Calle,
+                            Numero = viv.Numero,
+                            Barrio = viv.Barrio,
+                            Descripcion = viv.Descripcion,
+                            Banios = viv.Banios,
+                            Dormitorios = viv.Dormitorios,
+                            Metraje = viv.Metraje,
+                            Anio = viv.Anio,
+                            PBaseXMetroCuadrado = viv.PBaseXMetroCuadrado,
+                            PrecioFinal = viv.PrecioFinal
+                        });
+                    }
+                }
+                return losViviendas;
+            }
+            else {
+                return null;
+            }
+        }
+
         //AGREGAR USUARIO
         public DTOVivienda AgregarVivienda(bool tipo, int HabilitadaBit, string vCalle, string vNumero, string vBarrio, string vDescripcion, int vBanios, int vDormitorios, int vMetraje, int vAnio, double vPBaseXMetroCuadrado)
         {
@@ -201,6 +238,52 @@ namespace WcfServicios
             } else {
                 return null;
             }
+        }
+
+        //BUSCAR POR ID
+        public DTOVivienda FindById(int vid)
+        {
+            var encontro = repoViv.FindById(vid);
+            if (encontro != null){
+                DTOVivienda DTOviv = new DTOVivienda
+                {
+                    Habilitada = encontro.Habilitada,
+                    Calle = encontro.Calle,
+                    Numero = encontro.Numero,
+                    Barrio = encontro.Barrio,
+                    Descripcion = encontro.Descripcion,
+                    Banios = encontro.Banios,
+                    Dormitorios = encontro.Dormitorios,
+                    Metraje = encontro.Metraje,
+                    Anio = encontro.Anio,
+                    PBaseXMetroCuadrado = encontro.PBaseXMetroCuadrado
+                };
+                return DTOviv;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        //TIENE VIVIENDA
+        public bool tieneVivienda(string nombre)
+        {
+            var encontro = repoViv.tieneVivienda(nombre);
+            if (encontro)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        //OBTENER VARIABLES
+        public string obtenerVariable(string nombre) {
+            var variable = repoViv.obtenerVariable(nombre);
+            return variable;
         }
 
         //BARRIOS
@@ -383,5 +466,6 @@ namespace WcfServicios
             throw new NotImplementedException();
         }
 
+        
     }
 }

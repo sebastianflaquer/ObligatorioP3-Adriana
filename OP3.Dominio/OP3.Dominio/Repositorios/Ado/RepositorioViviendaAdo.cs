@@ -260,19 +260,7 @@ namespace OP3.Dominio.Repositorios.Ado
                 return VivU;
             }
         }
-
-        //FIND BY ID
-        public IEnumerable<Vivienda> FindByName(string nom)
-        {
-            throw new NotImplementedException();
-        }
-
-        //GET TOPE
-        public int getTope()
-        {
-            return this.TopMetraje;
-        }
-
+        
         //CALCULA COSTO VIVIENDA
         public string CalcularCostoVivienda(Vivienda Viv) {
             string retorno = "";
@@ -284,7 +272,6 @@ namespace OP3.Dominio.Repositorios.Ado
         //OBSERVAR VARIABLE
         public string obtenerVariable(string nombre)
         {
-            
             string valor = "";
 
             SqlConnection cn = UtilidadesBD.CrearConexion();
@@ -308,12 +295,9 @@ namespace OP3.Dominio.Repositorios.Ado
             }
 
             UtilidadesBD.CerrarConexion(cn);
-
             return valor;
-
         }
-
-
+        
         //GET PARAMETROS
         public string GetParametros()
         {

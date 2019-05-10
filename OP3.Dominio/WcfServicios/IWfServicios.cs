@@ -48,11 +48,16 @@ namespace WcfServicios
 
         [OperationContract]
         DTOBarrio EliminarBarrio(string nombre);
+
+
         
         ////////////////////////////////////////
         //VIVIENDAS
         [OperationContract]
         IEnumerable<DTOVivienda> GetTodasLasViviendas();
+
+        [OperationContract]
+        IEnumerable<DTOVivienda> BuscarViviendaPorBarrios(string nombreBarrio);
 
         [OperationContract]
         DTOVivienda AgregarVivienda(bool tipo, int HabilitadaBit, string vCalle, string vNumero, string vBarrio, string vDescripcion, int vBanios, int vDormitorios, int vMetraje, int vAnio, double vPBaseXMetroCuadrado);
@@ -62,7 +67,17 @@ namespace WcfServicios
 
         [OperationContract]
         DTOVivienda EliminarVivienda(int id);
-        
+
+        [OperationContract]
+        DTOVivienda FindById(int id);
+
+        [OperationContract]
+        bool tieneVivienda(string nombre);
+
+        [OperationContract]
+        string obtenerVariable(string nombre);
+
+
     }
 
     [DataContract]

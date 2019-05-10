@@ -13,14 +13,10 @@ namespace OP3.Dominio
 
 
         public override string Tipo { get; set;}
-
         
-
-
         //INSERTAR VIVIENDA NUEVA - DONE
         internal override bool Insertar()
         {
-
             SqlConnection cn = Utilidades.UtilidadesBD.CrearConexion();
 
             //CREA LA TRANSACCION
