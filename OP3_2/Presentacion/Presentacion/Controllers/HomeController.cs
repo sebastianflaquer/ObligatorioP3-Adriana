@@ -106,59 +106,75 @@ namespace Presentacion.Controllers
             repoBar.AgregarListaBarrios(listaBarrios);
 
             //PARAMETROS
-            //string pathParametros = Server.MapPath("~/Archivos/Parametros.txt");
-            //List<string> linesParametros = System.IO.File.ReadAllLines(pathParametros).ToList();
-            //foreach (var line in linesParametros)
-            //{
-            //    Parametro par = new Parametro();
-            //    string[] entries = line.Split('#');
+            string pathParametros = Server.MapPath("~/Archivos/Parametros.txt");
+            List<string> linesParametros = System.IO.File.ReadAllLines(pathParametros).ToList();
+            foreach (var line in linesParametros)
+            {
+                Parametro par = new Parametro();
+                string[] entries = line.Split('#');
 
-            //    foreach (var val in entries) {
-            //        string[] valores = val.Split('=');
-            //        par.Nombre = valores.First().ToString();
-            //        par.Valor = valores.Last();
-            //        var existe = db.Parametros.Where(b => b.Nombre == par.Nombre).FirstOrDefault();
-            //        if (existe == null)
-            //        {
-            //            db.Parametros.Add(par);
-            //            db.SaveChanges();
-            //        }
-            //    }
-            //}
+                foreach (var val in entries) {
+                    string[] valores = val.Split('=');
+                    par.Nombre = valores.First().ToString();
+                    par.Valor = valores.Last();
+
+                    var existe = repoViv.FindByParametroName(par.Nombre);
+
+                    if (existe == null)
+                    {
+                        repoViv.AddParametro(par);
+                    }
+                }
+            }
 
             //VIVIENDAS
-            //string pathViviendas = Server.MapPath("~/Archivos/Viviendas.txt");
-            //List<string> linesViviendas = System.IO.File.ReadAllLines(pathViviendas).ToList();
-            //foreach (var line in linesViviendas)
-            //{
-            //    bool existe = false;
-            //    string[] entries = line.Split('#');
-            //    Vivienda viv = new Vivienda();
-            //    // 0   1       2            3              4       5        6        7      8      9        10      11
-            //    //Id#calle#numeroPuerta#nombreBarrio#descripcion#baños#dormitorios#metraje#año#preciofinal#tipo#montoContribucion
+            string pathViviendas = Server.MapPath("~/Archivos/Viviendas.txt");
+            List<string> linesViviendas = System.IO.File.ReadAllLines(pathViviendas).ToList();
+            foreach (var line in linesViviendas)
+            {
+                bool existe = false;
+                string[] entries = line.Split('#');
+                Vivienda viv = new Vivienda();
+                // 0   1       2            3              4       5        6        7      8      9        10      11
+                //Id#calle#numeroPuerta#nombreBarrio#descripcion#baños#dormitorios#metraje#año#preciofinal#tipo#montoContribucion
+                Barrio bar = new Barrio();
 
-            //    viv.Calle = entries[1].ToString();
-            //    viv.Numero = entries[2].ToString();
-            //    viv.Barrio = entries[3].ToString();
-            //    viv.Descripcion = entries[4].ToString();
-            //    viv.Banios = Convert.ToInt32(entries[5]);
-            //    viv.Dormitorios = Convert.ToInt32(entries[6]);                
-            //    viv.Metraje = Convert.ToInt32(entries[7]);
-            //    viv.Anio = Convert.ToInt32(entries[8]);
-            //    viv.PrecioFinal = Convert.ToDouble(entries[9]);
-            //    viv.Tipo = entries[10];
-            //    viv.Contribucion = Convert.ToDouble(entries[11]);
+                bar = repoBar.FindByName(entries[3].ToString());
 
-            //    //var existe = db.Viviendas.Where(v =>  == viv.Nombre).FirstOrDefault();
-            //    if (existe == false)
-            //    {
-            //        db.Viviendas.Add(viv);
-            //        db.SaveChanges();
-            //    }
-            //}
-            return View("Index");
+                viv.Calle = entries[1].ToString();
+                viv.Numero = entries[2].ToString();
+                viv.Barrio = bar;
+                viv.Descripcion = entries[4].ToString();
+                viv.Banios = entries[5];
+                viv.Dormitorios = Convert.ToInt32(entries[6]);
+                viv.Metraje = Convert.ToInt32(entries[7]);
+                viv.Anio = Convert.ToInt32(entries[8]);
+                viv.PrecioFinal = Convert.ToDouble(entries[9]);
+                viv.Tipo = entries[10];
+                viv.Contribucion = Convert.ToDouble(entries[11]);
+
+                //var existe = db.Viviendas.Where(v =>  == viv.Nombre).FirstOrDefault();
+                if (existe == false)
+                {
+                    repoViv.Add(viv);                    
+                }
+            }
+
+
+            //return View(repoBar.FindAll().ToList());
+            //return View("Index");
+            return RedirectToAction("ListaCarga");
         }
 
+        public ActionResult ListaCarga(){
+            
+            ListaBarrioVivienda modelo = new ListaBarrioVivienda();
+            modelo.barrios = repoBar.FindAll().ToList();
+            modelo.viviendas = repoViv.FindAll().ToList();
+
+            return View(modelo);
+
+        }
 
 
     }

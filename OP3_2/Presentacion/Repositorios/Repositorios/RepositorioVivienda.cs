@@ -64,6 +64,20 @@ namespace Dominio.Repositorios
 
             }
         }
+        
+        public bool AddParametro(Parametro parametro)
+        {
+            db.Parametros.Add(parametro);
+            db.SaveChanges();
+
+            return true;
+        }
+
+        public Parametro FindByParametroName(string nombre)
+        {
+            Parametro par = db.Parametros.Where(p => p.Nombre == nombre).FirstOrDefault();
+            return par;
+        }
 
         public void Dispose()
         {
