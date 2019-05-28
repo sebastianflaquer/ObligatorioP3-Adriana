@@ -1,0 +1,24 @@
+﻿
+@model IEnumerable<DemoRestaurant.Models.Plato>
+
+@{
+    ViewBag.Title = "Lista de platos";
+}
+
+<h2>Lista de platos</h2>
+@if (Model == null)
+{
+    @:La lista de platos está vacía.
+}
+else
+{
+    <ul>
+        @foreach (var item in Model)
+        {
+           @* <li><span>@item.Nombre</span><span> @item.Descripcion</span><span>  @item.Precio  </span></li>*@
+            <li>@item.ToString()</li>
+        },
+    </ul>
+}
+
+

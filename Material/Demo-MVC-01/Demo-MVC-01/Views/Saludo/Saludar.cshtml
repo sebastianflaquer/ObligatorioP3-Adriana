@@ -1,0 +1,24 @@
+﻿
+@{
+    ViewBag.Title = "Saludar";
+}
+
+<h2>Saludar</h2>
+<div>
+    <!-- Bloques con una sola sentencia  -->
+    @{ var total = 7; }
+    @{ var miMensaje = "Buen día "; }
+
+    <!-- Expresiones "inline" -->
+    <p>El valor de total es: @total </p>
+    <p>El valor de miMensaje es: @miMensaje</p>
+
+    <!-- Bloques con más de una sentencia -->
+    @{
+        var bienvenida = "Bienvenido a nuestro sitio!";
+        var diaSemana = DateTime.Now.DayOfWeek;
+        var mensajeBienvenida = bienvenida + " Hoy es: " + diaSemana;
+    }
+    <p> @mensajeBienvenida</p>
+</div>
+

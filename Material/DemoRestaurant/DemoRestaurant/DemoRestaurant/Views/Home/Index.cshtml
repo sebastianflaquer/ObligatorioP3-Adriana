@@ -1,0 +1,31 @@
+﻿@{
+    ViewBag.Title = "Inicio";
+}
+
+<div class="jumbotron">
+    <h1>Ejemplo con listas </h1>
+    <h3>La idea es ver si les parece ok para trabajar MVC así en P2, sin usar las plantillas "mágicas".</h3>
+   
+        <ul>
+            <li class="">  En el Global.asax se instancia el sistema y se guardan algunos platos.</li>
+            <li>
+                Hay un javascript incluido en la carpeta de scripts llamado validaciones a modo de ejemplo de uso de jQuery que hace una verificación sencilla
+                y envía un alert si algo anda mal o envía el formulario si todo anda ok.
+
+                Está renderizado al final de la vista CrearHtml.
+            </li>
+            <li>   En la carpeta Content hay un estilo incluido en la hoja MisEstilos.css
+                Está incluido como bundle en /App_Start/BundleConfig.cs.</li>
+            <li>
+                Hay dos views para el ingreso de un plato, una generada con la plantilla Create y tomando Plato como modelo
+                (más coqueta) y otra con HTML hecho desde cero y aplicando el javascript (CrearHTML.cshtml), que es la que está activa.
+            </li>
+            <li>
+                La lista de platos está incluida en el Index() de PlatoController y la view correspondiente por convención.
+            </li>
+            <li>
+                Los links de menú están incluidos en _Layout.cshtml (equivalente a la página maestra).
+            </li>
+</ul>   
+ 
+</div>

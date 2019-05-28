@@ -1,0 +1,112 @@
+﻿@model Dominio.Models.Vivienda
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Vivienda</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Habilitada)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Habilitada)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Calle)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Calle)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Numero)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Numero)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Barrio)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Barrio)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Descripcion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Descripcion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Banios)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Banios)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Dormitorios)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Dormitorios)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Metraje)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Metraje)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Anio)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Anio)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PBaseXMetroCuadrado)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PBaseXMetroCuadrado)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PrecioFinal)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PrecioFinal)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

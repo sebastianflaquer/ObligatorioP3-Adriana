@@ -1,0 +1,16 @@
+﻿
+@{
+    ViewBag.Title = "Ingresar un nuevo plato - usa solo html";
+}
+
+<h2>"Ingresar un nuevo plato - usa solo html</h2>
+<form action="/plato/crearHtml" method="post" id="form1">
+    <label for="nombre">Nombre:</label> <input class="requerido"type="text" id="nombre" name="Nombre" placeholder="Ingresar el nombre" />
+    <label for="descripcion">Descripción:</label> <input type="text" class="requerido" id="Descripcion" name="descripcion" placeholder="Ingresar la descripción" />
+    <label for="precio">Precio:</label> <input type="number" class="requerido numero" id="nombre" name="Precio" placeholder="Ingresar el precio" />
+    <input type="submit" value="Crear" />
+</form>
+
+@section  scripts{
+    <script type="text/javascript" src="@Url.Content("~/Scripts/validaciones.js")" ></script>
+    }

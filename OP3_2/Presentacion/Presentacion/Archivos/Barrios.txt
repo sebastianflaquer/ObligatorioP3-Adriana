@@ -1,0 +1,13 @@
+Barrio Sur#Zona costera y cultural
+Buceo#Zona residencial donde esta el cementerio
+c#c
+Centro#Zona donde se encuentra la avenida principal y la zona comercial
+Ciudad Vieja#Barrio historico de la ciudad
+Cordón#Zona recidencial
+Defensa 2#bla
+Palermo#Zona costera recidencial
+Parque Batlle#Zona donde esta el Centenario
+Pocitos#Zona de mayor concentracion de la poblacion
+Punta Carretas#Zona recidencial y costera, muchos servicios
+Punta Gorda#Zona costera residencial
+sdfdsaff#wefeww

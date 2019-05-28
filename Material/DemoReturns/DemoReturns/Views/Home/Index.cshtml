@@ -1,0 +1,55 @@
+﻿@using DemoReturns.Models
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="jumbotron">
+    <h1>ASP.NET</h1>
+    <p class="lead">Diferentes formas de redireccionar y retornar vistas</p>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <h2>Retornar Vistas: return View()</h2>
+        <p><a class="btn btn-default" href="/redirects/index">Vista con objeto</a></p>
+        <p><a class="btn btn-default" href="/redirects/MostrarVista">Vista no correspondiente al método de acción, del mismo controller </a></p>
+        <p><a class="btn btn-default" href="/redirects/MostrarVistaConObjeto">Vista no correspondiente al método de acción, del mismo controller y pasando objeto</a></p>
+        <p><a class="btn btn-default" href="/redirects/MostrarVistaOtroController">Vista de otro controller y pasando objeto</a></p>
+        <h2>Redireccionar a métodos:return RedirectToAction()</h2>
+        <p><a class="btn btn-default" href="/redirects/RedireccionarAOtroMetodo">Redireccionar a otro método</a></p>
+        <p><a class="btn btn-default" href="/redirects/RedireccionarAOtroController">Redireccionar a un método de otro controller con objeto</a></p>
+
+    </div>
+    <div class="col-md-6">
+        <h2>Redireccionar a rutas: return RedirectToRoute() y return Redirect()</h2>
+        <p><a class="btn btn-default" href="/RedireccionarARuta/index">Redireccionar a una ruta definida en el RouteConfig.cs</a></p>
+        <p><a class="btn btn-default" href="/RedireccionarARuta/RedirecionarConParametros">Redireccionar a una ruta con nombre usando parámetros</a></p>
+        <p><a class="btn btn-default" href="/RedireccionarARuta/RedireccionarAUrl">Redireccionar a una URL</a></p>
+        <h2>ActionLink</h2>
+        <p>@Html.ActionLink(linkText: "ActionLink usando parámetros con nombre.", actionName: "OtroMetodo", controllerName: "Redirects")</p>
+        <p>@Html.ActionLink("ActionLink usando parámetros posicionales.", "OtroMetodo", "Redirects")</p>
+        <p>
+            @*  Hay que pasar el null para que no se confunda de sobrecarga y tome el cuarto parámetro como si fueran
+                atributos del elemento HTML (HtmlAttributes).
+                Esta también es la sobrecarga a usar para otro controlador *@
+            @Html.ActionLink("ActionLink pasando objeto.",
+                             "OtroMetodo",
+                             "Redirects",
+                               new Plato
+                               {
+                                   Nombre = "Carne al horno",
+                                   Descripcion = "Fácil y barato",
+                                   Precio = 3000
+                               },
+                               null)
+            </p>
+        <p>
+            @Html.ActionLink("ActionLink con atributos.",
+                             "OtroMetodo",
+                             "Redirects",
+                             null,
+                             new { @class = "btn btn-default", title = "Link con estilo" }
+                             )
+        </p>
+    </div>
+</div>

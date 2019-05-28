@@ -1,0 +1,11 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+<h3>
+    Acá se muestra TempData["Nombre"], si fue cargada desde /DemoTempData/Index: @TempData["Nombre"]
+    @Html.ActionLink("Ir a otro método de acción para ver si TempData sigue cargada.","RecuperarTempData","DemoTempData")
+</h3>
+

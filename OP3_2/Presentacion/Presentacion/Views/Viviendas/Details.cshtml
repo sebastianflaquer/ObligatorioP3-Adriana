@@ -1,0 +1,106 @@
+﻿@model Dominio.Models.Vivienda
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Vivienda</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Habilitada)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Habilitada)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Calle)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Calle)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Numero)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Numero)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Barrio)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Barrio)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Descripcion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Descripcion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Banios)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Banios)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Dormitorios)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Dormitorios)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Metraje)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Metraje)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Anio)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Anio)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PBaseXMetroCuadrado)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PBaseXMetroCuadrado)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PrecioFinal)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PrecioFinal)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

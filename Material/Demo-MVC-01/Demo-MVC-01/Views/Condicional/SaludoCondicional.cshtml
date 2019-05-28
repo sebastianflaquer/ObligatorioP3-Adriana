@@ -1,0 +1,21 @@
+﻿
+@{
+    ViewBag.Title = "SaludoCondicional";
+}
+
+<h2>Saludo Condicional</h2>
+@{   string nombre = "Juana";
+    var minuto = DateTime.Now.TimeOfDay.Minutes;
+    if(minuto > 10)
+    {
+        <p>Hola @nombre. Son más de la hora y 10 minutos</p>
+    }
+    else
+    {
+        <p>Hola @nombre. Son menos de la hora y 10 minutos</p>
+
+    }
+  
+    @nombre
+}
+

@@ -1,0 +1,37 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="jumbotron">
+    <h1>ASP.NET MVC - Demo pasaje de datos</h1>
+
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <h2>ViewBag</h2>
+        <h3>Observar que en la vista ViewBag tampoco es case sensitive</h3>
+        <p>
+            Viewbag.numero:@ViewBag.numero
+        </p>
+        <p>
+            Viewbag.Numero:@ViewBag.Numero
+        </p>
+        <p>
+            Observar que ViewData está cargado con el valor de ViewBag:
+            ViewData["Numero"]:@ViewData["Numero"]
+        </p>
+        <form name="form1" action="/DemoViewBag/VerificarSiSobrevive">
+            <input type="hidden" name="valorViewbag" value="@ViewBag.Numero" />
+            <input type="submit" value="Enviar por QueryString a través del formulario" />
+        </form>
+        <p><a class="btn btn-default" href="/demoViewBag/VerificarSiSobrevive">Ver si sobrevive viewbag &raquo;</a></p>
+    </div>
+    <div class="col-md-4">
+        <!-- /?valorViewbag=@ViewBag.Numero -->
+        <p><a class="btn btn-default" href="~/DemoViewBag/VerificarSiSobrevive">Learn more &raquo;</a></p>
+    </div>
+    <div class="col-md-4">
+        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
+    </div>
+</div>
