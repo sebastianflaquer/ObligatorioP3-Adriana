@@ -168,6 +168,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\BarriosController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\SorteosController.cs" />
     <Compile Include="Controllers\UsuariosController.cs" />
     <Compile Include="Controllers\ViviendasController.cs" />
     <Compile Include="Global.asax.cs">
@@ -190,6 +191,11 @@
     <Content Include="Views\Usuarios\Index.cshtml" />
     <Content Include="scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\Home\ListaCarga.cshtml" />
+    <Content Include="Views\Sorteos\Create.cshtml" />
+    <Content Include="Views\Sorteos\Delete.cshtml" />
+    <Content Include="Views\Sorteos\Details.cshtml" />
+    <Content Include="Views\Sorteos\Edit.cshtml" />
+    <Content Include="Views\Sorteos\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

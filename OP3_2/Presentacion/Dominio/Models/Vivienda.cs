@@ -12,19 +12,36 @@ namespace Dominio.Models
     {
         [Key]
         public int Id { get; set; } //identificador de Vivienda
+        //[DataType(DataType.Text.Equals{Recibida”, “Habilitada”, “Inhabilitada” o “Sorteada})]
+        public string Estado { get; set; }
+
         public string Tipo { get; set; }
+
         public int Habilitada { get; set; }
+
+        [MaxLength(50)]
         public string Calle { get; set; }
+
+        [MaxLength(50)]
         public string Numero { get; set; }
-        public Barrio Barrio { get; set; }
+
+        [MaxLength(50)]
+        public string Barrio { get; set; }
+
+        [MaxLength(250)]
         public string Descripcion { get; set; }
-        public string Banios { get; set; }
+
+        public int Banios { get; set; }
+        
         public int Dormitorios { get; set; }
+        
         public int Metraje { get; set; }
+        
         public int Anio { get; set; }
-        public double PBaseXMetroCuadrado { get; set; }
-        public double PrecioFinal { get; set; }
-        public double Contribucion { get; set; }
+
+        public decimal PrecioFinal { get; set; }
+
+        public decimal Contribucion { get; set; }
 
         //INSERTAR VIVIENDA
         internal virtual bool Insertar()

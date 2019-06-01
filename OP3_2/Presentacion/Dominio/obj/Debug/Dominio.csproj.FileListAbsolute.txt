@@ -34,4 +34,3 @@ C:\xampp\htdocs\REPOOP3Adriana\ObligatorioP3-2Adriana\OP3_2\Presentacion\Dominio
 C:\xampp\htdocs\REPOOP3Adriana\ObligatorioP3-2Adriana\OP3_2\Presentacion\Dominio\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
 C:\xampp\htdocs\REPOOP3Adriana\ObligatorioP3-2Adriana\OP3_2\Presentacion\Dominio\obj\Debug\Dominio.dll
 C:\xampp\htdocs\REPOOP3Adriana\ObligatorioP3-2Adriana\OP3_2\Presentacion\Dominio\obj\Debug\Dominio.pdb
-C:\xampp\htdocs\REPOOP3Adriana\ObligatorioP3-2Adriana\OP3_2\Presentacion\Dominio\obj\Debug\Dominio.csprojResolveAssemblyReference.cache

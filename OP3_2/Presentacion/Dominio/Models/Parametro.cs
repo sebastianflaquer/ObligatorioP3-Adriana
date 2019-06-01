@@ -15,7 +15,7 @@ namespace Dominio.Models
 
         public string Nombre { get; set; }
 
-        public string Valor { get; set; }
+        public decimal Valor { get; set; }
 
     }
 }

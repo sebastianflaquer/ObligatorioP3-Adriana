@@ -120,8 +120,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Models\Barrio.cs" />
-    <Compile Include="Models\ListaBarrioVivienda.cs" />
+    <Compile Include="Models\ListaBarrioViviendaViewModel.cs" />
     <Compile Include="Models\Parametro.cs" />
+    <Compile Include="Models\Sorteo.cs" />
     <Compile Include="Models\Usuario.cs" />
     <Compile Include="Models\Vivienda.cs" />
     <Compile Include="Models\ViviendaNueva.cs" />

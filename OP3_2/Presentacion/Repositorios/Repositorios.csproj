@@ -121,6 +121,7 @@
   <ItemGroup>
     <Compile Include="InterfacesRepositorio\IRepositorioBarrios.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositorios\RepositorioSorteo.cs" />
     <Compile Include="Repositorios\RepositorioVivienda.cs" />
     <Compile Include="Repositorios\RepositorioUsuario.cs" />
     <Compile Include="Repositorios\RepositorioBarrio.cs" />

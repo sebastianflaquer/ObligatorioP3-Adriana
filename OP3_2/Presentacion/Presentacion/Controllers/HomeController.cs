@@ -13,6 +13,7 @@ namespace Presentacion.Controllers
     public class HomeController : Controller
     {
        
+        //REPOSITORIOS
         public RepositorioBarrio repoBar = new RepositorioBarrio();
         public RepositorioUsuario repoUsu = new RepositorioUsuario();
         public RepositorioVivienda repoViv = new RepositorioVivienda();
@@ -81,99 +82,143 @@ namespace Presentacion.Controllers
         }
 
 
+        //LEER ARHIVO
         public ActionResult LeerArchivo() {
             return View();
         }
         
+        //LEER ARCHIVOS EXTO
         public ActionResult LeerArchivosTexto() {
-            
+
             //BARRIOS
             List<Barrio> listaBarrios = new List<Barrio>();
 
-            string pathBarrios = Server.MapPath("~/Archivos/Barrios.txt");            
-            List<string> linesBarrios = System.IO.File.ReadAllLines(pathBarrios).ToList();
-            foreach (var line in linesBarrios) {
+            string pathBarrios = Server.MapPath("~/Archivos/Barrios.txt");
+            List<string> linesBarrios = System.IO.File.ReadAllLines(pathBarrios, System.Text.Encoding.UTF8).ToList();
+            foreach (var line in linesBarrios)
+            {
                 string[] entries = line.Split('#');
                 Barrio bar = new Barrio();
+
                 bar.Nombre = entries.First().ToString();
                 bar.Descripcion = entries.Last();
 
                 listaBarrios.Add(bar);
-
-                
             }
-
             repoBar.AgregarListaBarrios(listaBarrios);
 
+
+
             //PARAMETROS
+            List<Parametro> listaParametro = new List<Parametro>();
+
             string pathParametros = Server.MapPath("~/Archivos/Parametros.txt");
-            List<string> linesParametros = System.IO.File.ReadAllLines(pathParametros).ToList();
+            List<string> linesParametros = System.IO.File.ReadAllLines(pathParametros, System.Text.Encoding.UTF8).ToList();
+
             foreach (var line in linesParametros)
             {
-                Parametro par = new Parametro();
+
                 string[] entries = line.Split('#');
 
-                foreach (var val in entries) {
+                foreach (var val in entries)
+                {
+
+                    Parametro par = new Parametro();
                     string[] valores = val.Split('=');
+
                     par.Nombre = valores.First().ToString();
-                    par.Valor = valores.Last();
+                    string valorString = valores.Last().ToString();
 
-                    var existe = repoViv.FindByParametroName(par.Nombre);
+                    //valida que el valor sea un decimal
+                    decimal nuevoVal;
+                    bool result = decimal.TryParse(valorString, out nuevoVal);
 
-                    if (existe == null)
+                    par.Valor = nuevoVal;
+
+                    if (result)
                     {
-                        repoViv.AddParametro(par);
+                        listaParametro.Add(par);
                     }
+
                 }
             }
+            repoViv.AgregarListaParametros(listaParametro);
 
             //VIVIENDAS
+            List<Vivienda> listaViviendas = new List<Vivienda>();
+
             string pathViviendas = Server.MapPath("~/Archivos/Viviendas.txt");
-            List<string> linesViviendas = System.IO.File.ReadAllLines(pathViviendas).ToList();
+            List<string> linesViviendas = System.IO.File.ReadAllLines(pathViviendas, System.Text.Encoding.UTF8).ToList();
+
             foreach (var line in linesViviendas)
             {
-                bool existe = false;
                 string[] entries = line.Split('#');
                 Vivienda viv = new Vivienda();
+
                 // 0   1       2            3              4       5        6        7      8      9        10      11
                 //Id#calle#numeroPuerta#nombreBarrio#descripcion#baños#dormitorios#metraje#año#preciofinal#tipo#montoContribucion
-                Barrio bar = new Barrio();
+                //CARGA EL BARRIO
 
-                bar = repoBar.FindByName(entries[3].ToString());
+                //string nombreBarrio = entries[3].ToString();
+                //Barrio bar = new Barrio();
+                //bar = repoBar.FindByName(nombreBarrio);
 
+                viv.Id = Convert.ToInt32(entries[0]);
                 viv.Calle = entries[1].ToString();
                 viv.Numero = entries[2].ToString();
-                viv.Barrio = bar;
+                viv.Barrio = entries[3].ToString();
                 viv.Descripcion = entries[4].ToString();
-                viv.Banios = entries[5];
+                viv.Banios = Convert.ToInt32(entries[5].ToString());
                 viv.Dormitorios = Convert.ToInt32(entries[6]);
                 viv.Metraje = Convert.ToInt32(entries[7]);
                 viv.Anio = Convert.ToInt32(entries[8]);
-                viv.PrecioFinal = Convert.ToDouble(entries[9]);
+                viv.PrecioFinal = Convert.ToDecimal(entries[9]);
                 viv.Tipo = entries[10];
-                viv.Contribucion = Convert.ToDouble(entries[11]);
+                viv.Contribucion = Convert.ToDecimal(entries[11]);
 
-                //var existe = db.Viviendas.Where(v =>  == viv.Nombre).FirstOrDefault();
-                if (existe == false)
-                {
-                    repoViv.Add(viv);                    
-                }
+                Vivienda vivEncontrada = repoViv.FindById(viv.Id);
+
+                listaViviendas.Add(viv);
+
             }
+            repoViv.AgregarListaVivienda(listaViviendas);
 
 
-            //return View(repoBar.FindAll().ToList());
-            //return View("Index");
+
+            //bool barrios = LeerArchivoBarrios();
+            //bool parametros = LeerArchivoParametros();
+            //bool viviendas = LeerArchivoViviendas();
+
+            //RETURN REDIRECTOACTION
+            //return View();
             return RedirectToAction("ListaCarga");
         }
 
+        //LEER ARCHIVO BARRIOS
+        //private bool LeerArchivoBarrios()
+        //{
+        //    return true;
+        //}
+
+        ////LEER ARCHIVO PARAMETROS
+        //private bool LeerArchivoParametros()
+        //{
+        //    return true;
+        //}
+
+        ////LEER ARCHIVO VIVIENDAS
+        //private bool LeerArchivoViviendas()
+        //{
+        //    return true;
+        //}
+
+
+        //LISTA CARGA
         public ActionResult ListaCarga(){
-            
-            ListaBarrioVivienda modelo = new ListaBarrioVivienda();
+            ListaBarrioViviendaViewModel modelo = new ListaBarrioViviendaViewModel();
             modelo.barrios = repoBar.FindAll().ToList();
             modelo.viviendas = repoViv.FindAll().ToList();
-
             return View(modelo);
-
         }
 
 

@@ -28,13 +28,17 @@ namespace Dominio.Models
         public string FechaNac { get; set; }
 
         [Required(ErrorMessage = "Este campo es Obligatorio")]
+        [DataType(DataType.EmailAddress, ErrorMessage = "El Email no es valido")]
         public string Email { get; set; }
 
-        [Required(ErrorMessage = "Este campo es Obligatorio")]
+        [Required]
+        [StringLength(100, ErrorMessage = "Este campo es Obligatorio, The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [DataType(DataType.Password)]
         public string Pass { get; set; }
 
         [NotMapped]
         [Required(ErrorMessage = "Este campo es Obligatorio")]
+        [DataType(DataType.Password)]
         public string ConfirmPassword { get; set; }
 
         public string Salt { get; set; }

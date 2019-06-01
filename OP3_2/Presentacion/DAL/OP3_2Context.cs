@@ -8,11 +8,12 @@ namespace DAL
 
     public partial class OP3_2Context : DbContext
     {
-        public System.Data.Entity.DbSet<Dominio.Models.Usuario> Usuarios { get; set; }
+
         public System.Data.Entity.DbSet<Dominio.Models.Barrio> Barrios { get; set; }
+        public System.Data.Entity.DbSet<Dominio.Models.Usuario> Usuarios { get; set; }
         public System.Data.Entity.DbSet<Dominio.Models.Vivienda> Viviendas { get; set; }
         public System.Data.Entity.DbSet<Dominio.Models.Parametro> Parametros { get; set; }
-        
+        public System.Data.Entity.DbSet<Dominio.Models.Sorteo> Sorteos { get; set; }
 
         public OP3_2Context() : base("name=OP3_2Context")
         {

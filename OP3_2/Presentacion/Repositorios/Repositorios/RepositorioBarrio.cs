@@ -57,21 +57,54 @@ namespace Dominio.Repositorios
             return true;
         }
 
-        public void AgregarListaBarrios(List<Barrio> listaBarrios) {            
+        public void AgregarListaBarrios(List<Barrio> listaBarrios) {
+
             foreach (Barrio bar in listaBarrios) {
+                //valida que exista
                 var existe = db.Barrios.Where(b => b.Nombre == bar.Nombre).FirstOrDefault();
-                if (existe == null) {
+                
+                //valida que sea valido
+                bool esValido = ValidarBarrio(bar);
+                
+                if (existe == null && esValido) {
                     db.Barrios.Add(bar);
                     db.SaveChanges();
                 }
             }
         }
 
+        public bool ValidarBarrio(Barrio bar)
+        {
+            bool esValido = false;
+            //valida Nombre
+            bool nombreValido = ValidarTextos(bar.Nombre, 3, 50);
+            bool DescripcionValido = ValidarTextos(bar.Descripcion, 3, 50);
+
+            if (nombreValido && DescripcionValido) {
+                esValido = true;
+            }
+            
+            return esValido;
+        }
+
+        //VALIDAR TEXTO
+        public bool ValidarTextos(string texto, int min, int max) {
+
+            bool esValido = false;
+
+            if (texto.Length > min && texto.Length <= max) {
+                esValido = true;
+            }
+
+            return esValido;
+
+        }
+
+        //DISPOSE
         public void Dispose()
         {
             db.Dispose();
         }
-
 
     }
 }

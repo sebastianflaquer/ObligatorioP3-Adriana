@@ -13,6 +13,7 @@ namespace Dominio.Repositorios
 
         private OP3_2Context db = new OP3_2Context();
 
+        //ADD
         public bool Add(Usuario usu)
         {
             db.Usuarios.Add(usu);
@@ -21,6 +22,7 @@ namespace Dominio.Repositorios
             return true;
         }
 
+        //DELETE
         public bool Delete(Usuario usu)
         {
             db.Usuarios.Remove(usu);
@@ -29,6 +31,7 @@ namespace Dominio.Repositorios
             return true;
         }
 
+        //FINDALL
         public IEnumerable<Usuario> FindAll()
         {
             List<Usuario> listaUsuarios = db.Usuarios.ToList();
@@ -66,6 +69,7 @@ namespace Dominio.Repositorios
             return true;
         }
 
+        //AGREGAR LISTA USUARIOS
         public void AgregarListaUsuarios(List<Usuario> listaUsuarios) {
             
             foreach (Usuario usu in listaUsuarios) {
