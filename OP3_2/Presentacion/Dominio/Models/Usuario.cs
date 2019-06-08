@@ -66,12 +66,5 @@ namespace Dominio.Models
             return pimienta;
         }
 
-        public string getRol()
-        {
-            string rol = "Postulante";
-            return rol;
-        }
-
-
     }
 }

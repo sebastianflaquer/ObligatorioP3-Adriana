@@ -77,6 +77,11 @@ namespace Dominio.Repositorios
                 var existe = db.Usuarios.Where(u => u.Nombre == usu.Nombre).FirstOrDefault();
 
                 if (existe == null) {
+
+                    //usu.Rol = usu.getRol();
+                    usu.Salt = usu.generarSalPass();
+                    usu.Pass = Usuario.EncriptarPass(usu.Pass, usu.Salt, Usuario.getPimienta());
+
                     db.Usuarios.Add(usu);
                     db.SaveChanges();
                 }

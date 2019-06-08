@@ -18,7 +18,6 @@ namespace Dominio.Repositorios
         {
             db.Barrios.Add(bar);
             db.SaveChanges();
-
             return true;
         }
 
@@ -26,7 +25,6 @@ namespace Dominio.Repositorios
         {
             db.Barrios.Remove(bar);
             db.SaveChanges();
-
             return true;
         }
 

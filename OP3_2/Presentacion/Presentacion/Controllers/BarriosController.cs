@@ -82,7 +82,6 @@ namespace Presentacion.Controllers
         {
             if (ModelState.IsValid)
             {
-
                 repoBar.Update(barrio);
 
                 return RedirectToAction("Index");

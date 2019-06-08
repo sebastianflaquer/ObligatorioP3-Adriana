@@ -82,7 +82,7 @@ namespace Presentacion.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Habilitada,Calle,Numero,Barrio,Descripcion,Banios,Dormitorios,Metraje,Anio,PBaseXMetroCuadrado,PrecioFinal")] Vivienda vivienda)
+        public ActionResult Edit([Bind(Include = "Id,Estado,Calle,Numero,Barrio,Descripcion,Banios,Dormitorios,Metraje,Anio,PBaseXMetroCuadrado,PrecioFinal")] Vivienda vivienda)
         {
             if (ModelState.IsValid)
             {
@@ -120,6 +120,72 @@ namespace Presentacion.Controllers
             repoViv.Delete(vivienda);
             return RedirectToAction("Index");
         }
+
+        //MODIFICAR VIVIENDA
+        public ActionResult ModificarVivienda()
+        {
+            return View(repoViv.FindAll().ToList());
+        }
+
+        public JsonResult ModificarViviendaData(string BuscarPor, string SearchValue)
+        {
+            List<Vivienda> listaViviendas = new List<Vivienda>();
+
+            if (BuscarPor == "Id")
+            {
+                try
+                {
+                    int Id = Convert.ToInt32(SearchValue);
+                    listaViviendas.Add(repoViv.FindById(Id));
+                }
+                catch (FormatException) {
+                    Console.WriteLine("{0} Is not a ID ", SearchValue);
+                }
+            }
+
+            return Json(listaViviendas, JsonRequestBehavior.AllowGet);
+        }
+
+
+
+
+
+
+        // GET: Viviendas/Details/5
+        public ActionResult ModificarViviendaDetails(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            Vivienda vivienda = repoViv.FindById(id);
+
+            if (vivienda == null)
+            {
+                return HttpNotFound();
+            }
+            return View(vivienda);
+        }
+
+
+        // POST: Viviendas/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Modificar([Bind(Include = "Id,Habilitada")] Vivienda vivienda)
+        {
+            if (ModelState.IsValid)
+            {
+                repoViv.Update(vivienda);
+
+                return RedirectToAction("Index");
+            }
+            return View(vivienda);
+        }
+
+
 
         protected override void Dispose(bool disposing)
         {

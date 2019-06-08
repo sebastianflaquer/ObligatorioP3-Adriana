@@ -16,3 +16,8 @@ textarea {
     max-width: 280px;
 }
 
+.disabled{
+    cursor: not-allowed;
+    background-color: #eee;
+}
+

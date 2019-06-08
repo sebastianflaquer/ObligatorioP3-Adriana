@@ -21,7 +21,40 @@ namespace Presentacion.Controllers
         // GET: Home
         public ActionResult Index()
         {
+            cargaUsuariosBase();
             return View();
+        }
+
+        private void cargaUsuariosBase()
+        {
+            List<Usuario> listaUsuarios = new List<Usuario>();
+
+            Usuario usuAdmin = new Usuario();
+            Usuario usuPostu = new Usuario();
+
+            usuAdmin.Cedula = "45173353";
+            usuAdmin.Nombre = "Sebastian";
+            usuAdmin.Apellido = "Flaquer";
+            usuAdmin.Email = "sebastian.flaquer@gmail.com";
+            usuAdmin.Rol = "Jefe";
+            usuAdmin.Pass = "123456";
+            usuAdmin.ConfirmPassword = "123456";
+            usuAdmin.FechaNac = "12/05/1987";
+
+            usuPostu.Cedula = "11111111";
+            usuPostu.Nombre = "Test Postulante";
+            usuPostu.Apellido = "Test Apellido Postulante";
+            usuPostu.Email = "test@test.com";
+            usuPostu.Rol = "Postulante";
+            usuPostu.Pass = "123456";
+            usuPostu.ConfirmPassword = "123456";
+            usuPostu.FechaNac = "12/05/1987";
+
+            listaUsuarios.Add(usuAdmin);
+            listaUsuarios.Add(usuPostu);
+
+            repoUsu.AgregarListaUsuarios(listaUsuarios);
+            
         }
 
         //LOGIN REGISTER
@@ -46,12 +79,12 @@ namespace Presentacion.Controllers
         }
 
         [HttpPost, ActionName("Login")]
-        public ActionResult Login(string Email, string Pass)
+        public ActionResult Login(string Cedula, string Pass)
         {
             if (ModelState.IsValid)
             {
                 //Busca si existe un objeto con ese mail y ese password
-                var usu = repoUsu.FindByEmail(Email);
+                var usu = repoUsu.FindByCedula(Cedula);
 
                 //Si el Loggeo es correcto
                 if (usu != null)
@@ -60,7 +93,7 @@ namespace Presentacion.Controllers
                     {
                         //Le agrega los datos a la Session
                         Session["logueado"] = true;
-                        Session["email"] = usu.Email;
+                        Session["email"] = usu.Cedula;
                         Session["rol"] = usu.Rol;
                         return RedirectToAction("Index", "Home");
                     }
@@ -89,7 +122,19 @@ namespace Presentacion.Controllers
         
         //LEER ARCHIVOS EXTO
         public ActionResult LeerArchivosTexto() {
+            
+            bool barrios = LeerArchivoBarrios();
+            bool parametros = LeerArchivoParametros();
+            bool viviendas = LeerArchivoViviendas();
 
+            //RETURN REDIRECTOACTION
+            //return View();
+            return RedirectToAction("ListaCarga");
+        }
+
+        //LEER ARCHIVO BARRIOS
+        private bool LeerArchivoBarrios()
+        {
             //BARRIOS
             List<Barrio> listaBarrios = new List<Barrio>();
 
@@ -98,8 +143,8 @@ namespace Presentacion.Controllers
             foreach (var line in linesBarrios)
             {
                 string[] entries = line.Split('#');
-                Barrio bar = new Barrio();
 
+                Barrio bar = new Barrio();
                 bar.Nombre = entries.First().ToString();
                 bar.Descripcion = entries.Last();
 
@@ -107,8 +152,12 @@ namespace Presentacion.Controllers
             }
             repoBar.AgregarListaBarrios(listaBarrios);
 
+            return true;
+        }
 
-
+        ////LEER ARCHIVO PARAMETROS
+        private bool LeerArchivoParametros()
+        {
             //PARAMETROS
             List<Parametro> listaParametro = new List<Parametro>();
 
@@ -144,73 +193,22 @@ namespace Presentacion.Controllers
             }
             repoViv.AgregarListaParametros(listaParametro);
 
+            return true;
+        }
+
+        ////LEER ARCHIVO VIVIENDAS
+        private bool LeerArchivoViviendas()
+        {
             //VIVIENDAS
-            List<Vivienda> listaViviendas = new List<Vivienda>();
+            
 
             string pathViviendas = Server.MapPath("~/Archivos/Viviendas.txt");
             List<string> linesViviendas = System.IO.File.ReadAllLines(pathViviendas, System.Text.Encoding.UTF8).ToList();
 
-            foreach (var line in linesViviendas)
-            {
-                string[] entries = line.Split('#');
-                Vivienda viv = new Vivienda();
-
-                // 0   1       2            3              4       5        6        7      8      9        10      11
-                //Id#calle#numeroPuerta#nombreBarrio#descripcion#baños#dormitorios#metraje#año#preciofinal#tipo#montoContribucion
-                //CARGA EL BARRIO
-
-                //string nombreBarrio = entries[3].ToString();
-                //Barrio bar = new Barrio();
-                //bar = repoBar.FindByName(nombreBarrio);
-
-                viv.Id = Convert.ToInt32(entries[0]);
-                viv.Calle = entries[1].ToString();
-                viv.Numero = entries[2].ToString();
-                viv.Barrio = entries[3].ToString();
-                viv.Descripcion = entries[4].ToString();
-                viv.Banios = Convert.ToInt32(entries[5].ToString());
-                viv.Dormitorios = Convert.ToInt32(entries[6]);
-                viv.Metraje = Convert.ToInt32(entries[7]);
-                viv.Anio = Convert.ToInt32(entries[8]);
-                viv.PrecioFinal = Convert.ToDecimal(entries[9]);
-                viv.Tipo = entries[10];
-                viv.Contribucion = Convert.ToDecimal(entries[11]);
-
-                Vivienda vivEncontrada = repoViv.FindById(viv.Id);
-
-                listaViviendas.Add(viv);
-
-            }
-            repoViv.AgregarListaVivienda(listaViviendas);
-
-
-
-            //bool barrios = LeerArchivoBarrios();
-            //bool parametros = LeerArchivoParametros();
-            //bool viviendas = LeerArchivoViviendas();
-
-            //RETURN REDIRECTOACTION
-            //return View();
-            return RedirectToAction("ListaCarga");
+            repoViv.leerArchivoViviendasRepo(linesViviendas);
+            
+            return true;
         }
-
-        //LEER ARCHIVO BARRIOS
-        //private bool LeerArchivoBarrios()
-        //{
-        //    return true;
-        //}
-
-        ////LEER ARCHIVO PARAMETROS
-        //private bool LeerArchivoParametros()
-        //{
-        //    return true;
-        //}
-
-        ////LEER ARCHIVO VIVIENDAS
-        //private bool LeerArchivoViviendas()
-        //{
-        //    return true;
-        //}
 
 
         //LISTA CARGA

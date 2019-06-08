@@ -13,4 +13,4 @@
 13#Brito del Pino#423#Parque Batlle#Esta es la descripcion#1#2#55#2017#27568,51#N#0
 14#Francisco Soca#8561#Parque Batlle#Esta es la descripcion#2#1#40#1976#4180,99#U#52515000,00
 15#Mar Mediterraneo#5867#Punta Gorda#Esta es la descripcion#3#1#70#2018#8425,19#N#0
-16#Caramburú#5895#Punta Gorda#Esta es la descripcion#4#1#150#1988#9771,21#U#52515000,00
+20#Caramburú#5895#Punta Gorda#Esta es la descripcion#4#1#150#1988#9771,21#U#52515000,00

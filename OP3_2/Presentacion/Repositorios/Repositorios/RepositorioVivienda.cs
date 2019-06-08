@@ -12,8 +12,22 @@ namespace Dominio.Repositorios
     {
 
         private OP3_2Context db = new OP3_2Context();
+        RepositorioBarrio repoBar = new RepositorioBarrio();
 
 
+        public IEnumerable<string> ListaEstados(){
+
+            List<string> listaEstados = new List<string>();
+
+            listaEstados.Add("Habilitada");
+            listaEstados.Add("Inhabilitada");
+
+            return listaEstados;
+        }
+
+
+
+        //ADD
         public bool Add(Vivienda vivienda)
         {
             db.Viviendas.Add(vivienda);
@@ -22,6 +36,7 @@ namespace Dominio.Repositorios
             return true;
         }
 
+        //DELETE
         public bool Delete(Vivienda vivienda)
         {
             db.Viviendas.Remove(vivienda);
@@ -30,6 +45,7 @@ namespace Dominio.Repositorios
             return true;
         }
 
+        //FIND ALL
         public IEnumerable<Vivienda> FindAll()
         {
             List<Vivienda> listaViviendas = db.Viviendas.ToList();
@@ -37,12 +53,25 @@ namespace Dominio.Repositorios
             return listaViviendas;
         }
 
+        //FINDBYID
         public Vivienda FindById(int? id)
         {
             Vivienda viv = db.Viviendas.Where(v => v.Id == id).FirstOrDefault();
             return viv;
         }
 
+
+        //BUSCAR VIVIENDAS POR BARRIO
+        public List<Vivienda> buscarViviendasPorBarrio(string nombreBarrio) {
+
+            List<Vivienda> listaViviendas = new List<Vivienda>();
+
+            listaViviendas = db.Viviendas.Where(v => v.Barrio.Nombre == nombreBarrio).ToList();
+            
+            return listaViviendas;
+        }
+
+        //UPDATE
         public bool Update(Vivienda vivienda)
         {
             db.Entry(vivienda).State = EntityState.Modified;
@@ -51,22 +80,113 @@ namespace Dominio.Repositorios
             return true;
         }
 
+
+
+        public void leerArchivoViviendasRepo(List<string> linesViviendas) {
+
+            List<Vivienda> listaViviendas = new List<Vivienda>();
+
+            foreach (var line in linesViviendas)
+            {
+                string[] entries = line.Split('#');
+
+                ViviendaNueva vivN = new ViviendaNueva();
+                ViviendaUsada vivU = new ViviendaUsada();
+
+                if (entries[10].ToString() == "N")
+                {
+
+                    string nombreBarrio = entries[3].ToString();
+                    //Barrio bar = new Barrio();
+                    Barrio bar = repoBar.FindByName(nombreBarrio);
+
+                    vivN.Id = Convert.ToInt32(entries[0]);
+                    vivN.Estado = "Recibida";
+                    vivN.Calle = entries[1].ToString();
+                    vivN.Numero = entries[2].ToString();
+                    vivN.Barrio = bar; //entries[3].ToString();
+                    vivN.Descripcion = entries[4].ToString();
+                    vivN.Banios = Convert.ToInt32(entries[5].ToString());
+                    vivN.Dormitorios = Convert.ToInt32(entries[6]);
+                    vivN.Metraje = Convert.ToInt32(entries[7]);
+                    vivN.Anio = Convert.ToInt32(entries[8]);
+                    vivN.PrecioFinal = Convert.ToDecimal(entries[9]);
+                    vivN.Tipo = entries[10];
+                    vivN.Contribucion = Convert.ToDecimal(entries[11]);
+
+                    Vivienda vivEncontrada = FindById(vivN.Id);
+
+                    listaViviendas.Add(vivN);
+
+                }
+                else {
+                    string nombreBarrio = entries[3].ToString();
+                    //Barrio bar = new Barrio();
+                    Barrio bar = repoBar.FindByName(nombreBarrio);
+
+                    vivU.Id = Convert.ToInt32(entries[0]);
+                    vivU.Estado = "Recibida";
+                    vivU.Calle = entries[1].ToString();
+                    vivU.Numero = entries[2].ToString();
+                    vivU.Barrio = bar; //entries[3].ToString();
+                    vivU.Descripcion = entries[4].ToString();
+                    vivU.Banios = Convert.ToInt32(entries[5].ToString());
+                    vivU.Dormitorios = Convert.ToInt32(entries[6]);
+                    vivU.Metraje = Convert.ToInt32(entries[7]);
+                    vivU.Anio = Convert.ToInt32(entries[8]);
+                    vivU.PrecioFinal = Convert.ToDecimal(entries[9]);
+                    vivU.Tipo = entries[10];
+                    vivU.Contribucion = Convert.ToDecimal(entries[11]);
+
+                    Vivienda vivEncontrada = FindById(vivU.Id);
+
+                    listaViviendas.Add(vivU);
+                }
+                // 0   1       2            3              4       5        6        7      8      9        10      11
+                //Id#calle#numeroPuerta#nombreBarrio#descripcion#baños#dormitorios#metraje#año#preciofinal#tipo#montoContribucion
+                //CARGA EL BARRIO
+            }
+
+            AgregarListaVivienda(listaViviendas);
+
+        }
+
+
+
         //AGREGAR LISTA VIVIENDAS
         public void AgregarListaVivienda(List<Vivienda> listaVivienda) {
 
-            foreach (Vivienda viv in listaVivienda) {
+            using (var db = new OP3_2Context())
+            {
+                foreach (Vivienda viv in listaVivienda)
+                {
 
-                //validar si no existe esa vivienda
-                var existe = db.Viviendas.Where(v => v.Id == viv.Id).FirstOrDefault();
+                    //validar si no existe esa vivienda
+                    var existe = db.Viviendas.Where(v => v.Id == viv.Id).FirstOrDefault();
 
-                //validar que sea valido
-                bool esValido = ValidarVivienda(viv);
-                
-                if (existe == null && esValido) {
-                    db.Viviendas.Add(viv);
-                    db.SaveChanges();
+                    //validar que sea valido
+                    bool esValido = ValidarVivienda(viv);
+
+                    if (existe == null && esValido)
+                    {
+                        Barrio bar = db.Barrios.Find(viv.Barrio.Id);
+                        viv.Barrio = bar;
+                        //db.Entry(viv.Barrio).State = EntityState.Modified;
+                        //db.Barrios.Attach(viv.Barrio);
+                        db.Viviendas.Add(viv);
+                        db.SaveChanges();
+                    }
                 }
+                ////buscamos la Reserva y le agregamos la calificacion al alojamiento
+                //Reserva res = db.Reservas.Find(ReservaId);
+                //newCalificacion.Alojamiento = res.Anuncio.Alojamiento;
+                //Registrado reg = db.Registrados.Find(Session["id"]);
+                //newCalificacion.Registrado = reg;
+                //db.Calificaciones.Add(newCalificacion);
+                //db.SaveChanges();
             }
+
+            
         }
 
         //VALIDAR VIVIENDAS
@@ -82,7 +202,7 @@ namespace Dominio.Repositorios
 
             bool nombreBarrioValido = false;
             if (viv.Barrio != null) {
-                var validarBar = db.Barrios.Where(b => b.Nombre == viv.Barrio).FirstOrDefault();
+                var validarBar = db.Barrios.Where(b => b.Nombre == viv.Barrio.Nombre).FirstOrDefault();
                 if (validarBar != null)
                 {
                     nombreBarrioValido = true;
@@ -94,7 +214,7 @@ namespace Dominio.Repositorios
             bool dormitoriosValido = ValidarEnteros(viv.Dormitorios);
             bool metrajeValido = ValidarEnteros(viv.Metraje);
             bool precioFinalValido = ValidarEnteros(viv.PrecioFinal);
-            bool tipoValido = ValidarTextos(viv.Tipo, 1, 50);
+            bool tipoValido = true;//ValidarTextos(viv.Tipo, 1, 50);
             bool montoContribucionValido = ValidarEnteros(viv.Contribucion);
 
             if (calleValido && numeroPuertaValido && nombreBarrioValido && descripcionValido && baniosValido && dormitoriosValido && metrajeValido && precioFinalValido && tipoValido && montoContribucionValido) {

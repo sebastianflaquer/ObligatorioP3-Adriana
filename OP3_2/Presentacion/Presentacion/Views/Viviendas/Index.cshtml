@@ -12,7 +12,7 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Habilitada)
+            @Html.DisplayNameFor(model => model.Estado)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Calle)
@@ -47,7 +47,7 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.Habilitada)
+            @Html.DisplayFor(modelItem => item.Estado)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Calle)
@@ -56,7 +56,7 @@
             @Html.DisplayFor(modelItem => item.Numero)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Barrio)
+            @Html.DisplayFor(modelItem => item.Barrio.Nombre)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Descripcion)

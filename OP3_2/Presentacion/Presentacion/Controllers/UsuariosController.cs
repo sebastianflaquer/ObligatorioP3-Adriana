@@ -64,7 +64,7 @@ namespace Presentacion.Controllers
             }
             else
             {
-                usu.Rol = usu.getRol();
+                //usu.Rol = usu.getRol();
                 usu.Salt = usu.generarSalPass();
                 usu.Pass = Usuario.EncriptarPass(usu.Pass, usu.Salt, Usuario.getPimienta());
 

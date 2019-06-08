@@ -12,13 +12,9 @@ namespace Dominio.Models
     {
         [Key]
         public int Id { get; set; } //identificador del Barrio
-
-        [Required(ErrorMessage = "Este campo es Obligatorio")]
-        [MaxLength(50)]
+        
         public string Nombre { get; set; }
-
-        [Required(ErrorMessage = "Este campo es Obligatorio")]
-        [MaxLength(250)]
+        
         public string Descripcion { get; set; }
 
     }

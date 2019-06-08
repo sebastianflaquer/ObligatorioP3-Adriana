@@ -11,13 +11,12 @@ namespace Dominio.Models
     public class Vivienda
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int Id { get; set; } //identificador de Vivienda
+
         //[DataType(DataType.Text.Equals{Recibida”, “Habilitada”, “Inhabilitada” o “Sorteada})]
         public string Estado { get; set; }
-
-        public string Tipo { get; set; }
-
-        public int Habilitada { get; set; }
+        
 
         [MaxLength(50)]
         public string Calle { get; set; }
@@ -25,8 +24,7 @@ namespace Dominio.Models
         [MaxLength(50)]
         public string Numero { get; set; }
 
-        [MaxLength(50)]
-        public string Barrio { get; set; }
+        public virtual Barrio Barrio { get; set; }
 
         [MaxLength(250)]
         public string Descripcion { get; set; }
@@ -42,6 +40,10 @@ namespace Dominio.Models
         public decimal PrecioFinal { get; set; }
 
         public decimal Contribucion { get; set; }
+
+        // This property will hold all available states for selection
+        [NotMapped]
+        public IEnumerable<string> Estados { get; set; }
 
         //INSERTAR VIVIENDA
         internal virtual bool Insertar()
