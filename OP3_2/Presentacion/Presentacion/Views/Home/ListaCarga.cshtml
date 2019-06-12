@@ -1,0 +1,115 @@
+﻿@model Dominio.Models.ListaBarrioViviendaViewModel
+
+@{
+    ViewBag.Title = "ListaCarga";
+}
+
+
+
+<h2>Lista de Viviendas</h2>
+<table class="table">
+    <tr>
+        <th>
+            Id
+        </th>
+        <th>
+            Estado
+        </th>
+        <th>
+            Calle
+        </th>
+        <th>
+            Numero
+        </th>
+        <th>
+            Barrio
+        </th>
+        <th>
+            Descripcion
+        </th>
+        <th>
+            Banios
+        </th>
+        <th>
+            Dormitorios
+        </th>
+        <th>
+            Metraje
+        </th>
+        <th>
+            Anio
+        </th>
+        <th>
+            Precio Final
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model.viviendas)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Estado)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Calle)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Numero)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Barrio.Nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Descripcion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Banios)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Dormitorios)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Metraje)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Anio)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PrecioFinal)
+            </td>
+        </tr>
+    }
+
+</table>
+
+
+<h2>Lista de Barrios</h2>
+<table class="table">
+    <tr>
+        <th>
+            Barrio
+        </th>
+        <th>
+            Descripcion
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model.barrios)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Descripcion)
+            </td>
+        </tr>
+    }
+
+</table>
+

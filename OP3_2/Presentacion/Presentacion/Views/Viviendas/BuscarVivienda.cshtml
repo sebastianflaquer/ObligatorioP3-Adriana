@@ -1,0 +1,247 @@
+﻿@model IEnumerable<Dominio.Models.Vivienda>
+
+@{
+    ViewBag.Title = "BuscarVivienda";
+}
+
+<h2>BuscarVivienda</h2>
+
+
+<h3>Aplicar filtro por:
+    <select id="criterio" class="form-control">
+        <option value="1">Cantidad de dormitorios</option>
+        <option value="2">Rango de precio</option>
+        <option value="3">Barrio</option>
+        <option value="4">Estado</option>
+        <option value="5">Tipo</option>
+    </select>
+</h3>
+
+
+
+
+<!-- FILTROS -->
+<div id="filtros">
+
+    <!-- DORM -->
+    <select id="cantdorm" class="form-control" style="display:none">
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">+4</option>
+    </select>
+
+    <!-- RANGO -->
+    <select id="rango" class="form-control" style="display:none">
+        <option value="1">0 - 30.000</option>
+        <option value="2">30.001 - 50.000</option>
+        <option value="3">+ 50.001</option>
+    </select>
+
+    <!-- BARRIO -->
+    @Html.DropDownList("listaBarrios", (IEnumerable<SelectListItem>)ViewData["listaBarrios"], "Seleccionar Barrio", new {@id = "barrio", @class = "form-control" })
+    
+    <!-- ESTADO -->
+    <select id="estado" class="form-control" style="display:none">
+        <option value="Recibida">Recibida</option>
+        <option value="Habilitada">Habilitada</option>
+        <option value="Inhabilitada">Inhabilitada</option>
+        <option value="Sorteada">Sorteada</option>
+    </select>
+
+    <!-- TIPO -->
+    <select id="tipo" class="form-control">
+        <option value="nueva">Nueva</option>
+        <option value="usada">Usada</option>
+    </select>
+    <br />
+    <input type="submit" id="SearchBtn" class="btn btn-primary" value="Buscar" />
+    <br /><br />
+
+</div>
+<!-- END FILTROS -->
+
+<br />
+
+<table class="table">
+    <thead>
+
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Estado)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Calle)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Numero)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Barrio)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Descripcion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Banios)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Dormitorios)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Metraje)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Anio)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PrecioFinal)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Contribucion)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody id="DataSearching">
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Estado)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Calle)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Numero)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Barrio.Nombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Descripcion)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Banios)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Dormitorios)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Metraje)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Anio)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PrecioFinal)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Contribucion)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                </td>
+            </tr>
+        }
+
+        </tbody>
+
+
+</table>
+
+<script src="~/scripts/jquery-1.10.2.min.js"></script>
+<script>
+    $(document).ready(function () {
+
+        function ocultarOpcion(){
+            $("#cantdorm").hide();
+            $("#rango").hide();
+            $("#barrio").hide();
+            $("#estado").hide();
+            $("#tipo").hide();
+        }
+
+        ocultarOpcion();
+        
+        var elemento;
+        
+        $("#criterio").change(function () {
+            var opcion = $("#criterio").val();
+            if(opcion == "1"){ //Cantidad de dormitorios
+                ocultarOpcion();
+                $("#cantdorm").show();
+                elemento = $("#cantdorm");
+            } else if (opcion == "2") { //Rango de precio
+                ocultarOpcion();
+                $("#rango").show();
+                elemento = $("#rango");
+            } else if (opcion == "3") { //Barrio
+                ocultarOpcion();
+                $("#barrio").show();
+                elemento = $("#barrio");
+            } else if (opcion == "4") { //ESTADO
+                ocultarOpcion();
+                $("#estado").show();
+                elemento = $("#estado");
+            } else if (opcion == "5") { //TIPO
+                ocultarOpcion();
+                $("#tipo").show();
+                elemento = $("#tipo");
+            }
+        });
+
+        //SEARCH BUTTON
+        $("#SearchBtn").click(function () {
+            var BuscarPor = $("#criterio").val();
+            var SearchValue = elemento.val();
+            var SetData = $("#DataSearching");
+            SetData.html("");
+
+            $.ajax({
+                type: "post",
+                url: "/Viviendas/BuscarViviendaData?BuscarPor=" + BuscarPor + "&SearchValue=" + SearchValue,
+                contentType: "html",
+                success: function (result) {
+                    if (result[0] != null) { //result.length >= 1
+                        $.each(result, function (index, value) {
+                            var Data = "<tr>" +
+                                "<td>" + value.Id + "</td>" +
+                                "<td>" + value.Estado + "</td>" +
+                                "<td>" + value.Calle + "</td>" +
+                                "<td>" + value.Numero + "</td>" +
+                                "<td>" + value.Barrio.Nombre + "</td>" +
+                                "<td>" + value.Descripcion + "</td>" +
+                                "<td>" + value.Banios + "</td>" +
+                                "<td>" + value.Dormitorios + "</td>" +
+                                "<td>" + value.Metraje + "</td>" +
+                                "<td>" + value.Anio + "</td>" +
+                                "<td>" + value.PrecioFinal + "</td>";
+
+                                if (value.Estado == "Habilitada") {
+                                    Data += "<td><a class='btn btn-primary' href='/Viviendas/Edit/" + value.Id + "'>Inscribirme</a></td>";
+                                }
+
+                            Data += "</tr>";
+                            SetData.append(Data);
+                        })
+                    }
+                    else {
+                        SetData.append('<tr style="color:red"><td>No Data</td></tr>')
+
+                    }
+                }
+            });
+        });
+    });
+</script>

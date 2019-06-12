@@ -1,0 +1,1 @@
+cotizacionUI=4,1642#cotizacionUSD=35,01#topeMts=150#plazoNueva=15,0#plazoUsada=10,0#MontoImpuestos=3,0#PorcentajeFinanciacion=8,0

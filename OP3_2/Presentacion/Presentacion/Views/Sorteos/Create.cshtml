@@ -1,0 +1,108 @@
+﻿@model Dominio.Models.Sorteo
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Crear nuevo sorteo</h2>
+
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>Sorteo</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.Fecha, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Fecha, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Fecha, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Hora, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Hora, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Hora, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2" for="Barrio">Barrio</label>
+            
+            <div class="col-md-10">
+                @Html.DropDownList("nombreBarrio",(IEnumerable<SelectListItem>)ViewData["listaBarrios"], "Seleccionar Barrio", new { @class = "form-control" })
+                @*@Html.EditorFor(model => model.Estado, new { htmlAttributes = new { @class = "form-control" } })*@
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <label class="control-label col-md-2" for="Vivienda">Vivienda</label>
+            <div  class="col-md-10">
+                <select id="idVivienda" name="idVivienda" class="form-control valid">
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $("#nombreBarrio").change(function () {
+
+            varNombreBarrio = $("#nombreBarrio").val();
+
+            //var SearchValue = $("#Buscar").val();
+            //var SetData = $("#DataSearching");
+
+            var SetData = $("#idVivienda");
+            SetData.html("");
+            $.ajax({
+                type: "post",
+                url: "/Sorteos/CreateSorteo?BuscarBarrio=" + varNombreBarrio,
+                contentType: "html",
+                success: function (result) {
+                    if (result[0] != null) { //result.length >= 1                        
+                        $.each(result, function (index, value) {
+                            var Data = "<option value='" + value.Id + "'>"
+                                + "Id: " + value.Id + " --- "
+                                + "Direccion: " + value.Calle + value.Numero + " - "
+                                + value.Barrio.Nombre + " - "
+                                + "Desc: " + value.Descripcion + " - "
+                                + "Baños: " + value.Banios + " - "
+                                + "Dormitorios: " + value.Dormitorios + " - "
+                                + "Metros: " + value.Metraje + " - "
+                                + "Año: " + value.Anio + " - "
+                                + "Precio: " + value.PrecioFinal;
+                            SetData.append(Data);
+                        })
+                    }
+                    else {
+                        SetData.append('<tr style="color:red"><td>No existen viviendas en este barrio, seleccione otro</td></tr>')
+                    }
+                }
+            });
+        });
+    });
+</script>
