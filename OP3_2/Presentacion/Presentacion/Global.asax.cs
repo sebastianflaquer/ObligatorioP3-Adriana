@@ -20,6 +20,7 @@ namespace Presentacion
             Session["logueado"] = false;
             Session["rol"] = "";
             Session["email"] = "";
+            Session["idUsuario"] = "";
         }
     }
 }

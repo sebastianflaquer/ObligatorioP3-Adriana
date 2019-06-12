@@ -43,11 +43,20 @@ namespace Dominio.Models
 
         public string Salt { get; set; }
 
+        public virtual ICollection<UsuarioSorteo> UsuarioSorteo { get; set; }
+
         //ENCRIPTAR PASS
         public static string EncriptarPass(string passwordIngreso, string salt, string pimienta)
         {
             string hashresult = FormsAuthentication.HashPasswordForStoringInConfigFile(passwordIngreso + salt + pimienta, "SHA1");
             return hashresult;
+        }
+
+        //ROL
+        public string getRol()
+        {
+            string rol = "Postulante";
+            return rol;
         }
 
         //GENERA LA SAL
@@ -65,6 +74,8 @@ namespace Dominio.Models
             string pimienta = "p1m13n7a";
             return pimienta;
         }
+
+        
 
     }
 }

@@ -175,7 +175,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\PresentacionContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -199,6 +198,9 @@
     <Content Include="Views\Sorteos\Details.cshtml" />
     <Content Include="Views\Sorteos\Edit.cshtml" />
     <Content Include="Views\Sorteos\Index.cshtml" />
+    <Content Include="Views\Viviendas\BuscarVivienda.cshtml" />
+    <Content Include="Views\Sorteos\Realizar.cshtml" />
+    <Content Include="Views\Sorteos\InscribirUsuario.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -208,6 +210,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Dominio\Dominio.csproj">

@@ -2,23 +2,10 @@
 
 CONSULTAS.
 
+1 - Que me explique como poner las viviendas. Vivienda Nueva y Vivienda Usada.
+2 - Listado de usuarios en Sorteos y de Sorteos en Usuarios.
 
-Esta en el practico. DropDownList. ViewModel.
-1 - Estado de kas Viviendas - de donde salen los estados? creo un modelo y que se guarde en la base de datos, para asi poder mostrarlo en la
-
-
-2 - Consultar sobre polimorfismo a la profe para las viviendas.
-
-
-
-3 - Al registrar una vivienda, si le pongo un barrio me lo crea.
-Practico 4 o 5 de busqueda. Para evitar que me gusrde el barrio otra vez. Hacer un atach para el barrio asi se da cuenta que existe.
-La otra opcion es marcar el barrio de la vivienda lo marcas como "Unchanged" db.Entry(nuevaVivienda.Barrio).State = EntityState.Unchanged.
-
-
-
-
-//SIN HACER	  
+3 - En la letra dice que al buscar la vivienda se puede "anotar" pero no hay un sorteo creado, que hacer con esto?
 
 
 
@@ -32,8 +19,8 @@ La otra opcion es marcar el barrio de la vivienda lo marcas como "Unchanged" db.
 ////////////// 
 TODO LISTO
 
-
-1   - Registrar en la base de datos las viviendas recibidas en los archivos de texto.
+//1
+1   - Registrar en la base de datos las viviendas recibidas en los archivos de texto.                           - DONE
 
 1.1 - Carga de Archivos - Link para cargar los archivos de texto (unicamente para el jefe (Rol Administrador)). - DONE
       Esto se almacenan en una carpeta llamada Archivos(raiz de la aplicacion MVC que estiona el sistema.       - DONE
@@ -47,11 +34,22 @@ barrios no tienen hay que agregarles uno.
 1.5 - Estado de las viviendas - El estado puede ser "Recibida", "Habilitada", "Inhabilitada" o "Soteada".       - DONE
       Al cargarlas  esdel archivo deberan quedar con eltado "Recibida".
 
+//2
+2   - Modificar el estado de una vivienda.   Se puede cambiar en: "Recibida", "Habilitada" o ""                 - DONE
+2.1 - El Jefe de la seccion podra: Cambiar el estado de la vivienda                                             - DONE
 
+
+//3
+3 - Preparacion del sorteo.
+3.1 - Crear el sorteto (Fehca, Hora, Barrio y Viviends del barrio habilitadas). Validar que la fecha sea posterior a la fecha actual.
+
+
+
+//5
 5 - Registro de postulantes.                                                                                    - DONE
 
 
-
+//9
 9 - Login y control de acceso a las funcionalidades.                                                            - DONE
 
 	  
@@ -59,10 +57,13 @@ barrios no tienen hay que agregarles uno.
 
 
 //IN PROGRESS
-
-2   - Modificar el estado de una vivienda.   Se puede cambiar en: "Recibida", "Habilitada" o ""                 - DONE
-2.1 - El Jefe de la seccion podra: Cambiar el estado de la vivienda                                             - DONE
 1.6 - Generalizacion - Armar con VIVIENDA como generico y despues herencia.
+
+4 - busqueda de viviendas. 
+4.1 - Busqueda de Viviendas, Filtrar por (Cantidad de Dormitorios, Rango precio, Barrio, estado, nueva o usada-)
+4.2 - Solo se fultra por 1 criterio a la vez. - incluyendo su precio final, cuota a pagar, cantidad de cuotas, impuestos que correspondan,
+datos del barrio, si es nueva o usada, etc.
+
 
 
 //SIN HACER	  
@@ -71,19 +72,14 @@ barrios no tienen hay que agregarles uno.
 
 
 
-3 - Preparacion del sorteo.
-3.1 - Crear el sorteto (Fehca, Hora, Barrio y Viviends del barrio habilitadas). Validar que la fecha sea posterior a la fecha actual.
 
 
 
 
-4 - busqueda de viviendas. 
-4.1 - Busqueda de Viviendas, Filtrar por (Cantidad de Dormitorios, Rango precio, Barrio, estado, nueva o usada-)
-4.2 - Solo se fultra por 1 criterio a la vez. - incluyendo su precio final, cuota a pagar, cantidad de cuotas, impuestos que correspondan,
-datos del barrio, si es nueva o usada, etc.
 
 
-6  - Inscribirce a un sorteo.
+
+6  - Inscribirce a un sorteo. - Durante la busqueda de vivienda.
 6.1 - Inscribirce a un sorteo. - Validar que ya no este inscripto. Validar que ya no este adjudicado en una vivienda anterior.
 
 

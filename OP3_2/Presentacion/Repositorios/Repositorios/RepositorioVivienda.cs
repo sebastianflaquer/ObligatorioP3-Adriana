@@ -61,13 +61,71 @@ namespace Dominio.Repositorios
         }
 
 
+        ////////////////////////////////////////////////////////////////////////////
+        //  BUSCAR POR
+
+        
+
+        //BUSCAR VIVIENDAS POR DORMITORIOS
+        public List<Vivienda> buscarViviendasPorDormitorios(string cantDorm)
+        {
+
+            List<Vivienda> listaViviendas = new List<Vivienda>();
+            int cantidad = Convert.ToInt32(cantDorm);
+
+
+            listaViviendas = db.Viviendas.Where(v => v.Dormitorios == cantidad).ToList();
+
+            return listaViviendas;
+        }
+
+        //BUSCAR VIVIENDAS POR RANGO
+        public List<Vivienda> buscarViviendasPorRango(decimal rangoMin, decimal rangoMax)  
+        {
+            List<Vivienda> listaViviendas = new List<Vivienda>();
+            listaViviendas = db.Viviendas.Where(v => v.PrecioFinal >= rangoMin && v.PrecioFinal <= rangoMax).ToList();
+            return listaViviendas;
+        }
+
+
         //BUSCAR VIVIENDAS POR BARRIO
-        public List<Vivienda> buscarViviendasPorBarrio(string nombreBarrio) {
+        public List<Vivienda> buscarViviendasPorBarrio(string nombreBarrio)
+        {
 
             List<Vivienda> listaViviendas = new List<Vivienda>();
 
             listaViviendas = db.Viviendas.Where(v => v.Barrio.Nombre == nombreBarrio).ToList();
-            
+
+            return listaViviendas;
+        }
+
+        //BUSCAR VIVIENDAS POR ESTADO
+        public List<Vivienda> buscarViviendasPorEstado(string estado)
+        {
+
+            List<Vivienda> listaViviendas = new List<Vivienda>();
+
+            listaViviendas = db.Viviendas.Where(v => v.Estado == estado).ToList();
+
+            return listaViviendas;
+        }
+
+        //BUSCAR VIVIENDAS NUEVAS
+        public List<ViviendaNueva> buscarViviendasNuevas(string tipo)
+        {
+            //buscarViviendasNuevas();
+            List<ViviendaNueva> listaViviendas = new List<ViviendaNueva>();
+            listaViviendas = db.ViviendasNueva.ToList();
+
+            return listaViviendas;
+        }
+
+        //BUSCAR VIVIENDAS USADAS
+        public List<ViviendaUsada> buscarViviendasUsadas(string tipo)
+        {   
+            List<ViviendaUsada> listaViviendas = new List<ViviendaUsada>();
+            listaViviendas = db.ViviendasUsada.ToList();
+
             return listaViviendas;
         }
 
@@ -76,26 +134,19 @@ namespace Dominio.Repositorios
         {
             db.Entry(vivienda).State = EntityState.Modified;
             db.SaveChanges();
-
             return true;
         }
 
-
-
+        //LEER ARCHIVO VIVIENDAS REPO
         public void leerArchivoViviendasRepo(List<string> linesViviendas) {
-
             List<Vivienda> listaViviendas = new List<Vivienda>();
-
             foreach (var line in linesViviendas)
             {
                 string[] entries = line.Split('#');
-
                 ViviendaNueva vivN = new ViviendaNueva();
                 ViviendaUsada vivU = new ViviendaUsada();
-
                 if (entries[10].ToString() == "N")
                 {
-
                     string nombreBarrio = entries[3].ToString();
                     //Barrio bar = new Barrio();
                     Barrio bar = repoBar.FindByName(nombreBarrio);
@@ -146,9 +197,7 @@ namespace Dominio.Repositorios
                 //Id#calle#numeroPuerta#nombreBarrio#descripcion#baños#dormitorios#metraje#año#preciofinal#tipo#montoContribucion
                 //CARGA EL BARRIO
             }
-
             AgregarListaVivienda(listaViviendas);
-
         }
 
 
