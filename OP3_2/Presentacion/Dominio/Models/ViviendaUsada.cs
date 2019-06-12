@@ -7,6 +7,7 @@ namespace Dominio.Models
 {
     public class ViviendaUsada : Vivienda
     {
-        public string Tipo { get; set; }
+
+        public decimal Contribucion { get; set; }
     }
 }

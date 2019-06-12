@@ -8,7 +8,7 @@ using System.Web;
 namespace Dominio.Models
 {
     [Table("Viviendas")]
-    public class Vivienda
+    public abstract class Vivienda
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
@@ -16,7 +16,8 @@ namespace Dominio.Models
 
         //[DataType(DataType.Text.Equals{Recibida”, “Habilitada”, “Inhabilitada” o “Sorteada})]
         public string Estado { get; set; }
-        
+
+        public string Tipo { get; set; }
 
         [MaxLength(50)]
         public string Calle { get; set; }
@@ -39,7 +40,7 @@ namespace Dominio.Models
 
         public decimal PrecioFinal { get; set; }
 
-        public decimal Contribucion { get; set; }
+        
 
         // This property will hold all available states for selection
         [NotMapped]
