@@ -124,9 +124,9 @@
     <Compile Include="Models\Parametro.cs" />
     <Compile Include="Models\Sorteo.cs" />
     <Compile Include="Models\Usuario.cs" />
-    <Compile Include="Models\UsuarioSorteo.cs" />
     <Compile Include="Models\Vivienda.cs" />
     <Compile Include="Models\ViviendaNueva.cs" />
+    <Compile Include="Models\ViviendasViewModel.cs" />
     <Compile Include="Models\ViviendaUsada.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

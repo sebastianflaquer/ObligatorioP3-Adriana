@@ -200,8 +200,6 @@ namespace Presentacion.Controllers
         private bool LeerArchivoViviendas()
         {
             //VIVIENDAS
-            
-
             string pathViviendas = Server.MapPath("~/Archivos/Viviendas.txt");
             List<string> linesViviendas = System.IO.File.ReadAllLines(pathViviendas, System.Text.Encoding.UTF8).ToList();
 
@@ -215,7 +213,8 @@ namespace Presentacion.Controllers
         public ActionResult ListaCarga(){
             ListaBarrioViviendaViewModel modelo = new ListaBarrioViviendaViewModel();
             modelo.barrios = repoBar.FindAll().ToList();
-            modelo.viviendas = repoViv.FindAll().ToList();
+            modelo.viviendasNuevas = repoViv.FindAllNuevas().ToList();
+            modelo.viviendasUsadas = repoViv.FindAllUsadas().ToList();
             return View(modelo);
         }
 

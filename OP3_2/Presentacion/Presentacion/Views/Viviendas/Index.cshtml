@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Dominio.Models.Vivienda>
+﻿@model Dominio.Models.ViviendasViewModel
 
 @{
     ViewBag.Title = "Index";
@@ -9,82 +9,163 @@
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
+
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Id)
+            Id
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Estado)
+            Tipo
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Calle)
+            Estado
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Numero)
+            Calle
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Barrio)
+            Num
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Descripcion)
+            Barrio
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Banios)
+            Descripcion
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Dormitorios)
+            Baños
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Metraje)
+            Dorm
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Anio)
+            Metraje
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.PrecioFinal)
+            Anio
         </th>
+        <th>
+            Precio Final
+        </th>
+        <th>
+            Contribucion
+        </th>
+        <th>Cant Cuotas</th>
+        <th>Precio Cuotas</th>
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Id)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Calle)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Numero)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Barrio.Nombre)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Descripcion)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Banios)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Dormitorios)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Metraje)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Anio)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PrecioFinal)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model.listaViviendasNuevas)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Tipo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Estado)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Calle)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Numero)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Barrio.Nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Descripcion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Banios)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Dormitorios)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Metraje)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Anio)
+            </td>
+            <td>
+                UI: @Html.DisplayFor(modelItem => item.PrecioFinal)
+            </td>
+            <th>
+                No Paga
+            </th>
+            <th>
+                @Html.DisplayFor(modelItem => item.CantCuotas)
+            </th>
+            <th>
+                $: @Html.DisplayFor(modelItem => item.ValorCuota)
+            </th>
+            <td>
+                @Html.ActionLink("Edit", "EditNueva", new {id = item.Id }, new { @class = "btn btn-primary" }) |
+                @Html.ActionLink("Details", "DetailsNueva", new { id = item.Id }) |
+                @Html.ActionLink("Delete", "DeleteNueva", new { id = item.Id })
+            </td>
+        </tr>
+    }
+
+    @foreach (var item in Model.listaViviendasUsadas)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Tipo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Estado)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Calle)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Numero)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Barrio.Nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Descripcion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Banios)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Dormitorios)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Metraje)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Anio)
+            </td>
+            <td>
+                USD: @Html.DisplayFor(modelItem => item.PrecioFinal)
+            </td>
+            <td>
+                $: @Html.DisplayFor(modelItem => item.Contribucion)
+            </td>
+            <th>
+                @Html.DisplayFor(modelItem => item.CantCuotas)
+            </th>
+            <th>
+                $: @Html.DisplayFor(modelItem => item.ValorCuota)
+            </th>
+            <td>
+                @Html.ActionLink("Edit", "EditUsada", new { id = item.Id }, new { @class = "btn btn-primary" }) |
+                @Html.ActionLink("Details", "DetailsUsada", new {id = item.Id }) |
+                @Html.ActionLink("Delete", "DeleteUsada", new { @class = "btn btn-primary", id = item.Id })
+            </td>
+        </tr>
+    }
 
 </table>

@@ -21,7 +21,11 @@ namespace Presentacion.Controllers
         // GET: Viviendas
         public ActionResult Index()
         {
-            return View(repoViv.FindAll().ToList());
+            ViviendasViewModel modelo = new ViviendasViewModel();
+            modelo.listaViviendasNuevas = repoViv.FindAllNuevas().ToList();
+            modelo.listaViviendasUsadas = repoViv.FindAllUsadas().ToList();
+
+            return View(modelo);
         }
 
         // GET: Viviendas/Details/5
@@ -39,6 +43,19 @@ namespace Presentacion.Controllers
                 return HttpNotFound();
             }
             return View(vivienda);
+        }
+
+
+        //GET: Viviendas/CreateNueva
+        public ActionResult CreateNueva()
+        {
+            return View();
+        }
+
+        //GET: Viviendas/CreateUsada
+        public ActionResult CreateUsada()
+        {
+            return View();
         }
 
         // GET: Viviendas/Create
@@ -151,6 +168,78 @@ namespace Presentacion.Controllers
             return Json(listaViviendas, JsonRequestBehavior.AllowGet);
         }
         
+        
+
+        // GET: Viviendas/Details/5
+        public ActionResult ModificarViviendaDetails(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            Vivienda vivienda = repoViv.FindById(id);
+
+            if (vivienda == null)
+            {
+                return HttpNotFound();
+            }
+            return View(vivienda);
+        }
+
+
+        // POST: Viviendas/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Modificar([Bind(Include = "Id,Habilitada")] Vivienda vivienda)
+        {
+            if (ModelState.IsValid)
+            {
+                repoViv.Update(vivienda);
+
+                return RedirectToAction("Index");
+            }
+            return View(vivienda);
+        }
+
+        //BUSCAR VIVIENDA
+        public ActionResult BuscarVivienda() {
+
+            List<SelectListItem> newList = new List<SelectListItem>();
+            List<Barrio> listaBarrios = repoBar.FindAll().ToList();
+            foreach (var item in listaBarrios)
+            {
+                SelectListItem itemList = new SelectListItem { Text = item.Nombre, Value = item.Nombre };
+                newList.Add(itemList);
+            }
+
+            ViewData["listaBarrios"] = newList;
+            
+            return View(repoViv.FindAll().ToList());
+        }
+        
+        //LISTA CARGA
+        public ActionResult BuscarViviendaTodas()
+        {
+            ViviendasViewModel modelo = new ViviendasViewModel();
+
+            List<SelectListItem> newList = new List<SelectListItem>();
+            List<Barrio> listaBarrios = repoBar.FindAll().ToList();
+            foreach (var item in listaBarrios)
+            {
+                SelectListItem itemList = new SelectListItem { Text = item.Nombre, Value = item.Nombre };
+                newList.Add(itemList);
+            }
+
+            ViewData["listaBarrios"] = newList;
+
+            modelo.listaViviendasNuevas = repoViv.FindAllNuevas().ToList();
+            modelo.listaViviendasUsadas = repoViv.FindAllUsadas().ToList();
+            return View(modelo);
+        }
+
         //AJAX
         //BUSCAR VVIENDA DATA
         public JsonResult BuscarViviendaData(string BuscarPor, string SearchValue)
@@ -174,7 +263,8 @@ namespace Presentacion.Controllers
                     decimal min = 0;
                     decimal max = 0;
 
-                    if (SearchValue == "1") {
+                    if (SearchValue == "1")
+                    {
                         min = 0;
                         max = Convert.ToDecimal("50000.00");
                     }
@@ -217,78 +307,10 @@ namespace Presentacion.Controllers
                     Console.WriteLine("{0}  Error al buscar la vivienda - estado", SearchValue);
                 }
             }
-            //else if (BuscarPor == "5") //TIPO
-            //{ 
-            //    try
-            //    {
-            //        if (SearchValue == "M") {
-            //            listaViviendas = repoViv.buscarViviendasNuevas.ToList();
-            //        }
-            //        else {
-            //            listaViviendas = repoViv.buscarViviendasUsadas.ToString();
-            //        }
-                    
-            //    }
-            //    catch (FormatException)
-            //    {
-            //        Console.WriteLine("{0}  Error al buscar la vivienda - tipo", SearchValue);
-            //    }
-            //}
 
             return Json(listaViviendas, JsonRequestBehavior.AllowGet);
         }
 
-        // GET: Viviendas/Details/5
-        public ActionResult ModificarViviendaDetails(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-
-            Vivienda vivienda = repoViv.FindById(id);
-
-            if (vivienda == null)
-            {
-                return HttpNotFound();
-            }
-            return View(vivienda);
-        }
-
-
-        // POST: Viviendas/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Modificar([Bind(Include = "Id,Habilitada")] Vivienda vivienda)
-        {
-            if (ModelState.IsValid)
-            {
-                repoViv.Update(vivienda);
-
-                return RedirectToAction("Index");
-            }
-            return View(vivienda);
-        }
-
-        //BUSCAR VIVIENDA
-        public ActionResult BuscarVivienda() {
-
-
-            List<SelectListItem> newList = new List<SelectListItem>();
-            List<Barrio> listaBarrios = repoBar.FindAll().ToList();
-            foreach (var item in listaBarrios)
-            {
-                SelectListItem itemList = new SelectListItem { Text = item.Nombre, Value = item.Nombre };
-                newList.Add(itemList);
-            }
-
-            ViewData["listaBarrios"] = newList;
-            
-            return View(repoViv.FindAll().ToList());
-        }
-        
 
         protected override void Dispose(bool disposing)
         {

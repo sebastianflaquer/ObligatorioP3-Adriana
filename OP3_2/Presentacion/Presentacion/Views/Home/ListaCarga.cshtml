@@ -42,10 +42,12 @@
         <th>
             Precio Final
         </th>
-        <th></th>
+        <th>
+            Contribucion
+        </th>
     </tr>
 
-    @foreach (var item in Model.viviendas)
+    @foreach (var item in Model.viviendasNuevas)
     {
         <tr>
             <td>
@@ -79,7 +81,52 @@
                 @Html.DisplayFor(modelItem => item.Anio)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.PrecioFinal)
+                UI: @Html.DisplayFor(modelItem => item.PrecioFinal)
+            </td>
+            <th>
+                No Paga
+            </th>
+        </tr>
+    }
+
+    @foreach (var item in Model.viviendasUsadas)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Estado)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Calle)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Numero)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Barrio.Nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Descripcion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Banios)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Dormitorios)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Metraje)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Anio)
+            </td>
+            <td>
+                USD: @Html.DisplayFor(modelItem => item.PrecioFinal)
+            </td>
+            <td>
+                $: @Html.DisplayFor(modelItem => item.Contribucion)
             </td>
         </tr>
     }

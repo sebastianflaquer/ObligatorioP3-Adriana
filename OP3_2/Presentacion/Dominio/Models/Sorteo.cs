@@ -26,6 +26,7 @@ namespace Dominio.Models
         
         public virtual Vivienda Viv { get; set; }
         //public virtual Usuario Usu { get; set; }
-        public virtual ICollection<UsuarioSorteo> UsuarioSorteo { get; set; }
+
+        public virtual ICollection<Usuario> listaUsuarios { get; set; }
     }
 }

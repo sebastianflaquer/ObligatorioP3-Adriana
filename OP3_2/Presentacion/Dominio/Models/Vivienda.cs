@@ -37,14 +37,22 @@ namespace Dominio.Models
         public int Metraje { get; set; }
         
         public int Anio { get; set; }
-
+        
         public decimal PrecioFinal { get; set; }
 
-        
-
-        // This property will hold all available states for selection
         [NotMapped]
-        public IEnumerable<string> Estados { get; set; }
+        public decimal ValorCuota{ get; set; }
+        [NotMapped]
+        public int CantCuotas { get; set; }
+        
+        //CALCULAR VALOR CUOTA
+        public decimal calcValorCuota(int anios, decimal moneda) {
+
+            ValorCuota = PrecioFinal / (anios * 12);
+            ValorCuota = ValorCuota * moneda;
+
+            return ValorCuota;
+        }
 
         //INSERTAR VIVIENDA
         internal virtual bool Insertar()

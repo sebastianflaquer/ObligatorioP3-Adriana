@@ -43,7 +43,7 @@ namespace Dominio.Models
 
         public string Salt { get; set; }
 
-        public virtual ICollection<UsuarioSorteo> UsuarioSorteo { get; set; }
+        public virtual ICollection<Sorteo> listaSorteos { get; set; }
 
         //ENCRIPTAR PASS
         public static string EncriptarPass(string passwordIngreso, string salt, string pimienta)

@@ -7,7 +7,8 @@ namespace Dominio.Models
 {
     public class ListaBarrioViviendaViewModel
     {
-        public IEnumerable<Vivienda> viviendas { get; set;}
+        public IEnumerable<ViviendaNueva> viviendasNuevas { get; set;}
+        public IEnumerable<ViviendaUsada> viviendasUsadas { get; set; }
         public IEnumerable<Barrio> barrios { get; set;}
 
     }

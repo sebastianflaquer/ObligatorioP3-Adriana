@@ -50,6 +50,45 @@ namespace Dominio.Repositorios
         {
             List<Vivienda> listaViviendas = db.Viviendas.ToList();
 
+
+            return listaViviendas;
+        }
+
+        //FIND ALL
+        public IEnumerable<ViviendaNueva> FindAllNuevas()
+        {
+            Parametro paraAnios = db.Parametros.Where(p => p.Nombre == "plazoUsada").FirstOrDefault();
+            int anios = Convert.ToInt32(paraAnios.Valor);
+
+            Parametro paraMoneda = db.Parametros.Where(p => p.Nombre == "cotizacionUI").FirstOrDefault();
+            int moneda = Convert.ToInt32(paraMoneda.Valor);
+
+            List<ViviendaNueva> listaViviendas = db.ViviendasNueva.ToList();
+            foreach (var viv in listaViviendas)
+            {
+                viv.calcValorCuota(anios, moneda);
+                viv.CantCuotas = (anios * 12);
+            }
+
+            return listaViviendas;
+        }
+
+        //FIND ALL
+        public IEnumerable<ViviendaUsada> FindAllUsadas()
+        {
+            Parametro paraAnios = db.Parametros.Where(p => p.Nombre == "plazoUsada").FirstOrDefault();
+            int anios = Convert.ToInt32(paraAnios.Valor);
+
+            Parametro paraMoneda = db.Parametros.Where(p => p.Nombre == "cotizacionUSD").FirstOrDefault();
+            int moneda = Convert.ToInt32(paraMoneda.Valor);
+
+            List<ViviendaUsada> listaViviendas = db.ViviendasUsada.ToList();
+            foreach (var viv in listaViviendas)
+            {
+                viv.calcValorCuota(anios, moneda);
+                viv.CantCuotas = (anios * 12);
+            }
+
             return listaViviendas;
         }
 
@@ -163,8 +202,6 @@ namespace Dominio.Repositorios
                     vivN.Anio = Convert.ToInt32(entries[8]);
                     vivN.PrecioFinal = Convert.ToDecimal(entries[9]);
                     vivN.Tipo = entries[10];
-                    vivN.Contribucion = Convert.ToDecimal(entries[11]);
-
                     Vivienda vivEncontrada = FindById(vivN.Id);
 
                     listaViviendas.Add(vivN);
@@ -226,16 +263,7 @@ namespace Dominio.Repositorios
                         db.SaveChanges();
                     }
                 }
-                ////buscamos la Reserva y le agregamos la calificacion al alojamiento
-                //Reserva res = db.Reservas.Find(ReservaId);
-                //newCalificacion.Alojamiento = res.Anuncio.Alojamiento;
-                //Registrado reg = db.Registrados.Find(Session["id"]);
-                //newCalificacion.Registrado = reg;
-                //db.Calificaciones.Add(newCalificacion);
-                //db.SaveChanges();
             }
-
-            
         }
 
         //VALIDAR VIVIENDAS
@@ -264,7 +292,7 @@ namespace Dominio.Repositorios
             bool metrajeValido = ValidarEnteros(viv.Metraje);
             bool precioFinalValido = ValidarEnteros(viv.PrecioFinal);
             bool tipoValido = true;//ValidarTextos(viv.Tipo, 1, 50);
-            bool montoContribucionValido = ValidarEnteros(viv.Contribucion);
+            bool montoContribucionValido = true;//ValidarEnteros(viv.Contribucion);
 
             if (calleValido && numeroPuertaValido && nombreBarrioValido && descripcionValido && baniosValido && dormitoriosValido && metrajeValido && precioFinalValido && tipoValido && montoContribucionValido) {
                 esValido = true;
@@ -365,9 +393,5 @@ namespace Dominio.Repositorios
         {
             db.Dispose();
         }
-
-        
-
-
     }
 }
