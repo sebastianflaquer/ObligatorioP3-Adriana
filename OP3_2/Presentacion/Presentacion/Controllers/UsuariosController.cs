@@ -18,32 +18,52 @@ namespace Presentacion.Controllers
         // GET: Usuarios
         public ActionResult Index()
         {
-            //return View();
-            return View(repoUsu.FindAll());
+            if (Session["rol"].ToString() == "Jefe") //Si esta logeado
+            {
+                return View(repoUsu.FindAll());
+            }
+            else //Si no esta logeado
+            {
+                return RedirectToAction("../Home");
+            }
         }
 
         // GET: Usuarios/Details/5
         public ActionResult Details(int? id)
         {
-            if (id == null)
+            if (Session["rol"].ToString() == "Jefe") //Si esta logeado
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+
+                Usuario usuario = repoUsu.FindById(id);
+                //Usuario usuario = db.Usuarios.Find(id);
+
+                if (usuario == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(usuario);
             }
-
-            Usuario usuario = repoUsu.FindById(id);
-            //Usuario usuario = db.Usuarios.Find(id);
-
-            if (usuario == null)
+            else //Si no esta logeado
             {
-                return HttpNotFound();
+                return RedirectToAction("../Home");
             }
-            return View(usuario);
         }
 
         // GET: Usuarios/Create
         public ActionResult Create()
         {
-            return View();
+            if (Session["rol"].ToString() == "Jefe") //Si esta logeado
+            {
+                return View();
+            }
+            else //Si no esta logeado
+            {
+                return RedirectToAction("../Home");
+            }
         }
 
         // POST: Usuarios/Create
@@ -82,18 +102,25 @@ namespace Presentacion.Controllers
         // GET: Usuarios/Edit/5
         public ActionResult Edit(int? id)
         {
-            if (id == null)
+            if (Session["rol"].ToString() == "Jefe") //Si esta logeado
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
 
-            Usuario usuario = repoUsu.FindById(id);
-            //Usuario usuario = db.Usuarios.Find(id);
-            if (usuario == null)
-            {
-                return HttpNotFound();
+                Usuario usuario = repoUsu.FindById(id);
+                //Usuario usuario = db.Usuarios.Find(id);
+                if (usuario == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(usuario);
             }
-            return View(usuario);
+            else //Si no esta logeado
+            {
+                return RedirectToAction("../Home");
+            }
         }
 
         // POST: Usuarios/Edit/5
@@ -116,17 +143,25 @@ namespace Presentacion.Controllers
         // GET: Usuarios/Delete/5
         public ActionResult Delete(int? id)
         {
-            if (id == null)
+            if (Session["rol"].ToString() == "Jefe") //Si esta logeado
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Usuario usuario = repoUsu.FindById(id);
+                //Usuario usuario = db.Usuarios.Find(id);
+                if (usuario == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(usuario);
             }
-            Usuario usuario = repoUsu.FindById(id);
-            //Usuario usuario = db.Usuarios.Find(id);
-            if (usuario == null)
+            else //Si no esta logeado
             {
-                return HttpNotFound();
+                return RedirectToAction("../Home");
             }
-            return View(usuario);
+           
         }
 
         // POST: Usuarios/Delete/5

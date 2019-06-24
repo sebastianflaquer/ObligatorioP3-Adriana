@@ -18,28 +18,49 @@ namespace Presentacion.Controllers
         // GET: Barrios
         public ActionResult Index()
         {
-            return View(repoBar.FindAll().ToList());
+            if (Session["rol"].ToString() == "Jefe") //Si esta logeado
+            {
+                return View(repoBar.FindAll().ToList());
+            }
+            else //Si no esta logeado
+            {
+                return RedirectToAction("../Home");
+            }
         }
 
         // GET: Barrios/Details/5
         public ActionResult Details(int? id)
         {
-            if (id == null)
+            if (Session["rol"].ToString() == "Jefe") //Si esta logeado
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Barrio barrio = repoBar.FindById(id);
+                if (barrio == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(barrio);
             }
-            Barrio barrio = repoBar.FindById(id);
-            if (barrio == null)
+            else //Si no esta logeado
             {
-                return HttpNotFound();
+                return RedirectToAction("../Home");
             }
-            return View(barrio);
         }
 
         // GET: Barrios/Create
         public ActionResult Create()
         {
-            return View();
+            if (Session["rol"].ToString() == "Jefe") //Si esta logeado
+            {
+                return View();
+            }
+            else //Si no esta logeado
+            {
+                return RedirectToAction("../Home");
+            }
         }
 
         // POST: Barrios/Create
@@ -61,16 +82,24 @@ namespace Presentacion.Controllers
         // GET: Barrios/Edit/5
         public ActionResult Edit(int? id)
         {
-            if (id == null)
+
+            if (Session["rol"].ToString() == "Jefe") //Si esta logeado
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Barrio barrio = repoBar.FindById(id);
+                if (barrio == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(barrio);
             }
-            Barrio barrio = repoBar.FindById(id);
-            if (barrio == null)
+            else //Si no esta logeado
             {
-                return HttpNotFound();
+                return RedirectToAction("../Home");
             }
-            return View(barrio);
         }
 
         // POST: Barrios/Edit/5
@@ -92,16 +121,23 @@ namespace Presentacion.Controllers
         // GET: Barrios/Delete/5
         public ActionResult Delete(int? id)
         {
-            if (id == null)
+            if (Session["rol"].ToString() == "Jefe") //Si esta logeado
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Barrio barrio = repoBar.FindById(id);
+                if (barrio == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(barrio);
             }
-            Barrio barrio = repoBar.FindById(id);
-            if (barrio == null)
+            else //Si no esta logeado
             {
-                return HttpNotFound();
+                return RedirectToAction("../Home");
             }
-            return View(barrio);
         }
 
         // POST: Barrios/Delete/5

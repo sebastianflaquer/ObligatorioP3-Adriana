@@ -27,37 +27,59 @@ namespace Presentacion.Controllers
         // GET: Sorteos
         public ActionResult Realizar()
         {
-            return View(repoSor.FindAll().ToList());
+            if (Session["rol"].ToString() == "Jefe") //Si esta logeado
+            {
+                return View(repoSor.FindAll().ToList());
+            }
+            else //Si no esta logeado
+            {
+                return RedirectToAction("../Home/Login");
+            }
+           
         }
 
         // GET: Sorteos/Details/5
         public ActionResult Details(int? id)
         {
-            if (id == null)
+            if (Session["rol"].ToString() == "Jefe") //Si esta logeado
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Sorteo sorteo = repoSor.FindById(id);
+                if (sorteo == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(sorteo);
             }
-            Sorteo sorteo = repoSor.FindById(id);
-            if (sorteo == null)
+            else //Si no esta logeado
             {
-                return HttpNotFound();
+                return RedirectToAction("../Home");
             }
-            return View(sorteo);
         }
 
         // GET: Sorteos/Create
         public ActionResult Create()
         {
-            List<SelectListItem> newList = new List<SelectListItem>();
-            List<Barrio> listaBarrios = repoBar.FindAll().ToList();
-            foreach (var item in listaBarrios)
+            if (Session["rol"].ToString() == "Jefe") //Si esta logeado
             {
-                SelectListItem itemList = new SelectListItem { Text = item.Nombre, Value = item.Nombre};
-                newList.Add(itemList);
-            }
-            ViewData["listaBarrios"] = newList;
+                List<SelectListItem> newList = new List<SelectListItem>();
+                List<Barrio> listaBarrios = repoBar.FindAll().ToList();
+                foreach (var item in listaBarrios)
+                {
+                    SelectListItem itemList = new SelectListItem { Text = item.Nombre, Value = item.Nombre };
+                    newList.Add(itemList);
+                }
+                ViewData["listaBarrios"] = newList;
 
-            return View();
+                return View();
+            }
+            else //Si no esta logeado
+            {
+                return RedirectToAction("../Home");
+            }
         }
 
         //AJAX
@@ -88,16 +110,23 @@ namespace Presentacion.Controllers
         // GET: Sorteos/Edit/5
         public ActionResult InscribirUsuario(int? id)
         {
-            if (id == null)
+            if (Session["rol"].ToString() == "Jefe") //Si esta logeado
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Sorteo sorteo = repoSor.FindById(id);
+                if (sorteo == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(sorteo);
             }
-            Sorteo sorteo = repoSor.FindById(id);
-            if (sorteo == null)
+            else //Si no esta logeado
             {
-                return HttpNotFound();
+                return RedirectToAction("../Home");
             }
-            return View(sorteo);
         }
 
         //POST
@@ -120,16 +149,28 @@ namespace Presentacion.Controllers
         // GET: Sorteos/Edit/5
         public ActionResult Edit(int? id)
         {
-            if (id == null)
+            if (Session["rol"].ToString() == "Jefe") //Si esta logeado
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Sorteo sorteo = repoSor.FindById(id);
+                if (sorteo == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(sorteo);
             }
-            Sorteo sorteo = repoSor.FindById(id);
-            if (sorteo == null)
+            else //Si no esta logeado
             {
-                return HttpNotFound();
+                return RedirectToAction("../Home");
             }
-            return View(sorteo);
+
+
+
+
+            
         }
 
 
@@ -154,16 +195,23 @@ namespace Presentacion.Controllers
         // GET: Sorteos/Delete/5
         public ActionResult Delete(int? id)
         {
-            if (id == null)
+            if (Session["rol"].ToString() == "Jefe") //Si esta logeado
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Sorteo sorteo = repoSor.FindById(id);
+                if (sorteo == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(sorteo);
             }
-            Sorteo sorteo = repoSor.FindById(id);
-            if (sorteo == null)
+            else //Si no esta logeado
             {
-                return HttpNotFound();
+                return RedirectToAction("../Home");
             }
-            return View(sorteo);
         }
 
         // POST: Sorteos/Delete/5

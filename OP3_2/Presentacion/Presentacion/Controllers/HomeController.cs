@@ -117,7 +117,14 @@ namespace Presentacion.Controllers
 
         //LEER ARHIVO
         public ActionResult LeerArchivo() {
-            return View();
+            if (Session["rol"].ToString() == "Jefe") //Si esta logeado
+            {
+                return View();
+            }
+            else //Si no esta logeado
+            {   
+                return RedirectToAction("../Home");
+            }
         }
         
         //LEER ARCHIVOS EXTO

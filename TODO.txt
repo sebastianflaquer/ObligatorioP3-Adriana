@@ -3,6 +3,7 @@
 CONSULTAS.
 
 1 - Que me explique como poner las viviendas. Vivienda Nueva y Vivienda Usada.
+
 2 - Listado de usuarios en Sorteos y de Sorteos en Usuarios.
 
 3 - En la letra dice que al buscar la vivienda se puede "anotar" pero no hay un sorteo creado, que hacer con esto?
@@ -57,6 +58,7 @@ barrios no tienen hay que agregarles uno.
 
 
 //IN PROGRESS
+
 1.6 - Generalizacion - Armar con VIVIENDA como generico y despues herencia.
 
 4 - busqueda de viviendas. 
@@ -69,28 +71,19 @@ datos del barrio, si es nueva o usada, etc.
 //SIN HACER	  
 
 
-
-
-
-
-
-
-
-
-
-
 6  - Inscribirce a un sorteo. - Durante la busqueda de vivienda.
 6.1 - Inscribirce a un sorteo. - Validar que ya no este inscripto. Validar que ya no este adjudicado en una vivienda anterior.
-
 
 7  - Visualizacion de los sorteos.
 7.1 - Lista de los Sorteos. (Primero los NO realizados ordenados por fecha ascendente) y debajo los realizados (ordenados tambien por fechas descendentes)
 7.2 - Si el que ve la lista es el jefe, aparece un boton en los sorteos que son ese dia. para realizar el sorteo.
 
-
 8 - Realizacion del sorteo.
 
 8.1 - Lista de los postulantes ordenada alfabeticamente. Y se genera un numero entero randomicamente. Ese numero inicia en 1 y la cantidad de postulantes para esa vivienda.
+
+
+
 
 
 
