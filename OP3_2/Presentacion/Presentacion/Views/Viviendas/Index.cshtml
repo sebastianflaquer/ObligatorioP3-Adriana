@@ -105,9 +105,9 @@
                 $: @Html.DisplayFor(modelItem => item.ValorCuota)
             </th>
             <td>
-                @Html.ActionLink("Edit", "EditNueva", new {id = item.Id }, new { @class = "btn btn-primary" }) |
-                @Html.ActionLink("Details", "DetailsNueva", new { id = item.Id }) |
-                @Html.ActionLink("Delete", "DeleteNueva", new { id = item.Id })
+                @Html.ActionLink("Edit", "Edit", new {id = item.Id }, new { @class = "btn btn-primary" }) |
+                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
             </td>
         </tr>
     }
@@ -161,9 +161,9 @@
                 $: @Html.DisplayFor(modelItem => item.ValorCuota)
             </th>
             <td>
-                @Html.ActionLink("Edit", "EditUsada", new { id = item.Id }, new { @class = "btn btn-primary" }) |
-                @Html.ActionLink("Details", "DetailsUsada", new {id = item.Id }) |
-                @Html.ActionLink("Delete", "DeleteUsada", new { @class = "btn btn-primary", id = item.Id })
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-primary" }) |
+                @Html.ActionLink("Details", "Details", new {id = item.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { @class = "btn btn-primary", id = item.Id })
             </td>
         </tr>
     }

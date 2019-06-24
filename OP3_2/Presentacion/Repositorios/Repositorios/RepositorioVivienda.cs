@@ -178,7 +178,11 @@ namespace Dominio.Repositorios
 
         //LEER ARCHIVO VIVIENDAS REPO
         public void leerArchivoViviendasRepo(List<string> linesViviendas) {
-            List<Vivienda> listaViviendas = new List<Vivienda>();
+            //List<Vivienda> listaViviendas = new List<Vivienda>();
+
+            List<ViviendaNueva> listaViviendasNuevas = new List<ViviendaNueva>();
+            List<ViviendaUsada> listaViviendasUsadas = new List<ViviendaUsada>();
+
             foreach (var line in linesViviendas)
             {
                 string[] entries = line.Split('#');
@@ -204,7 +208,8 @@ namespace Dominio.Repositorios
                     vivN.Tipo = entries[10];
                     Vivienda vivEncontrada = FindById(vivN.Id);
 
-                    listaViviendas.Add(vivN);
+                    listaViviendasNuevas.Add(vivN);
+                    //listaViviendas.Add(vivN);
 
                 }
                 else {
@@ -228,30 +233,51 @@ namespace Dominio.Repositorios
 
                     Vivienda vivEncontrada = FindById(vivU.Id);
 
-                    listaViviendas.Add(vivU);
+                    listaViviendasUsadas.Add(vivU);
+                    //listaViviendas.Add(vivU);
                 }
                 // 0   1       2            3              4       5        6        7      8      9        10      11
                 //Id#calle#numeroPuerta#nombreBarrio#descripcion#baños#dormitorios#metraje#año#preciofinal#tipo#montoContribucion
                 //CARGA EL BARRIO
             }
-            AgregarListaVivienda(listaViviendas);
+
+            AgregarListaVivienda(listaViviendasNuevas, listaViviendasUsadas);
         }
 
 
 
         //AGREGAR LISTA VIVIENDAS
-        public void AgregarListaVivienda(List<Vivienda> listaVivienda) {
+        public void AgregarListaVivienda(List<ViviendaNueva> listaViviendaNuevas, List<ViviendaUsada> listaViviendaUsadas) {
 
             using (var db = new OP3_2Context())
             {
-                foreach (Vivienda viv in listaVivienda)
+                foreach (ViviendaNueva viv in listaViviendaNuevas){
+
+                    //validar si no existe esa vivienda
+                    var existe = db.Viviendas.Where(v => v.Id == viv.Id).FirstOrDefault();
+
+                    bool esValido = ValidarViviendaNueva(viv);
+                    
+
+                    if (existe == null && esValido)
+                    {
+                        Barrio bar = db.Barrios.Find(viv.Barrio.Id);
+                        viv.Barrio = bar;
+                        //db.Entry(viv.Barrio).State = EntityState.Modified;
+                        //db.Barrios.Attach(viv.Barrio);
+                        db.Viviendas.Add(viv);
+                        db.SaveChanges();
+                    }
+                }
+
+                foreach (ViviendaUsada viv in listaViviendaUsadas)
                 {
 
                     //validar si no existe esa vivienda
                     var existe = db.Viviendas.Where(v => v.Id == viv.Id).FirstOrDefault();
 
-                    //validar que sea valido
-                    bool esValido = ValidarVivienda(viv);
+                    bool esValido = ValidarViviendaUsada(viv);
+
 
                     if (existe == null && esValido)
                     {
@@ -267,18 +293,56 @@ namespace Dominio.Repositorios
         }
 
         //VALIDAR VIVIENDAS
-        public bool ValidarVivienda(Vivienda viv)
+        //public bool ValidarVivienda(Vivienda viv)
+        //{
+        //    bool esValido = false;
+
+        //    // 0   1       2            3              4       5        6        7      8      9        10      11
+        //    //Id#calle#numeroPuerta#nombreBarrio#descripcion#baños#dormitorios#metraje#año#preciofinal#tipo#montoContribucion
+
+        //    bool calleValido = ValidarTextos(viv.Calle, 3, 50);
+        //    bool numeroPuertaValido = ValidarTextos(viv.Numero, 1, 50);
+
+        //    bool nombreBarrioValido = false;
+        //    if (viv.Barrio != null) {
+        //        var validarBar = db.Barrios.Where(b => b.Nombre == viv.Barrio.Nombre).FirstOrDefault();
+        //        if (validarBar != null)
+        //        {
+        //            nombreBarrioValido = true;
+        //        }
+        //    }
+
+        //    bool descripcionValido = ValidarTextos(viv.Descripcion, 3, 250);
+        //    bool baniosValido = ValidarEnteros(viv.Banios);
+        //    bool dormitoriosValido = ValidarEnteros(viv.Dormitorios);
+        //    bool metrajeValido = ValidarEnteros(viv.Metraje);
+        //    bool precioFinalValido = ValidarEnteros(viv.PrecioFinal);
+        //    bool tipoValido = ValidarTipo(viv.Tipo);
+
+        //    if (viv is ViviendaUsada) {
+        //        bool montoContribucionValido = ValidarEnteros(viv.Contribucion);
+        //    }
+
+            
+
+        //    if (calleValido && numeroPuertaValido && nombreBarrioValido && descripcionValido && baniosValido && dormitoriosValido && metrajeValido && precioFinalValido && tipoValido && montoContribucionValido) {
+        //        esValido = true;
+        //    }
+
+        //    return esValido;
+        //}
+
+        //VALIDAR VIVIENDA NUEVA
+        public bool ValidarViviendaNueva(ViviendaNueva viv)
         {
             bool esValido = false;
-
-            // 0   1       2            3              4       5        6        7      8      9        10      11
-            //Id#calle#numeroPuerta#nombreBarrio#descripcion#baños#dormitorios#metraje#año#preciofinal#tipo#montoContribucion
-
+            
             bool calleValido = ValidarTextos(viv.Calle, 3, 50);
             bool numeroPuertaValido = ValidarTextos(viv.Numero, 1, 50);
 
             bool nombreBarrioValido = false;
-            if (viv.Barrio != null) {
+            if (viv.Barrio != null)
+            {
                 var validarBar = db.Barrios.Where(b => b.Nombre == viv.Barrio.Nombre).FirstOrDefault();
                 if (validarBar != null)
                 {
@@ -287,19 +351,58 @@ namespace Dominio.Repositorios
             }
 
             bool descripcionValido = ValidarTextos(viv.Descripcion, 3, 250);
-            bool baniosValido = true;//ValidarEnteros(viv.Banios);
+            bool baniosValido = ValidarEnteros(viv.Banios);
             bool dormitoriosValido = ValidarEnteros(viv.Dormitorios);
             bool metrajeValido = ValidarEnteros(viv.Metraje);
             bool precioFinalValido = ValidarEnteros(viv.PrecioFinal);
-            bool tipoValido = true;//ValidarTextos(viv.Tipo, 1, 50);
-            bool montoContribucionValido = true;//ValidarEnteros(viv.Contribucion);
+            bool tipoValido = ValidarTipo(viv.Tipo);
 
-            if (calleValido && numeroPuertaValido && nombreBarrioValido && descripcionValido && baniosValido && dormitoriosValido && metrajeValido && precioFinalValido && tipoValido && montoContribucionValido) {
+            if (calleValido && numeroPuertaValido && nombreBarrioValido && descripcionValido && baniosValido && dormitoriosValido && metrajeValido && precioFinalValido && tipoValido)
+            {
                 esValido = true;
             }
 
             return esValido;
         }
+
+        public bool ValidarViviendaUsada(ViviendaUsada viv)
+        {
+            bool esValido = false;
+
+            bool calleValido = ValidarTextos(viv.Calle, 3, 50);
+            bool numeroPuertaValido = ValidarTextos(viv.Numero, 1, 50);
+
+            bool nombreBarrioValido = false;
+            if (viv.Barrio != null)
+            {
+                var validarBar = db.Barrios.Where(b => b.Nombre == viv.Barrio.Nombre).FirstOrDefault();
+                if (validarBar != null)
+                {
+                    nombreBarrioValido = true;
+                }
+            }
+
+            bool descripcionValido = ValidarTextos(viv.Descripcion, 3, 250);
+            bool baniosValido = ValidarEnteros(viv.Banios);
+            bool dormitoriosValido = ValidarEnteros(viv.Dormitorios);
+            bool metrajeValido = ValidarEnteros(viv.Metraje);
+            bool precioFinalValido = ValidarEnteros(viv.PrecioFinal);
+            bool tipoValido = ValidarTipo(viv.Tipo);
+            bool montoContribucionValido = ValidarEnteros(viv.Contribucion);
+            
+
+            if (calleValido && numeroPuertaValido && nombreBarrioValido && descripcionValido && baniosValido && dormitoriosValido && metrajeValido && precioFinalValido && tipoValido && montoContribucionValido)
+            {
+                esValido = true;
+            }
+
+            return esValido;
+        }
+
+
+
+
+
 
         //AGREGAR LISTA PARAMETROS
         public void AgregarListaParametros(List<Parametro> listaParametro)
@@ -346,6 +449,18 @@ namespace Dominio.Repositorios
             bool esValido = false;
 
             if (texto.Length >= min && texto.Length <= max)
+            {
+                esValido = true;
+            }
+            return esValido;
+        }
+
+        //VALIDAR TIPO
+        public bool ValidarTipo(string texto)
+        {
+            bool esValido = false;
+
+            if (texto == "N" || texto == "U")
             {
                 esValido = true;
             }
