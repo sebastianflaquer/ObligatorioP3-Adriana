@@ -92,6 +92,18 @@ namespace Repositorios.Repositorios
 
         }
 
+        //REALIZAR SORTEO
+        public Sorteo relizarSorteo(int? idSorteo)
+        {
+
+            Sorteo sorteo = FindById(idSorteo);
+            int cant = Convert.ToInt32(sorteo.listaUsuarios.LongCount());
+            var randomNumber = new Random().Next(1, cant);
+            sorteo.UsuGanador = sorteo.listaUsuarios.ElementAt(randomNumber);
+
+            return sorteo;
+        }
+
         //INSCRIBIR USUARIO
         public void inscribirUsuario(int idSorteo, string cedulaUsuario)
         {

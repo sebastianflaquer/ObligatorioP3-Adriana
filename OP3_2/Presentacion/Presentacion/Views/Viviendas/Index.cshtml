@@ -105,9 +105,14 @@
                 $: @Html.DisplayFor(modelItem => item.ValorCuota)
             </th>
             <td>
-                @Html.ActionLink("Edit", "Edit", new {id = item.Id }, new { @class = "btn btn-primary" }) |
-                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                @if (Session["rol"].ToString() == "Jefe")
+                {
+                    @Html.ActionLink("Edit", "EditNueva", new { id = item.Id })
+                    <span>|</span>
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                    <span>|</span>
+                }
+                @Html.ActionLink("Details", "Details", new { id = item.Id })
             </td>
         </tr>
     }
@@ -161,9 +166,15 @@
                 $: @Html.DisplayFor(modelItem => item.ValorCuota)
             </th>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-primary" }) |
-                @Html.ActionLink("Details", "Details", new {id = item.Id }) |
-                @Html.ActionLink("Delete", "Delete", new { @class = "btn btn-primary", id = item.Id })
+                @if (Session["rol"].ToString() == "Jefe")
+                {
+                    @Html.ActionLink("Edit", "EditUsada", new { id = item.Id })
+                    <span>|</span>
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Id }) 
+                   <span>|</span>
+                }
+
+                @Html.ActionLink("Details", "Details", new { id = item.Id })
             </td>
         </tr>
     }

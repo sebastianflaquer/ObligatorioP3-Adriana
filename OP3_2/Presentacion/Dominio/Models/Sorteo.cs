@@ -25,7 +25,8 @@ namespace Dominio.Models
         public DateTime Hora { get; set;}
         
         public virtual Vivienda Viv { get; set; }
-        //public virtual Usuario Usu { get; set; }
+
+        public virtual Usuario UsuGanador { get; set; }
 
         public virtual ICollection<Usuario> listaUsuarios { get; set; }
     }

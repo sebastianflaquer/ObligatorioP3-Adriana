@@ -204,6 +204,9 @@
     <Content Include="Views\Viviendas\BuscarViviendaTodas.cshtml" />
     <Content Include="Views\Viviendas\CreateNueva.cshtml" />
     <Content Include="Views\Viviendas\CreateUsada.cshtml" />
+    <Content Include="Views\Viviendas\EditUsada.cshtml" />
+    <Content Include="Views\Viviendas\EditNueva.cshtml" />
+    <None Include="Views\Viviendas\ModificarVivienda.cshtml.OLD" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

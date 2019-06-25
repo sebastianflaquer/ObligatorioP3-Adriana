@@ -25,6 +25,7 @@ namespace Presentacion.Controllers
             return View();
         }
 
+        //CARGA USUARIOS BASE
         private void cargaUsuariosBase()
         {
             List<Usuario> listaUsuarios = new List<Usuario>();
@@ -113,8 +114,7 @@ namespace Presentacion.Controllers
             }
             return View(User);
         }
-
-
+        
         //LEER ARHIVO
         public ActionResult LeerArchivo() {
             if (Session["rol"].ToString() == "Jefe") //Si esta logeado
@@ -135,7 +135,6 @@ namespace Presentacion.Controllers
             bool viviendas = LeerArchivoViviendas();
 
             //RETURN REDIRECTOACTION
-            //return View();
             return RedirectToAction("ListaCarga");
         }
 
@@ -214,8 +213,7 @@ namespace Presentacion.Controllers
             
             return true;
         }
-
-
+        
         //LISTA CARGA
         public ActionResult ListaCarga(){
             ListaBarrioViviendaViewModel modelo = new ListaBarrioViviendaViewModel();

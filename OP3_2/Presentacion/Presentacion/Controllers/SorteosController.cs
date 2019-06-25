@@ -38,6 +38,51 @@ namespace Presentacion.Controllers
            
         }
 
+
+
+        // GET: Sorteos/Edit/5
+        public ActionResult Realizar(int? id)
+        {
+            if (Session["rol"].ToString() == "Jefe") //Si esta logeado
+            {
+                
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                else {
+
+                    Sorteo sorteo = repoSor.relizarSorteo(id);
+
+                    if (sorteo == null)
+                    {
+                        return HttpNotFound();
+                    }
+                    return View(sorteo);
+                }
+            }
+            else //Si no esta logeado
+            {
+                return RedirectToAction("../Home");
+            }
+        }
+
+        // POST: Sorteos/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Realizar([Bind(Include = "Id,Fecha,Hora")] Sorteo sorteo)
+        {
+            if (ModelState.IsValid)
+            {
+                repoSor.Update(sorteo);
+
+                return RedirectToAction("Index");
+            }
+            return View(sorteo);
+        }
+
         // GET: Sorteos/Details/5
         public ActionResult Details(int? id)
         {
@@ -87,7 +132,18 @@ namespace Presentacion.Controllers
         public JsonResult CreateSorteo(string BuscarBarrio)
         {
             List<Vivienda> listaViviendas = repoViv.buscarViviendasPorBarrio(BuscarBarrio);
-            return Json(listaViviendas, JsonRequestBehavior.AllowGet);
+
+            List<Vivienda> listaViviendasSinSortear = new List<Vivienda>();
+
+            foreach (var viv in listaViviendas) {
+                if (viv.Estado == "Habilitada") {
+
+                    listaViviendasSinSortear.Add(viv);
+
+                }
+            }
+
+            return Json(listaViviendasSinSortear, JsonRequestBehavior.AllowGet);
         }
 
         // POST: Sorteos/Create
@@ -105,8 +161,7 @@ namespace Presentacion.Controllers
 
             return View(sorteo);
         }
-
-
+        
         // GET: Sorteos/Edit/5
         public ActionResult InscribirUsuario(int? id)
         {
@@ -144,8 +199,7 @@ namespace Presentacion.Controllers
             }
             return View(sorteo);
         }
-
-
+        
         // GET: Sorteos/Edit/5
         public ActionResult Edit(int? id)
         {
@@ -166,15 +220,7 @@ namespace Presentacion.Controllers
             {
                 return RedirectToAction("../Home");
             }
-
-
-
-
-            
         }
-
-
-       
 
         // POST: Sorteos/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
@@ -234,5 +280,6 @@ namespace Presentacion.Controllers
             }
             base.Dispose(disposing);
         }
+
     }
 }

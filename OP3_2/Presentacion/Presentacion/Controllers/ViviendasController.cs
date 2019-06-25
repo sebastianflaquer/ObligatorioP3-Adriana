@@ -21,11 +21,18 @@ namespace Presentacion.Controllers
         // GET: Viviendas
         public ActionResult Index()
         {
-            ViviendasViewModel modelo = new ViviendasViewModel();
-            modelo.listaViviendasNuevas = repoViv.FindAllNuevas().ToList();
-            modelo.listaViviendasUsadas = repoViv.FindAllUsadas().ToList();
+            if ((bool)Session["logueado"]) //Si esta logeado
+            {
+                ViviendasViewModel modelo = new ViviendasViewModel();
+                modelo.listaViviendasNuevas = repoViv.FindAllNuevas().ToList();
+                modelo.listaViviendasUsadas = repoViv.FindAllUsadas().ToList();
 
-            return View(modelo);
+                return View(modelo);
+            }
+            else //Si no esta logeado
+            {
+                return RedirectToAction("../Home");
+            }
         }
 
         // GET: Viviendas/Details/5
@@ -44,8 +51,7 @@ namespace Presentacion.Controllers
             }
             return View(vivienda);
         }
-
-
+        
         //GET: Viviendas/CreateNueva
         public ActionResult CreateNueva()
         {
@@ -79,7 +85,7 @@ namespace Presentacion.Controllers
 
             return View(vivienda);
         }
-
+        
         // GET: Viviendas/Edit/5
         public ActionResult Edit(int? id)
         {
@@ -102,7 +108,24 @@ namespace Presentacion.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Estado,Calle,Numero,Barrio,Descripcion,Banios,Dormitorios,Metraje,Anio,PBaseXMetroCuadrado,PrecioFinal")] Vivienda vivienda)
+        public ActionResult Edit( int Id, string Estado)
+        {
+            if (ModelState.IsValid)
+            {
+
+                repoViv.cambiarEstado(Id, Estado);
+                //repoViv.Update(vivienda);
+                
+            }
+            return RedirectToAction("../Viviendas/ModificarVivienda");
+        }
+        
+        // POST: Viviendas/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditNueva([Bind(Include = "Id,Estado,Calle,Numero,Barrio,Descripcion,Banios,Dormitorios,Metraje,Anio,PBaseXMetroCuadrado,PrecioFinal")] ViviendaNueva vivienda)
         {
             if (ModelState.IsValid)
             {
@@ -113,6 +136,56 @@ namespace Presentacion.Controllers
             return View(vivienda);
         }
 
+        // GET: Viviendas/Edit/5
+        public ActionResult EditNueva(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            Vivienda vivienda = repoViv.FindById(id);
+
+            if (vivienda == null)
+            {
+                return HttpNotFound();
+            }
+            return View(vivienda);
+        }
+        
+        // POST: Viviendas/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditUsada([Bind(Include = "Id,Estado,Calle,Numero,Barrio,Descripcion,Banios,Dormitorios,Metraje,Anio,PBaseXMetroCuadrado,PrecioFinal")] ViviendaUsada vivienda)
+        {
+            if (ModelState.IsValid)
+            {
+                repoViv.Update(vivienda);
+
+                return RedirectToAction("Index");
+            }
+            return View(vivienda);
+        }
+
+        // GET: Viviendas/Edit/5
+        public ActionResult EditUsada(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            Vivienda vivienda = repoViv.FindById(id);
+
+            if (vivienda == null)
+            {
+                return HttpNotFound();
+            }
+            return View(vivienda);
+        }
+        
         // GET: Viviendas/Delete/5
         public ActionResult Delete(int? id)
         {
@@ -144,7 +217,17 @@ namespace Presentacion.Controllers
         //MODIFICAR VIVIENDA
         public ActionResult ModificarVivienda()
         {
-            return View(repoViv.FindAll().ToList());
+            if (Session["rol"].ToString() == "Jefe") //Si esta logeado
+            {
+                return View(
+                    repoViv.FindAll().Where(v => v.Estado != "Sorteada").ToList()
+                    //repoViv.FindAll().ToList()
+                );
+            }
+            else //Si no esta logeado
+            {
+                return RedirectToAction("../Home");
+            }
         }
 
         //AJAX
@@ -168,8 +251,6 @@ namespace Presentacion.Controllers
             return Json(listaViviendas, JsonRequestBehavior.AllowGet);
         }
         
-        
-
         // GET: Viviendas/Details/5
         public ActionResult ModificarViviendaDetails(int? id)
         {
@@ -186,8 +267,7 @@ namespace Presentacion.Controllers
             }
             return View(vivienda);
         }
-
-
+        
         // POST: Viviendas/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -310,8 +390,7 @@ namespace Presentacion.Controllers
 
             return Json(listaViviendas, JsonRequestBehavior.AllowGet);
         }
-
-
+        
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -320,5 +399,7 @@ namespace Presentacion.Controllers
             }
             base.Dispose(disposing);
         }
+
+
     }
 }
