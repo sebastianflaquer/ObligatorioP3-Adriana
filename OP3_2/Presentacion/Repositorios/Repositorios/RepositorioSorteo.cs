@@ -95,7 +95,6 @@ namespace Repositorios.Repositorios
         //REALIZAR SORTEO
         public Sorteo relizarSorteo(int? idSorteo)
         {
-
             Sorteo sorteo = FindById(idSorteo);
             int cant = Convert.ToInt32(sorteo.listaUsuarios.LongCount());
             var randomNumber = new Random().Next(1, cant);
@@ -107,14 +106,22 @@ namespace Repositorios.Repositorios
         //INSCRIBIR USUARIO
         public void inscribirUsuario(int idSorteo, string cedulaUsuario)
         {
+            using (var db = new OP3_2Context())
+            {
+                Usuario usuCedula = repoUsu.FindByCedula(cedulaUsuario);
 
-            Usuario usuCedula = repoUsu.FindByCedula(cedulaUsuario);
+                Usuario usu = db.Usuarios.Find(usuCedula.id);
+                Sorteo sor = db.Sorteos.Find(idSorteo);
 
-            Usuario usu = new Usuario();
-            usu = db.Usuarios.Find(usuCedula.id);
+                sor.listaUsuarios.Add(usu);
+                db.Entry(sor).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+            
 
-            Sorteo sor = db.Sorteos.Find(idSorteo);
-
+            //Usuario usu = new Usuario();
+            //usu = db.Usuarios.Find(usuCedula.id);
+            //Sorteo sor = db.Sorteos.Find(idSorteo);
             //if (sor.UsuarioSorteo == null)
             //{
             //    ICollection<UsuarioSorteo> nuevaLista = new ICollection<UsuarioSorteo>();
@@ -125,11 +132,10 @@ namespace Repositorios.Repositorios
             //    sor.UsuarioSorteo.Add(usu);
             //}           
             //sor.Usu = usu;
-
-            db.Entry(sor).State = EntityState.Modified;
-            db.SaveChanges();
-
+            //db.Entry(sor).State = EntityState.Modified;
+            //db.SaveChanges();
             //this.Update(sor);
+
         }
     }
 }

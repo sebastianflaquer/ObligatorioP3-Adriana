@@ -165,7 +165,7 @@ namespace Presentacion.Controllers
         // GET: Sorteos/Edit/5
         public ActionResult InscribirUsuario(int? id)
         {
-            if (Session["rol"].ToString() == "Jefe") //Si esta logeado
+            if ((bool)Session["logueado"]) //Si esta logeado
             {
                 if (id == null)
                 {
@@ -182,6 +182,7 @@ namespace Presentacion.Controllers
             {
                 return RedirectToAction("../Home");
             }
+
         }
 
         //POST
@@ -191,11 +192,11 @@ namespace Presentacion.Controllers
         {
             if (ModelState.IsValid)
             {
-                string cedulaUsuario = Session["email"].ToString();
 
+                string cedulaUsuario = Session["email"].ToString();
                 repoSor.inscribirUsuario(sorteo.Id, cedulaUsuario);
-                //repoSor.Update(sor);
                 return RedirectToAction("Index");
+
             }
             return View(sorteo);
         }

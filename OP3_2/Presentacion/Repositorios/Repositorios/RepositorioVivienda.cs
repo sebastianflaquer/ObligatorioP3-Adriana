@@ -56,15 +56,15 @@ namespace Dominio.Repositorios
         //FIND ALL
         public IEnumerable<ViviendaNueva> FindAllNuevas()
         {
-            Parametro paraAnios = db.Parametros.Where(p => p.Nombre == "plazoUsada").FirstOrDefault();
-            int anios = Convert.ToInt32(paraAnios.Valor);
-
-            Parametro paraMoneda = db.Parametros.Where(p => p.Nombre == "cotizacionUI").FirstOrDefault();
-            int moneda = Convert.ToInt32(paraMoneda.Valor);
-
             List<ViviendaNueva> listaViviendas = db.ViviendasNueva.ToList();
             foreach (var viv in listaViviendas)
             {
+                Parametro paraAnios = db.Parametros.Where(p => p.Nombre == "plazoUsada").FirstOrDefault();
+                int anios = Convert.ToInt32(paraAnios.Valor);
+
+                Parametro paraMoneda = db.Parametros.Where(p => p.Nombre == "cotizacionUI").FirstOrDefault();
+                int moneda = Convert.ToInt32(paraMoneda.Valor);
+
                 viv.calcValorCuota(anios, moneda);
                 viv.CantCuotas = (anios * 12);
             }
@@ -75,15 +75,15 @@ namespace Dominio.Repositorios
         //FIND ALL
         public IEnumerable<ViviendaUsada> FindAllUsadas()
         {
-            Parametro paraAnios = db.Parametros.Where(p => p.Nombre == "plazoUsada").FirstOrDefault();
-            int anios = Convert.ToInt32(paraAnios.Valor);
-
-            Parametro paraMoneda = db.Parametros.Where(p => p.Nombre == "cotizacionUSD").FirstOrDefault();
-            int moneda = Convert.ToInt32(paraMoneda.Valor);
-
             List<ViviendaUsada> listaViviendas = db.ViviendasUsada.ToList();
             foreach (var viv in listaViviendas)
             {
+                Parametro paraAnios = db.Parametros.Where(p => p.Nombre == "plazoUsada").FirstOrDefault();
+                int anios = Convert.ToInt32(paraAnios.Valor);
+
+                Parametro paraMoneda = db.Parametros.Where(p => p.Nombre == "cotizacionUSD").FirstOrDefault();
+                int moneda = Convert.ToInt32(paraMoneda.Valor);
+
                 viv.calcValorCuota(anios, moneda);
                 viv.CantCuotas = (anios * 12);
             }
