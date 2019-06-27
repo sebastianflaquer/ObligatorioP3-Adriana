@@ -246,7 +246,7 @@ namespace Presentacion.Controllers
                 {
                     string cedulaGanadora = sorteo.UsuGanador.Cedula;
                     ViewBag.yasorteado = true;
-                    List<Usuario> listaInscriptos = sorteo.listaUsuario.ToList();
+                    List<Postulante> listaInscriptos = sorteo.listaUsuario.ToList();
                     listaInscriptos.OrderBy(s => s.Apellido);
                     ViewBag.ListaInscriptos = listaInscriptos;
 
@@ -288,7 +288,7 @@ namespace Presentacion.Controllers
                         }
                     }
 
-                    List<Usuario> listaInscriptos = sorteoNuevo.listaUsuario.ToList();
+                    List<Postulante> listaInscriptos = sorteoNuevo.listaUsuario.ToList();
                     listaInscriptos.OrderBy(s => s.Apellido);
 
                     if (sorteoNuevo == null)

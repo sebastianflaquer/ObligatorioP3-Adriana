@@ -9,7 +9,7 @@ using System.Web.Security;
 namespace Dominio.Models
 {
     [Table("Usuarios")]
-    public class Usuario
+    public abstract class Usuario
     {
         [Key]
         public int id { get; set; }
@@ -42,16 +42,6 @@ namespace Dominio.Models
         public string ConfirmPassword { get; set; }
 
         public string Salt { get; set; }
-
-        public virtual ICollection<Sorteo> listaSorteos { get; set; }
-
-
-
-
-
-
-
-
 
         //ENCRIPTAR PASS
         public static string EncriptarPass(string passwordIngreso, string salt, string pimienta)

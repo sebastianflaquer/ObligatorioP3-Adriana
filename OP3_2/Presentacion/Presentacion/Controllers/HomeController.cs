@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using System.IO;
 using System.Text;
 using Dominio.Repositorios;
+using Repositorios.Repositorios;
 
 namespace Presentacion.Controllers
 {
@@ -17,6 +18,7 @@ namespace Presentacion.Controllers
         public RepositorioBarrio repoBar = new RepositorioBarrio();
         public RepositorioUsuario repoUsu = new RepositorioUsuario();
         public RepositorioVivienda repoViv = new RepositorioVivienda();
+        public RepositorioSorteo repoSor = new RepositorioSorteo();
 
         // GET: Home
         public ActionResult Index()
@@ -29,6 +31,7 @@ namespace Presentacion.Controllers
         private void cargarDatosPrueba()
         {
             cargaUsuariosBase();
+            LeerArchivosTexto();
             modificarViviendas();
             crearSorteos();
         }
@@ -36,9 +39,10 @@ namespace Presentacion.Controllers
         //CARGA USUARIOS BASE
         private void cargaUsuariosBase()
         {
-            List<Usuario> listaUsuarios = new List<Usuario>();
+            List<Jefe> listaUsuariosJefe = new List<Jefe>();
+            List<Postulante> listaUsuariosPostulantes = new List<Postulante>();
 
-            Usuario usuAdmin = new Usuario();
+            Jefe usuAdmin = new Jefe();
 
             usuAdmin.Cedula = "45173353";
             usuAdmin.Nombre = "Sebastian";
@@ -47,54 +51,55 @@ namespace Presentacion.Controllers
             usuAdmin.Rol = "Jefe";
             usuAdmin.Pass = "123456";
             usuAdmin.ConfirmPassword = "123456";
-            usuAdmin.FechaNac = "12/05/1987";
-            listaUsuarios.Add(usuAdmin);
+            usuAdmin.FechaNac = "1987-05-12";
+            listaUsuariosJefe.Add(usuAdmin);
             
-            Usuario usuPostu3 = new Usuario();
+            Postulante usuPostu3 = new Postulante();
             usuPostu3.Cedula = "33333333";
-            usuPostu3.Nombre = "cccccccccc";
-            usuPostu3.Apellido = "ccccccccccccccc";
-            usuPostu3.Email = "test@test.com";
+            usuPostu3.Nombre = "Juan";
+            usuPostu3.Apellido = "Perez";
+            usuPostu3.Email = "juanperez@gmail.com";
             usuPostu3.Rol = "Postulante";
             usuPostu3.Pass = "123456";
             usuPostu3.ConfirmPassword = "123456";
-            usuPostu3.FechaNac = "12/05/1987";
-            listaUsuarios.Add(usuPostu3);
+            usuPostu3.FechaNac = "1987-05-12";
+            listaUsuariosPostulantes.Add(usuPostu3);
 
-            Usuario usuPostu2 = new Usuario();
+            Postulante usuPostu2 = new Postulante();
             usuPostu2.Cedula = "22222222";
-            usuPostu2.Nombre = "bbbbbbbbbb";
-            usuPostu2.Apellido = "bbbbbbbbbb";
-            usuPostu2.Email = "test@test.com";
+            usuPostu2.Nombre = "Maria";
+            usuPostu2.Apellido = "Rodriguez";
+            usuPostu2.Email = "mrodriguez@gmail.com";
             usuPostu2.Rol = "Postulante";
             usuPostu2.Pass = "123456";
             usuPostu2.ConfirmPassword = "123456";
-            usuPostu2.FechaNac = "12/05/1987";
-            listaUsuarios.Add(usuPostu2);
+            usuPostu2.FechaNac = "1987-05-12";
+            listaUsuariosPostulantes.Add(usuPostu2);
 
-            Usuario usuPostu = new Usuario();
+            Postulante usuPostu = new Postulante();
             usuPostu.Cedula = "11111111";
-            usuPostu.Nombre = "aaaaaaaa";
-            usuPostu.Apellido = "aaaaaaaaaaa";
-            usuPostu.Email = "test@test.com";
+            usuPostu.Nombre = "Lucas";
+            usuPostu.Apellido = "Torreira";
+            usuPostu.Email = "ltorreira@gmail.com";
             usuPostu.Rol = "Postulante";
             usuPostu.Pass = "123456";
             usuPostu.ConfirmPassword = "123456";
-            usuPostu.FechaNac = "12/05/1987";
-            listaUsuarios.Add(usuPostu);
+            usuPostu.FechaNac = "1987-05-12";
+            listaUsuariosPostulantes.Add(usuPostu);
 
-            Usuario usuPostu4 = new Usuario();
+            Postulante usuPostu4 = new Postulante();
             usuPostu4.Cedula = "44444444";
-            usuPostu4.Nombre = "ddddddddddde";
-            usuPostu4.Apellido = "ddddddddddd";
-            usuPostu4.Email = "test@test.com";
+            usuPostu4.Nombre = "Luis";
+            usuPostu4.Apellido = "Suarez";
+            usuPostu4.Email = "lsuarez@gmail.com";
             usuPostu4.Rol = "Postulante";
             usuPostu4.Pass = "123456";
             usuPostu4.ConfirmPassword = "123456";
-            usuPostu4.FechaNac = "12/05/1987";
-            listaUsuarios.Add(usuPostu4);
+            usuPostu4.FechaNac = "1987-05-12";
+            listaUsuariosPostulantes.Add(usuPostu4);
 
-            repoUsu.AgregarListaUsuarios(listaUsuarios);
+            repoUsu.AgregarListaUsuarios(listaUsuariosPostulantes);
+            repoUsu.AgregarListaUsuariosJefe(listaUsuariosJefe);
 
         }
 
@@ -106,23 +111,41 @@ namespace Presentacion.Controllers
             repoViv.cambiarEstado(8, "Habilitada");
             repoViv.cambiarEstado(10, "Habilitada");
             repoViv.cambiarEstado(13, "Habilitada");
-            //throw new NotImplementedException();
         }
 
         private void crearSorteos()
         {
-            //throw new NotImplementedException();
+            Sorteo sor1 = new Sorteo();
+            sor1.Fecha = Convert.ToDateTime("2019-06-28 00:00:00.000");
+            sor1.Hora = Convert.ToDateTime("2019-06-27 01:00:00.000");
+            repoSor.crearSorteo(sor1, 1);
+
+            Sorteo sor2 = new Sorteo();
+            sor2.Fecha = Convert.ToDateTime("2019-06-27 00:00:00.000");
+            sor2.Hora = Convert.ToDateTime("2019-06-27 01:00:00.000");
+            repoSor.crearSorteo(sor2, 2);
+
+            Sorteo sor3 = new Sorteo();
+            sor3.Fecha = Convert.ToDateTime("2019-06-30 00:00:00.000");
+            sor3.Hora = Convert.ToDateTime("2019-06-27 01:00:00.000");
+            repoSor.crearSorteo(sor3, 5);
+
+            Sorteo sor4 = new Sorteo();
+            sor4.Fecha = Convert.ToDateTime("2019-06-29 00:00:00.000");
+            sor4.Hora = Convert.ToDateTime("2019-06-27 01:00:00.000");
+            repoSor.crearSorteo(sor4, 8);
+
+            Sorteo sor5 = new Sorteo();
+            sor5.Fecha = Convert.ToDateTime("2019-07-01 00:00:00.000");
+            sor5.Hora = Convert.ToDateTime("2019-06-27 01:00:00.000");
+            repoSor.crearSorteo(sor5, 10);
+
+            Sorteo sor6 = new Sorteo();
+            sor6.Fecha = Convert.ToDateTime("2019-07-02 00:00:00.000");
+            sor6.Hora = Convert.ToDateTime("2019-06-27 01:00:00.000");
+            repoSor.crearSorteo(sor6, 13);
+
         }
-
-        
-
-
-
-
-
-
-
-
 
         //LOGIN REGISTER
         public ActionResult LoginRegister()

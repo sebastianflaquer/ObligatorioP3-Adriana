@@ -99,7 +99,9 @@ else
                     <td>
                         @Html.DisplayFor(modelItem => item.Viv.Id) - <a target="_blank" href="Viviendas/Details/@Html.DisplayFor(modelItem => item.Viv.Id)">Ver Vivienda:</a>
                     </td>
-                    <td></td>
+                    <td>
+                        @Html.ActionLink("Ver Sorteo", "RealizarSorteo", new { id = item.Id })
+                    </td>
                 </tr>
             }
         </table>

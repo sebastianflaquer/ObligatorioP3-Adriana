@@ -64,7 +64,7 @@ namespace Presentacion.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Usuario usu)
+        public ActionResult Create(Postulante usu)
         {
 
             //BUSCA SI HAY UN USUARIO CON EL MISMO EMAIL

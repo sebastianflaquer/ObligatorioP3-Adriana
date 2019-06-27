@@ -1,3 +1,4 @@
+C:\xampp\htdocs\REPOOP3Adriana\ObligatorioP3-2Adriana\OP3_2\Presentacion\Repositorios\obj\Debug\Repositorios.csprojResolveAssemblyReference.cache
 C:\xampp\htdocs\REPOOP3Adriana\ObligatorioP3-2Adriana\OP3_2\Presentacion\Repositorios\bin\ApplicationInsights.config
 C:\xampp\htdocs\REPOOP3Adriana\ObligatorioP3-2Adriana\OP3_2\Presentacion\Repositorios\bin\roslyn\csc.exe
 C:\xampp\htdocs\REPOOP3Adriana\ObligatorioP3-2Adriana\OP3_2\Presentacion\Repositorios\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
@@ -36,6 +37,5 @@ C:\xampp\htdocs\REPOOP3Adriana\ObligatorioP3-2Adriana\OP3_2\Presentacion\Reposit
 C:\xampp\htdocs\REPOOP3Adriana\ObligatorioP3-2Adriana\OP3_2\Presentacion\Repositorios\bin\Microsoft.AI.WindowsServer.xml
 C:\xampp\htdocs\REPOOP3Adriana\ObligatorioP3-2Adriana\OP3_2\Presentacion\Repositorios\bin\Microsoft.ApplicationInsights.xml
 C:\xampp\htdocs\REPOOP3Adriana\ObligatorioP3-2Adriana\OP3_2\Presentacion\Repositorios\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
-C:\xampp\htdocs\REPOOP3Adriana\ObligatorioP3-2Adriana\OP3_2\Presentacion\Repositorios\obj\Debug\Repositorios.csprojResolveAssemblyReference.cache
 C:\xampp\htdocs\REPOOP3Adriana\ObligatorioP3-2Adriana\OP3_2\Presentacion\Repositorios\obj\Debug\Repositorios.dll
 C:\xampp\htdocs\REPOOP3Adriana\ObligatorioP3-2Adriana\OP3_2\Presentacion\Repositorios\obj\Debug\Repositorios.pdb

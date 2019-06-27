@@ -10,7 +10,9 @@ namespace DAL
     {
 
         public System.Data.Entity.DbSet<Dominio.Models.Barrio> Barrios { get; set; }
-        public System.Data.Entity.DbSet<Dominio.Models.Usuario> Usuarios { get; set; }        
+        public System.Data.Entity.DbSet<Dominio.Models.Usuario> Usuarios { get; set; }
+        public System.Data.Entity.DbSet<Dominio.Models.Jefe> Jefes { get; set; }
+        public System.Data.Entity.DbSet<Dominio.Models.Postulante> Postulantes { get; set; }
         public System.Data.Entity.DbSet<Dominio.Models.Parametro> Parametros { get; set; }
         public System.Data.Entity.DbSet<Dominio.Models.Sorteo> Sorteos { get; set; }
         public System.Data.Entity.DbSet<Dominio.Models.Vivienda> Viviendas { get; set; }
@@ -25,7 +27,7 @@ namespace DAL
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Sorteo>()
-               .HasMany<Usuario>(s => s.listaUsuario)
+               .HasMany<Postulante>(s => s.listaUsuario)
                .WithMany(c => c.listaSorteos)
                .Map(cs =>
                {

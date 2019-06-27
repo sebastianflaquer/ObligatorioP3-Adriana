@@ -30,7 +30,7 @@ namespace Dominio.Models
         //public int idGanador { get; set; }
         public virtual Usuario UsuGanador { get; set; }
 
-        public virtual ICollection<Usuario> listaUsuario { get; set; }
+        public virtual ICollection<Postulante> listaUsuario { get; set; }
 
 
 

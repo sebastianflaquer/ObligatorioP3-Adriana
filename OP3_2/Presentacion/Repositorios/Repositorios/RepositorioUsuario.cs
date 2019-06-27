@@ -69,25 +69,35 @@ namespace Dominio.Repositorios
             return true;
         }
 
-        //AGREGAR LISTA USUARIOS
-        public void AgregarListaUsuarios(List<Usuario> listaUsuarios) {
-            
-            foreach (Usuario usu in listaUsuarios) {
-
-                var existe = db.Usuarios.Count(u => u.Nombre == usu.Nombre);
-
+        //AGREGAR LISTA USUARIOS POSTULANTES
+        public void AgregarListaUsuarios(List<Postulante> listaUsuarios) {            
+            foreach (Postulante usu in listaUsuarios) {
+                var existe = db.Postulantes.Count(u => u.Nombre == usu.Nombre);
                 if (existe == 0) {
-
                     //usu.Rol = usu.getRol();
                     usu.Salt = usu.generarSalPass();
                     usu.Pass = Usuario.EncriptarPass(usu.Pass, usu.Salt, Usuario.getPimienta());
-
-                    db.Usuarios.Add(usu);
+                    db.Postulantes.Add(usu);
                     db.SaveChanges();
                 }
-
             }
+        }
 
+        //AGREGAR LISTA USUARIOS JEFE
+        public void AgregarListaUsuariosJefe(List<Jefe> listaUsuarios)
+        {
+            foreach (Jefe usu in listaUsuarios)
+            {
+                var existe = db.Jefes.Count(u => u.Nombre == usu.Nombre);
+                if (existe == 0)
+                {
+                    //usu.Rol = usu.getRol();
+                    usu.Salt = usu.generarSalPass();
+                    usu.Pass = Usuario.EncriptarPass(usu.Pass, usu.Salt, Usuario.getPimienta());
+                    db.Jefes.Add(usu);
+                    db.SaveChanges();
+                }
+            }
         }
 
         public void Dispose()

@@ -64,15 +64,27 @@ namespace Repositorios.Repositorios
         //CREAR SORTEO
         public void crearSorteo(Sorteo sorteo, int idVivienda)
         {
-            using (OP3_2Context otrodb = new OP3_2Context())
-            {
-                sorteo.Viv = otrodb.Viviendas.Find(idVivienda); //repoViv.FindById(nombreVivienda);
+            //chekea que ya vivienda no este en otro sorteo.            
+            bool encontro = false;
+            List<Sorteo> listaSorteos = db.Sorteos.ToList();
 
-                otrodb.Entry(sorteo.Viv).State = EntityState.Unchanged;
-                otrodb.Entry(sorteo.Viv.Barrio).State = EntityState.Unchanged;
+            foreach (var sor in listaSorteos) {
+                if (sor.Viv.Id == idVivienda) {
+                    encontro = true;
+                }
+            }
 
-                otrodb.Sorteos.Add(sorteo);
-                otrodb.SaveChanges();
+            if (!encontro) {
+                using (OP3_2Context otrodb = new OP3_2Context())
+                {
+                    sorteo.Viv = otrodb.Viviendas.Find(idVivienda); //repoViv.FindById(nombreVivienda);
+
+                    otrodb.Entry(sorteo.Viv).State = EntityState.Unchanged;
+                    otrodb.Entry(sorteo.Viv.Barrio).State = EntityState.Unchanged;
+
+                    otrodb.Sorteos.Add(sorteo);
+                    otrodb.SaveChanges();
+                }
             }
         }
 
@@ -104,7 +116,8 @@ namespace Repositorios.Repositorios
             {
                 Usuario usuCedula = repoUsu.FindByCedula(cedulaUsuario);
 
-                Usuario usu = db.Usuarios.Find(usuCedula.id);
+                //Usuario usu = db.Usuarios.Find(usuCedula.id);
+                Postulante usu = db.Postulantes.Find(usuCedula.id);
                 Sorteo sor = db.Sorteos.Find(idSorteo);
 
                 bool encontro = false;
