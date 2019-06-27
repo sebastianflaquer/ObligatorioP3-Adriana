@@ -32,7 +32,7 @@ namespace Dominio.Models
         public string Email { get; set; }
 
         [Required]
-        [StringLength(100, ErrorMessage = "Este campo es Obligatorio, The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [StringLength(100, ErrorMessage = "Este campo es Obligatorio, El {0} debe tener al menos {2} caracteres de largo.", MinimumLength = 6)]
         [DataType(DataType.Password)]
         public string Pass { get; set; }
 
@@ -44,6 +44,14 @@ namespace Dominio.Models
         public string Salt { get; set; }
 
         public virtual ICollection<Sorteo> listaSorteos { get; set; }
+
+
+
+
+
+
+
+
 
         //ENCRIPTAR PASS
         public static string EncriptarPass(string passwordIngreso, string salt, string pimienta)

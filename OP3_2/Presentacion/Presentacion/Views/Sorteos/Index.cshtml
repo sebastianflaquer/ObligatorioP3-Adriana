@@ -1,48 +1,67 @@
 ﻿@model IEnumerable<Dominio.Models.Sorteo>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Lista de Sorteos";
 }
 
-<h2>Index</h2>
+<h2>Lista de Sorteos</h2>
+<br />
+@if (!Model.Any())
+{
+    <h4>Ya ganaste un Sorteo, no puedes acceder a la lista de sorteos</h4>
+}
+else
+{
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Fecha)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Hora)
+            </th>
+            <th>
+                Vivienda
+            </th>
+            <th></th>
+        </tr>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Fecha)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Hora)
-        </th>
-        <th>
-            Vivienda
-        </th>
-        <th></th>
-    </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Fecha)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Hora)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Viv.Id) - <a target="_blank" href="Viviendas/Details/@Html.DisplayFor(modelItem => item.Viv.Id)">Ver Vivienda:</a>
+                </td>
+                <td>
+                    @if (Session["rol"].ToString() == "Jefe")
+                    {
+                        @Html.ActionLink("Realizar Sorteo", "RealizarSorteo", new { id = item.Id })
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Fecha)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Hora)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Viv.Id)
-        </td>
-        <td>
-            @Html.ActionLink("Inscribir", "InscribirUsuario", new { id = item.Id })
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
-    </tr>
+                    }
+                    else
+                    {
+                        @Html.ActionLink("Inscribir", "InscribirUsuario", new { id = item.Id })
+                    }
+                </td>
+                @*<td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                </td>*@
+            </tr>
+        }
+    </table>
 }
 
-</table>
+
+
+

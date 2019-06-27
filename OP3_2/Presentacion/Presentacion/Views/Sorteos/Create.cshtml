@@ -58,7 +58,7 @@
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Volver a la Lista", "Index")
 </div>
 
 
@@ -70,7 +70,6 @@
 <script>
     $(document).ready(function () {
 
-        debugger;
         var dtToday = new Date();
 
         var month = dtToday.getMonth() + 1;
@@ -82,15 +81,12 @@
             day = '0' + day.toString();
 
         var maxDate = year + '-' + month + '-' + day;
-        //alert(maxDate);
+
         $('.datefield').attr('min', maxDate);
 
         $("#nombreBarrio").change(function () {
 
             varNombreBarrio = $("#nombreBarrio").val();
-
-            //var SearchValue = $("#Buscar").val();
-            //var SetData = $("#DataSearching");
 
             var SetData = $("#idVivienda");
             SetData.html("");

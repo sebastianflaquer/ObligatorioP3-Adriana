@@ -74,9 +74,9 @@ namespace Dominio.Repositorios
             
             foreach (Usuario usu in listaUsuarios) {
 
-                var existe = db.Usuarios.Where(u => u.Nombre == usu.Nombre).FirstOrDefault();
+                var existe = db.Usuarios.Count(u => u.Nombre == usu.Nombre);
 
-                if (existe == null) {
+                if (existe == 0) {
 
                     //usu.Rol = usu.getRol();
                     usu.Salt = usu.generarSalPass();

@@ -96,10 +96,15 @@ namespace Repositorios.Repositorios
         public Sorteo relizarSorteo(int? idSorteo)
         {
             Sorteo sorteo = FindById(idSorteo);
-            int cant = Convert.ToInt32(sorteo.listaUsuarios.LongCount());
-            var randomNumber = new Random().Next(1, cant);
-            sorteo.UsuGanador = sorteo.listaUsuarios.ElementAt(randomNumber);
+            int cant = Convert.ToInt32(sorteo.listaUsuario.LongCount());
+            if (cant > 0) {
+                var randomNumber = new Random().Next(1, cant);
+                sorteo.UsuGanador = sorteo.listaUsuario.ElementAt(randomNumber-1);
+                sorteo.Viv.Estado = "Sorteada";
 
+                db.Entry(sorteo).State = EntityState.Modified;
+                db.SaveChanges();
+            }
             return sorteo;
         }
 
@@ -113,9 +118,19 @@ namespace Repositorios.Repositorios
                 Usuario usu = db.Usuarios.Find(usuCedula.id);
                 Sorteo sor = db.Sorteos.Find(idSorteo);
 
-                sor.listaUsuarios.Add(usu);
-                db.Entry(sor).State = EntityState.Modified;
-                db.SaveChanges();
+                bool encontro = false;
+
+                foreach (var item in sor.listaUsuario) {
+                    if (item.Cedula == cedulaUsuario) {
+                        encontro = true;
+                    }
+                }
+
+                if (encontro == false) {
+                    sor.listaUsuario.Add(usu);
+                    db.Entry(sor).State = EntityState.Modified;
+                    db.SaveChanges();
+                }
             }
             
 

@@ -23,7 +23,7 @@
                 @Html.DropDownList("Estado", new List<SelectListItem> {
                     new SelectListItem { Text = "Habilitada", Value="Habilitada"},
                     new SelectListItem { Text = "Inhabilitada", Value="Inhabilitada"}
-                    }, "Seleccionar Estado")
+                    }, "Seleccionar Estado", new { @class = "form-control" })
 
                 @*@Html.EditorFor(model => model.Estado, new { htmlAttributes = new { @class = "form-control" } })*@
                 @Html.ValidationMessageFor(model => model.Estado, "", new { @class = "text-danger" })
@@ -39,7 +39,7 @@
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Volver a la Lista", "Index")
 </div>
 
 <script src="~/Scripts/jquery-1.10.2.min.js"></script>

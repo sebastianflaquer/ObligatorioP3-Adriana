@@ -24,6 +24,15 @@ namespace DAL
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Sorteo>()
+               .HasMany<Usuario>(s => s.listaUsuario)
+               .WithMany(c => c.listaSorteos)
+               .Map(cs =>
+               {
+                   cs.MapLeftKey("SorteoId");
+                   cs.MapRightKey("UsuarioId");
+                   cs.ToTable("SorteoUsuario");
+               });
             //Database.SetInitializer<OP3_2Context>(null);
             //base.OnModelCreating(modelBuilder);
         }

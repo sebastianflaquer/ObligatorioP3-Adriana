@@ -22,12 +22,19 @@ namespace Dominio.Models
         [Display(Name = "Hora")]
         [DataType(DataType.Time)]
         [DisplayFormat(DataFormatString = "{0:hh:mm}", ApplyFormatInEditMode = true)]
-        public DateTime Hora { get; set;}
-        
+        public DateTime Hora { get; set; }
+
         public virtual Vivienda Viv { get; set; }
 
+        //[ForeignKey("UsuGanador")]
+        //public int idGanador { get; set; }
         public virtual Usuario UsuGanador { get; set; }
 
-        public virtual ICollection<Usuario> listaUsuarios { get; set; }
+        public virtual ICollection<Usuario> listaUsuario { get; set; }
+
+
+
+
+
     }
 }

@@ -199,13 +199,13 @@
     <Content Include="Views\Sorteos\Edit.cshtml" />
     <Content Include="Views\Sorteos\Index.cshtml" />
     <Content Include="Views\Viviendas\BuscarVivienda.cshtml" />
-    <Content Include="Views\Sorteos\Realizar.cshtml" />
     <Content Include="Views\Viviendas\BuscarViviendaTodas.cshtml" />
     <Content Include="Views\Viviendas\CreateNueva.cshtml" />
     <Content Include="Views\Viviendas\CreateUsada.cshtml" />
     <Content Include="Views\Viviendas\EditUsada.cshtml" />
     <Content Include="Views\Viviendas\EditNueva.cshtml" />
     <Content Include="Views\Sorteos\InscribirUsuario.cshtml" />
+    <Content Include="Views\Sorteos\RealizarSorteo.cshtml" />
     <None Include="Views\Viviendas\ModificarVivienda.cshtml.OLD" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
