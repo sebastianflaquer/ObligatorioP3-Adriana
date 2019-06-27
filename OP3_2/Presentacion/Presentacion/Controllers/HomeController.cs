@@ -21,17 +21,24 @@ namespace Presentacion.Controllers
         // GET: Home
         public ActionResult Index()
         {
-            cargaUsuariosBase();
+            cargarDatosPrueba();
             return View();
         }
 
+        //CARGAR DATOS PRUEBA
+        private void cargarDatosPrueba()
+        {
+            cargaUsuariosBase();
+            modificarViviendas();
+            crearSorteos();
+        }
+        
         //CARGA USUARIOS BASE
         private void cargaUsuariosBase()
         {
             List<Usuario> listaUsuarios = new List<Usuario>();
 
             Usuario usuAdmin = new Usuario();
-            
 
             usuAdmin.Cedula = "45173353";
             usuAdmin.Nombre = "Sebastian";
@@ -42,33 +49,11 @@ namespace Presentacion.Controllers
             usuAdmin.ConfirmPassword = "123456";
             usuAdmin.FechaNac = "12/05/1987";
             listaUsuarios.Add(usuAdmin);
-
-            Usuario usuPostu = new Usuario();
-            usuPostu.Cedula = "11111111";
-            usuPostu.Nombre = "1 Test Postulante";
-            usuPostu.Apellido = "Test Apellido Postulante";
-            usuPostu.Email = "test@test.com";
-            usuPostu.Rol = "Postulante";
-            usuPostu.Pass = "123456";
-            usuPostu.ConfirmPassword = "123456";
-            usuPostu.FechaNac = "12/05/1987";
-            listaUsuarios.Add(usuPostu);
-
-            Usuario usuPostu2 = new Usuario();
-            usuPostu2.Cedula = "22222222";
-            usuPostu2.Nombre = "2 Test Postulante";
-            usuPostu2.Apellido = "Test Apellido Postulante";
-            usuPostu2.Email = "test@test.com";
-            usuPostu2.Rol = "Postulante";
-            usuPostu2.Pass = "123456";
-            usuPostu2.ConfirmPassword = "123456";
-            usuPostu2.FechaNac = "12/05/1987";
-            listaUsuarios.Add(usuPostu2);
-
+            
             Usuario usuPostu3 = new Usuario();
             usuPostu3.Cedula = "33333333";
-            usuPostu3.Nombre = "3 Test Postulante";
-            usuPostu3.Apellido = "Test Apellido Postulante";
+            usuPostu3.Nombre = "cccccccccc";
+            usuPostu3.Apellido = "ccccccccccccccc";
             usuPostu3.Email = "test@test.com";
             usuPostu3.Rol = "Postulante";
             usuPostu3.Pass = "123456";
@@ -76,9 +61,68 @@ namespace Presentacion.Controllers
             usuPostu3.FechaNac = "12/05/1987";
             listaUsuarios.Add(usuPostu3);
 
+            Usuario usuPostu2 = new Usuario();
+            usuPostu2.Cedula = "22222222";
+            usuPostu2.Nombre = "bbbbbbbbbb";
+            usuPostu2.Apellido = "bbbbbbbbbb";
+            usuPostu2.Email = "test@test.com";
+            usuPostu2.Rol = "Postulante";
+            usuPostu2.Pass = "123456";
+            usuPostu2.ConfirmPassword = "123456";
+            usuPostu2.FechaNac = "12/05/1987";
+            listaUsuarios.Add(usuPostu2);
+
+            Usuario usuPostu = new Usuario();
+            usuPostu.Cedula = "11111111";
+            usuPostu.Nombre = "aaaaaaaa";
+            usuPostu.Apellido = "aaaaaaaaaaa";
+            usuPostu.Email = "test@test.com";
+            usuPostu.Rol = "Postulante";
+            usuPostu.Pass = "123456";
+            usuPostu.ConfirmPassword = "123456";
+            usuPostu.FechaNac = "12/05/1987";
+            listaUsuarios.Add(usuPostu);
+
+            Usuario usuPostu4 = new Usuario();
+            usuPostu4.Cedula = "44444444";
+            usuPostu4.Nombre = "ddddddddddde";
+            usuPostu4.Apellido = "ddddddddddd";
+            usuPostu4.Email = "test@test.com";
+            usuPostu4.Rol = "Postulante";
+            usuPostu4.Pass = "123456";
+            usuPostu4.ConfirmPassword = "123456";
+            usuPostu4.FechaNac = "12/05/1987";
+            listaUsuarios.Add(usuPostu4);
+
             repoUsu.AgregarListaUsuarios(listaUsuarios);
-            
+
         }
+
+        private void modificarViviendas()
+        {
+            repoViv.cambiarEstado(1, "Habilitada");
+            repoViv.cambiarEstado(2, "Habilitada");
+            repoViv.cambiarEstado(5, "Habilitada");
+            repoViv.cambiarEstado(8, "Habilitada");
+            repoViv.cambiarEstado(10, "Habilitada");
+            repoViv.cambiarEstado(13, "Habilitada");
+            //throw new NotImplementedException();
+        }
+
+        private void crearSorteos()
+        {
+            //throw new NotImplementedException();
+        }
+
+        
+
+
+
+
+
+
+
+
 
         //LOGIN REGISTER
         public ActionResult LoginRegister()

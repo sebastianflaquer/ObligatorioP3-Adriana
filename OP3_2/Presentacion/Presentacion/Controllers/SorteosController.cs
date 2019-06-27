@@ -18,27 +18,44 @@ namespace Presentacion.Controllers
         public RepositorioBarrio repoBar = new RepositorioBarrio();
         public RepositorioVivienda repoViv = new RepositorioVivienda();
 
+        //if ((bool)Session["logueado"]) //Si esta logeado
+        //{
+                
+        //}
+        //else //Si no esta logeado
+        //{
+        //    return RedirectToAction("../Home");
+        //}
+
         // GET: Sorteos
         public ActionResult Index()
         {
-            var listaFinal = new List<Sorteo>();
-            var listaRealizados = new List<Sorteo>();
 
-            bool yagano = false;
-            string cedulaUsuario = Session["email"].ToString();
-            var listaSorteos = repoSor.FindAll();
+            if ((bool)Session["logueado"]) //Si esta logeado
+            {
+                SorteoViewModel modelo = new SorteoViewModel();
+                ViewBag.ganador = false;
 
-            foreach (var sorteo in listaSorteos) {
-                if (sorteo.UsuGanador != null) {
-                    if (sorteo.UsuGanador.Cedula == cedulaUsuario)
+                var listaFinal = new List<Sorteo>();
+                var listaRealizados = new List<Sorteo>();
+
+                bool yagano = false;
+                string cedulaUsuario = Session["email"].ToString();
+                var listaSorteos = repoSor.FindAll();
+
+                foreach (var sorteo in listaSorteos)
+                {
+                    if (sorteo.UsuGanador != null)
                     {
-                        yagano = true;
+                        if (sorteo.UsuGanador.Cedula == cedulaUsuario)
+                        {
+                            yagano = true;
+                        }
                     }
                 }
-            }
 
-            if (!yagano)
-            {
+                
+
                 //si el usuario ya gano un sorteo            
                 listaSorteos = listaSorteos.OrderByDescending(s => s.Fecha);
                 foreach (var item in listaSorteos)
@@ -54,12 +71,22 @@ namespace Presentacion.Controllers
                     }
                 }
 
-                foreach (var sor in listaRealizados)
+                if (yagano)
                 {
-                    listaFinal.Add(sor);
+                    ViewBag.ganador = true;
                 }
+
+                ViewBag.Date = DateTime.Today;
+
+                modelo.soretosRelizados = listaRealizados;
+                modelo.soretosPendientes = listaFinal;
+
+                return View(modelo);
             }
-            return View(listaFinal);
+            else //Si no esta logeado
+            {
+                return RedirectToAction("../Home");
+            }
         }
         
 
@@ -203,21 +230,77 @@ namespace Presentacion.Controllers
         // GET: Sorteos/Edit/5
         public ActionResult RealizarSorteo(int? id)
         {
+
+            ViewBag.yasorteado = false;
+
             if ((bool)Session["logueado"]) //Si esta logeado
             {
                 if (id == null)
                 {
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                 }
-                //Sorteo sorteo = repoSor.FindById(id);
 
-                Sorteo sorteoNuevo = repoSor.relizarSorteo(id);
+                Sorteo sorteo = repoSor.FindById(id);
 
-                if (sorteoNuevo == null)
+                if (sorteo.UsuGanador != null)
                 {
-                    return HttpNotFound();
+                    string cedulaGanadora = sorteo.UsuGanador.Cedula;
+                    ViewBag.yasorteado = true;
+                    List<Usuario> listaInscriptos = sorteo.listaUsuario.ToList();
+                    listaInscriptos.OrderBy(s => s.Apellido);
+                    ViewBag.ListaInscriptos = listaInscriptos;
+
+                    int numeroGanador = 0;
+                    bool encontro = false;
+
+                    foreach (var item in sorteo.listaUsuario)
+                    {
+                        if (item.Cedula != cedulaGanadora && !encontro)
+                        {
+                            numeroGanador++; // = numeroGanador + 1;
+                        }
+                        else
+                        {
+                            encontro = true;
+                        }
+                    }
+
+                    ViewBag.numeroGanador = numeroGanador + 1;
+
+                    return View(sorteo);
                 }
-                return View(sorteoNuevo);
+                else {
+                    Sorteo sorteoNuevo = repoSor.relizarSorteo(id);
+                    string cedulaGanadora = sorteoNuevo.UsuGanador.Cedula;
+
+                    int numeroGanador = 0;
+                    bool encontro = false;
+
+                    foreach (var item in sorteoNuevo.listaUsuario)
+                    {
+                        if (item.Cedula != cedulaGanadora && !encontro)
+                        {
+                            numeroGanador++; // = numeroGanador + 1;
+                        }
+                        else
+                        {
+                            encontro = true;
+                        }
+                    }
+
+                    List<Usuario> listaInscriptos = sorteoNuevo.listaUsuario.ToList();
+                    listaInscriptos.OrderBy(s => s.Apellido);
+
+                    if (sorteoNuevo == null)
+                    {
+                        return HttpNotFound();
+                    }
+
+                    ViewBag.numeroGanador = numeroGanador + 1;
+                    ViewBag.ListaInscriptos = listaInscriptos;
+
+                    return View(sorteoNuevo);
+                }
             }
             else //Si no esta logeado
             {

@@ -56,14 +56,7 @@ namespace Presentacion.Controllers
         // GET: Usuarios/Create
         public ActionResult Create()
         {
-            if (Session["rol"].ToString() == "Jefe") //Si esta logeado
-            {
-                return View();
-            }
-            else //Si no esta logeado
-            {
-                return RedirectToAction("../Home");
-            }
+            return View();
         }
 
         // POST: Usuarios/Create

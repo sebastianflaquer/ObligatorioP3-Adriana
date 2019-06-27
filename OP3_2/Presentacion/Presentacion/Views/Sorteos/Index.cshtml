@@ -1,4 +1,5 @@
-﻿@model IEnumerable<Dominio.Models.Sorteo>
+﻿@model Dominio.Models.SorteoViewModel
+
 
 @{
     ViewBag.Title = "Lista de Sorteos";
@@ -6,62 +7,102 @@
 
 <h2>Lista de Sorteos</h2>
 <br />
-@if (!Model.Any())
+@if(ViewBag.ganador)  
 {
     <h4>Ya ganaste un Sorteo, no puedes acceder a la lista de sorteos</h4>
 }
 else
 {
-    <p>
-        @Html.ActionLink("Create New", "Create")
-    </p>
-    <table class="table">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Fecha)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Hora)
-            </th>
-            <th>
-                Vivienda
-            </th>
-            <th></th>
-        </tr>
-
-        @foreach (var item in Model)
+    if (!Model.soretosRelizados.Any() && !Model.soretosPendientes.Any())
+    {
+        <h4>No hay ningun Sorteo</h4>
+    }
+    else
+    {
+        if (Session["rol"].ToString() == "Jefe")
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Fecha)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Hora)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Viv.Id) - <a target="_blank" href="Viviendas/Details/@Html.DisplayFor(modelItem => item.Viv.Id)">Ver Vivienda:</a>
-                </td>
-                <td>
-                    @if (Session["rol"].ToString() == "Jefe")
-                    {
-                        @Html.ActionLink("Realizar Sorteo", "RealizarSorteo", new { id = item.Id })
-
-                    }
-                    else
-                    {
-                        @Html.ActionLink("Inscribir", "InscribirUsuario", new { id = item.Id })
-                    }
-                </td>
-                @*<td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-                </td>*@
-            </tr>
+            <p>
+                @Html.ActionLink("Crear Nuevo", "Create")
+            </p>
         }
-    </table>
+
+        <h3>Sorteos Pendientes</h3>
+        <table class="table">
+            <tr>
+                <th>
+                    Fecha
+                </th>
+                <th>
+                    Hora
+                </th>
+                <th>
+                    Id Vivienda
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model.soretosPendientes)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Fecha)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Hora)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Viv.Id) - <a target="_blank" href="Viviendas/Details/@Html.DisplayFor(modelItem => item.Viv.Id)">Ver Vivienda:</a>
+                    </td>
+                    <td>
+                        @if (Session["rol"].ToString() == "Jefe")
+                        {
+                            if (item.Fecha.Date == ViewBag.Date)
+                            {
+                                @Html.ActionLink("Realizar Sorteo", "RealizarSorteo", new { id = item.Id })
+                            }
+                        }
+                        else
+                        {
+                            @Html.ActionLink("Inscribir", "InscribirUsuario", new { id = item.Id })
+                        }
+                    </td>
+                </tr>
+            }
+        </table>
+
+        <br />
+
+        <h3>Sorteos Realizados</h3>
+        <table class="table">
+            <tr>
+                <th>
+                    Fecha
+                </th>
+                <th>
+                    Hora
+                </th>
+                <th>
+                    Id Vivienda
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model.soretosRelizados)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Fecha)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Hora)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Viv.Id) - <a target="_blank" href="Viviendas/Details/@Html.DisplayFor(modelItem => item.Viv.Id)">Ver Vivienda:</a>
+                    </td>
+                    <td></td>
+                </tr>
+            }
+        </table>
+    }
 }
-
-
-
 

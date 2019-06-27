@@ -64,21 +64,6 @@ namespace Repositorios.Repositorios
         //CREAR SORTEO
         public void crearSorteo(Sorteo sorteo, int idVivienda)
         {
-
-            //sorteo.Bar = sorteo.Viv.Barrio;//repoBar.FindByName(nombreBarrio);
-            //db.Detach(sorteo.Viv);
-            //Add(sorteo);
-
-            //using (OP3_2Context otrodb = new OP3_2Context())
-            //{
-            //    sorteo.Viv = otrodb.Viviendas.Find(nombreVivienda); //repoViv.FindById(nombreVivienda);
-
-            //    otrodb.Entry(sorteo.Viv).State = EntityState.Unchanged;
-            //    otrodb.Entry(sorteo.Viv.Barrio).State = EntityState.Unchanged;
-
-            //    otrodb.Sorteos.Add(sorteo);
-            //    otrodb.SaveChanges();
-            //}
             using (OP3_2Context otrodb = new OP3_2Context())
             {
                 sorteo.Viv = otrodb.Viviendas.Find(idVivienda); //repoViv.FindById(nombreVivienda);
@@ -89,7 +74,6 @@ namespace Repositorios.Repositorios
                 otrodb.Sorteos.Add(sorteo);
                 otrodb.SaveChanges();
             }
-
         }
 
         //REALIZAR SORTEO
@@ -99,12 +83,17 @@ namespace Repositorios.Repositorios
             int cant = Convert.ToInt32(sorteo.listaUsuario.LongCount());
             if (cant > 0) {
                 var randomNumber = new Random().Next(1, cant);
-                sorteo.UsuGanador = sorteo.listaUsuario.ElementAt(randomNumber-1);
+
+                IEnumerable<Usuario> listaOrd = sorteo.listaUsuario.ToList();
+                listaOrd = listaOrd.OrderBy(s => s.Apellido);
+
+                sorteo.UsuGanador = listaOrd.ElementAt(randomNumber-1);
                 sorteo.Viv.Estado = "Sorteada";
 
                 db.Entry(sorteo).State = EntityState.Modified;
                 db.SaveChanges();
             }
+
             return sorteo;
         }
 

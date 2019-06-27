@@ -105,14 +105,14 @@
                 $: @Html.DisplayFor(modelItem => item.ValorCuota)
             </th>
             <td>
-                @if (Session["rol"].ToString() == "Jefe")
+                @*@if (Session["rol"].ToString() == "Jefe")
                 {
                     @Html.ActionLink("Edit", "EditNueva", new { id = item.Id })
                     <span>|</span>
                     @Html.ActionLink("Delete", "Delete", new { id = item.Id })
                     <span>|</span>
                 }
-                @Html.ActionLink("Details", "Details", new { id = item.Id })
+                @Html.ActionLink("Details", "Details", new { id = item.Id })*@
             </td>
         </tr>
     }
@@ -166,7 +166,7 @@
                 $: @Html.DisplayFor(modelItem => item.ValorCuota)
             </th>
             <td>
-                @if (Session["rol"].ToString() == "Jefe")
+                @*@if (Session["rol"].ToString() == "Jefe")
                 {
                     @Html.ActionLink("Edit", "EditUsada", new { id = item.Id })
                     <span>|</span>
@@ -174,7 +174,7 @@
                    <span>|</span>
                 }
 
-                @Html.ActionLink("Details", "Details", new { id = item.Id })
+                @Html.ActionLink("Details", "Details", new { id = item.Id })*@
             </td>
         </tr>
     }
