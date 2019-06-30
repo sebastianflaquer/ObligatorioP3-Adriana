@@ -51,8 +51,8 @@
 
     <!-- TIPO -->
     <select id="tipo" class="form-control">
-        <option value="nueva">Nueva</option>
-        <option value="usada">Usada</option>
+        <option value="N">Nueva</option>
+        <option value="U">Usada</option>
     </select>
     <br />
     <input type="submit" id="SearchBtn" class="btn btn-primary" value="Buscar" />
@@ -104,7 +104,7 @@
                 @*@Html.DisplayNameFor(model => model.Contribucion)*@
                 Contribucion
             </th>
-            <th></th>
+            <th>Opciones</th>
         </tr>
     </thead>
     <tbody id="DataSearching">
@@ -144,7 +144,17 @@
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.PrecioFinal)
-                </td>                
+                </td>
+
+                @if(item.){
+                
+                }
+                <td>
+                    @Html.DisplayFor(modelItem => item.PrecioFinal)
+                </td>
+                <th></th>
+
+
                 <td>
                     @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
                     @Html.ActionLink("Details", "Details", new { id = item.Id }) |
@@ -226,8 +236,16 @@
                                 "<td>" + value.Anio + "</td>" +
                                 "<td>" + value.PrecioFinal + "</td>";
 
+                                if (value.Tipo == "U") {
+                                    Data += "<td>" + value.Contribucion + "</td>";
+                                } else {
+                                    Data += "<td>No Paga</td>";
+                                }
+
                                 if (value.Estado == "Habilitada") {
                                     Data += "<td><a class='btn btn-primary' href='/Viviendas/Edit/" + value.Id + "'>Inscribirme</a></td>";
+                                } else {
+                                    Data += "<td></td>";
                                 }
 
                             Data += "</tr>";

@@ -48,9 +48,10 @@ namespace Dominio.Models
         //CALCULAR VALOR CUOTA
         public decimal calcValorCuota(int anios, decimal moneda) {
 
-            ValorCuota = PrecioFinal / (anios * 12);
-            ValorCuota = ValorCuota * moneda;
-
+            this.ValorCuota = PrecioFinal / (anios * 12);
+            this.ValorCuota = ValorCuota * moneda;
+            this.ValorCuota = Math.Round(ValorCuota);
+            
             return ValorCuota;
         }
 

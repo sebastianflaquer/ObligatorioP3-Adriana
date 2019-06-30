@@ -59,7 +59,7 @@ namespace Dominio.Repositorios
             List<ViviendaNueva> listaViviendas = db.ViviendasNueva.ToList();
             foreach (var viv in listaViviendas)
             {
-                Parametro paraAnios = db.Parametros.Where(p => p.Nombre == "plazoUsada").FirstOrDefault();
+                Parametro paraAnios = db.Parametros.Where(p => p.Nombre == "plazoNueva").FirstOrDefault();
                 int anios = Convert.ToInt32(paraAnios.Valor);
 
                 Parametro paraMoneda = db.Parametros.Where(p => p.Nombre == "cotizacionUI").FirstOrDefault();
@@ -105,12 +105,101 @@ namespace Dominio.Repositorios
         //BUSCAR VIVIENDAS POR DORMITORIOS
         public List<Vivienda> buscarViviendasPorDormitorios(string cantDorm)
         {
-
             List<Vivienda> listaViviendas = new List<Vivienda>();
             int cantidad = Convert.ToInt32(cantDorm);
-
-
             listaViviendas = db.Viviendas.Where(v => v.Dormitorios == cantidad).ToList();
+            listaViviendas = cargarDatosVivienda(listaViviendas);
+            return listaViviendas;
+        }
+
+        private List<ViviendaUsada> cargarDatosViviendaUsada(List<ViviendaUsada> listaViviendas)
+        {
+            foreach (var viv in listaViviendas)
+            {
+                Parametro paraAniosU = db.Parametros.Where(p => p.Nombre == "plazoUsada").FirstOrDefault();
+                int aniosU = Convert.ToInt32(paraAniosU.Valor);
+
+                Parametro paraAniosN = db.Parametros.Where(p => p.Nombre == "plazoNueva").FirstOrDefault();
+                int aniosN = Convert.ToInt32(paraAniosN.Valor);
+
+                Parametro paraMonedaUSD = db.Parametros.Where(p => p.Nombre == "cotizacionUSD").FirstOrDefault();
+                int monedaUSD = Convert.ToInt32(paraMonedaUSD.Valor);
+
+                Parametro paraMonedaUI = db.Parametros.Where(p => p.Nombre == "cotizacionUI").FirstOrDefault();
+                int monedaUI = Convert.ToInt32(paraMonedaUI.Valor);
+
+                if (viv.Tipo == "N")
+                {
+                    viv.calcValorCuota(aniosN, monedaUI);
+                    viv.CantCuotas = (aniosN * 12);
+                }
+                else
+                {
+                    viv.calcValorCuota(aniosU, monedaUSD);
+                    viv.CantCuotas = (aniosU * 12);
+                }
+            }
+
+            return listaViviendas;
+        }
+
+        private List<ViviendaNueva> cargarDatosViviendaNueva(List<ViviendaNueva> listaViviendas)
+        {
+            foreach (var viv in listaViviendas)
+            {
+                Parametro paraAniosU = db.Parametros.Where(p => p.Nombre == "plazoUsada").FirstOrDefault();
+                int aniosU = Convert.ToInt32(paraAniosU.Valor);
+
+                Parametro paraAniosN = db.Parametros.Where(p => p.Nombre == "plazoNueva").FirstOrDefault();
+                int aniosN = Convert.ToInt32(paraAniosN.Valor);
+
+                Parametro paraMonedaUSD = db.Parametros.Where(p => p.Nombre == "cotizacionUSD").FirstOrDefault();
+                int monedaUSD = Convert.ToInt32(paraMonedaUSD.Valor);
+
+                Parametro paraMonedaUI = db.Parametros.Where(p => p.Nombre == "cotizacionUI").FirstOrDefault();
+                int monedaUI = Convert.ToInt32(paraMonedaUI.Valor);
+
+                if (viv.Tipo == "N")
+                {
+                    viv.calcValorCuota(aniosN, monedaUI);
+                    viv.CantCuotas = (aniosN * 12);
+                }
+                else
+                {
+                    viv.calcValorCuota(aniosU, monedaUSD);
+                    viv.CantCuotas = (aniosU * 12);
+                }
+            }
+
+            return listaViviendas;
+        }
+
+        private List<Vivienda> cargarDatosVivienda(List<Vivienda> listaViviendas)
+        {
+            foreach (var viv in listaViviendas)
+            {
+                Parametro paraAniosU = db.Parametros.Where(p => p.Nombre == "plazoUsada").FirstOrDefault();
+                int aniosU = Convert.ToInt32(paraAniosU.Valor);
+
+                Parametro paraAniosN = db.Parametros.Where(p => p.Nombre == "plazoNueva").FirstOrDefault();
+                int aniosN = Convert.ToInt32(paraAniosN.Valor);
+
+                Parametro paraMonedaUSD = db.Parametros.Where(p => p.Nombre == "cotizacionUSD").FirstOrDefault();
+                int monedaUSD = Convert.ToInt32(paraMonedaUSD.Valor);
+
+                Parametro paraMonedaUI = db.Parametros.Where(p => p.Nombre == "cotizacionUI").FirstOrDefault();
+                int monedaUI = Convert.ToInt32(paraMonedaUI.Valor);
+
+                if (viv.Tipo == "N")
+                {
+                    viv.calcValorCuota(aniosN, monedaUI);
+                    viv.CantCuotas = (aniosN * 12);
+                }
+                else {
+                    viv.calcValorCuota(aniosU, monedaUSD);
+                    viv.CantCuotas = (aniosU * 12);
+                }
+            }
 
             return listaViviendas;
         }
@@ -120,6 +209,7 @@ namespace Dominio.Repositorios
         {
             List<Vivienda> listaViviendas = new List<Vivienda>();
             listaViviendas = db.Viviendas.Where(v => v.PrecioFinal >= rangoMin && v.PrecioFinal <= rangoMax).ToList();
+            listaViviendas = cargarDatosVivienda(listaViviendas);
             return listaViviendas;
         }
 
@@ -141,6 +231,7 @@ namespace Dominio.Repositorios
             List<Vivienda> listaViviendas = new List<Vivienda>();
 
             listaViviendas = db.Viviendas.Where(v => v.Barrio.Nombre == nombreBarrio).ToList();
+            listaViviendas = cargarDatosVivienda(listaViviendas);
 
             return listaViviendas;
         }
@@ -152,25 +243,28 @@ namespace Dominio.Repositorios
             List<Vivienda> listaViviendas = new List<Vivienda>();
 
             listaViviendas = db.Viviendas.Where(v => v.Estado == estado).ToList();
+            listaViviendas = cargarDatosVivienda(listaViviendas);
 
             return listaViviendas;
         }
 
         //BUSCAR VIVIENDAS NUEVAS
-        public List<ViviendaNueva> buscarViviendasNuevas(string tipo)
+        public List<ViviendaNueva> buscarViviendasNuevas()
         {
             //buscarViviendasNuevas();
             List<ViviendaNueva> listaViviendas = new List<ViviendaNueva>();
             listaViviendas = db.ViviendasNueva.ToList();
+            listaViviendas = cargarDatosViviendaNueva(listaViviendas);
 
             return listaViviendas;
         }
 
         //BUSCAR VIVIENDAS USADAS
-        public List<ViviendaUsada> buscarViviendasUsadas(string tipo)
+        public List<ViviendaUsada> buscarViviendasUsadas()
         {   
             List<ViviendaUsada> listaViviendas = new List<ViviendaUsada>();
             listaViviendas = db.ViviendasUsada.ToList();
+            listaViviendas = cargarDatosViviendaUsada(listaViviendas);
 
             return listaViviendas;
         }

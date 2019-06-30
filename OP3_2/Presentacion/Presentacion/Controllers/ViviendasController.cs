@@ -38,18 +38,25 @@ namespace Presentacion.Controllers
         // GET: Viviendas/Details/5
         public ActionResult Details(int? id)
         {
-            if (id == null)
+            if (Session["rol"].ToString() == "Jefe") //Si esta logeado
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+
+                Vivienda vivienda = repoViv.FindById(id);
+
+                if (vivienda == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(vivienda);
             }
-
-            Vivienda vivienda = repoViv.FindById(id);
-
-            if (vivienda == null)
+            else //Si no esta logeado
             {
-                return HttpNotFound();
+                return RedirectToAction("../Home");
             }
-            return View(vivienda);
         }
         
         //GET: Viviendas/CreateNueva
@@ -67,7 +74,14 @@ namespace Presentacion.Controllers
         // GET: Viviendas/Create
         public ActionResult Create()
         {
-            return View();
+            if (Session["rol"].ToString() == "Jefe") //Si esta logeado
+            {
+                return View();
+            }
+            else //Si no esta logeado
+            {
+                return RedirectToAction("../Home");
+            }
         }
 
         // POST: Viviendas/Create
@@ -89,18 +103,26 @@ namespace Presentacion.Controllers
         // GET: Viviendas/Edit/5
         public ActionResult Edit(int? id)
         {
-            if (id == null)
+            if (Session["rol"].ToString() == "Jefe") //Si esta logeado
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+
+                Vivienda vivienda = repoViv.FindById(id);
+
+                if (vivienda == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(vivienda);
             }
-
-            Vivienda vivienda = repoViv.FindById(id);
-
-            if (vivienda == null)
+            else //Si no esta logeado
             {
-                return HttpNotFound();
+                return RedirectToAction("../Home");
             }
-            return View(vivienda);
+            
         }
 
         // POST: Viviendas/Edit/5
@@ -189,18 +211,25 @@ namespace Presentacion.Controllers
         // GET: Viviendas/Delete/5
         public ActionResult Delete(int? id)
         {
-            if (id == null)
+            if ((bool)Session["logueado"]) //Si esta logeado
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+
+                Vivienda vivienda = repoViv.FindById(id);
+
+                if (vivienda == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(vivienda);
             }
-
-            Vivienda vivienda = repoViv.FindById(id);
-
-            if (vivienda == null)
+            else //Si no esta logeado
             {
-                return HttpNotFound();
+                return RedirectToAction("../Home");
             }
-            return View(vivienda);
         }
 
         // POST: Viviendas/Delete/5
@@ -287,17 +316,23 @@ namespace Presentacion.Controllers
         //BUSCAR VIVIENDA
         public ActionResult BuscarVivienda() {
 
-            List<SelectListItem> newList = new List<SelectListItem>();
-            List<Barrio> listaBarrios = repoBar.FindAll().ToList();
-            foreach (var item in listaBarrios)
+            if ((bool)Session["logueado"]) //Si esta logeado
             {
-                SelectListItem itemList = new SelectListItem { Text = item.Nombre, Value = item.Nombre };
-                newList.Add(itemList);
-            }
+                List<SelectListItem> newList = new List<SelectListItem>();
+                List<Barrio> listaBarrios = repoBar.FindAll().ToList();
+                foreach (var item in listaBarrios)
+                {
+                    SelectListItem itemList = new SelectListItem { Text = item.Nombre, Value = item.Nombre };
+                    newList.Add(itemList);
+                }
 
-            ViewData["listaBarrios"] = newList;
-            
-            return View(repoViv.FindAll().ToList());
+                ViewData["listaBarrios"] = newList;
+                return View(repoViv.FindAll().ToList());
+            }
+            else //Si no esta logeado
+            {
+                return RedirectToAction("../Home");
+            }
         }
         
         //LISTA CARGA
@@ -325,6 +360,7 @@ namespace Presentacion.Controllers
         public JsonResult BuscarViviendaData(string BuscarPor, string SearchValue)
         {
             List<Vivienda> listaViviendas = new List<Vivienda>();
+
             if (BuscarPor == "1") //Cantidad de dormitorios
             {
                 try
@@ -381,6 +417,30 @@ namespace Presentacion.Controllers
                 try
                 {
                     listaViviendas = repoViv.buscarViviendasPorEstado(SearchValue).ToList();
+                }
+                catch (FormatException)
+                {
+                    Console.WriteLine("{0}  Error al buscar la vivienda - estado", SearchValue);
+                }
+            }
+            else if (BuscarPor == "5") //ESTADO
+            {
+                try
+                {
+                    if (SearchValue == "N")
+                    {
+                        List<ViviendaNueva> listaViviendasNueva = new List<ViviendaNueva>();
+                        listaViviendasNueva = repoViv.buscarViviendasNuevas().ToList();
+
+                        return Json(listaViviendasNueva, JsonRequestBehavior.AllowGet);
+                    }
+                    else {
+                        List<ViviendaUsada> listaViviendasUsada = new List<ViviendaUsada>();
+                        listaViviendasUsada = repoViv.buscarViviendasUsadas().ToList();
+
+                        return Json(listaViviendasUsada, JsonRequestBehavior.AllowGet);
+                    }
+                    
                 }
                 catch (FormatException)
                 {

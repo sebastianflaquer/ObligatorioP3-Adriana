@@ -17,16 +17,7 @@ namespace Presentacion.Controllers
         public RepositorioSorteo repoSor = new RepositorioSorteo();
         public RepositorioBarrio repoBar = new RepositorioBarrio();
         public RepositorioVivienda repoViv = new RepositorioVivienda();
-
-        //if ((bool)Session["logueado"]) //Si esta logeado
-        //{
-                
-        //}
-        //else //Si no esta logeado
-        //{
-        //    return RedirectToAction("../Home");
-        //}
-
+        
         // GET: Sorteos
         public ActionResult Index()
         {
@@ -53,8 +44,6 @@ namespace Presentacion.Controllers
                         }
                     }
                 }
-
-                
 
                 //si el usuario ya gano un sorteo            
                 listaSorteos = listaSorteos.OrderByDescending(s => s.Fecha);
@@ -89,7 +78,6 @@ namespace Presentacion.Controllers
             }
         }
         
-
         // GET: Sorteos/Details/5
         public ActionResult Details(int? id)
         {
@@ -225,13 +213,13 @@ namespace Presentacion.Controllers
             }
             return View(sorteo);
         }
-
-
+        
         // GET: Sorteos/Edit/5
         public ActionResult RealizarSorteo(int? id)
         {
 
             ViewBag.yasorteado = false;
+            ViewBag.nohayusuarios = false;
 
             if ((bool)Session["logueado"]) //Si esta logeado
             {
@@ -269,7 +257,13 @@ namespace Presentacion.Controllers
 
                     return View(sorteo);
                 }
+                else if(sorteo.listaUsuario.Count() <= 0)
+                {
+                    ViewBag.nohayusuarios = true;
+                    return View(sorteo);
+                }
                 else {
+                    
                     Sorteo sorteoNuevo = repoSor.relizarSorteo(id);
                     string cedulaGanadora = sorteoNuevo.UsuGanador.Cedula;
 

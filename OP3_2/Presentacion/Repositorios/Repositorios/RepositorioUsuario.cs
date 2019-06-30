@@ -22,6 +22,23 @@ namespace Dominio.Repositorios
             return true;
         }
 
+        //ADD
+        public bool AddPostulante(Postulante usu)
+        {
+            bool retorno = false;
+            var existe = db.Postulantes.Count(u => u.Cedula == usu.Cedula);
+            if (existe == 0)
+            {
+                usu.Rol = usu.getRol();
+                usu.Salt = usu.generarSalPass();
+                usu.Pass = Usuario.EncriptarPass(usu.Pass, usu.Salt, Usuario.getPimienta());
+                db.Postulantes.Add(usu);
+                db.SaveChanges();
+                retorno = true;
+            }
+            return retorno;
+        }
+
         //DELETE
         public bool Delete(Usuario usu)
         {
@@ -39,6 +56,13 @@ namespace Dominio.Repositorios
             return listaUsuarios;
         }
 
+        public IEnumerable<Postulante> FindAllPostulantes()
+        {
+            List<Postulante> listaUsuarios = db.Postulantes.ToList();
+
+            return listaUsuarios;
+        }
+
         //BUSCA POR CEDULA
         public Usuario FindByCedula(string cedula)
         {
@@ -50,6 +74,13 @@ namespace Dominio.Repositorios
         public Usuario FindById(int? id)
         {
             Usuario usu = db.Usuarios.Where(c => c.id == id).FirstOrDefault();
+            return usu;
+        }
+
+        //BUSCA POR ID
+        public Postulante FindByIdPostulante(int? id)
+        {
+            Postulante usu = db.Postulantes.Where(c => c.id == id).FirstOrDefault();
             return usu;
         }
 

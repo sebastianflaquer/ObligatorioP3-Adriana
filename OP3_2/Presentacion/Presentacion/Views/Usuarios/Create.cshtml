@@ -7,7 +7,7 @@
 <h2>Create</h2>
 
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm(new { id = "signupform" }))
 {
     @Html.AntiForgeryToken()
     
@@ -19,7 +19,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Cedula, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Cedula, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.Cedula, new { htmlAttributes = new { @class = "form-control", @id = "txtCedula" } })
                 @Html.ValidationMessageFor(model => model.Cedula, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -27,7 +27,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Nombre, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Nombre, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.Nombre, new { htmlAttributes = new { @class = "form-control", @id = "txtNombre" } })
                 @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -35,7 +35,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Apellido, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Apellido, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.Apellido, new { htmlAttributes = new { @class = "form-control", @id = "txtApellido" } })
                 @Html.ValidationMessageFor(model => model.Apellido, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -43,7 +43,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.FechaNac, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.FechaNac, new { htmlAttributes = new {@type = "Date", @class = "form-control datefield" } })
+                @Html.EditorFor(model => model.FechaNac, new { htmlAttributes = new {@type = "Date", @class = "form-control datefield", @id = "txtFechaNac" } })
                 @Html.ValidationMessageFor(model => model.FechaNac, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -51,7 +51,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @id = "txtEmail" } })
                 @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -59,7 +59,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Pass, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Pass, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.Pass, new { htmlAttributes = new { @class = "form-control", @id = "txtPass" } })
                 @Html.ValidationMessageFor(model => model.Pass, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -67,16 +67,14 @@
         <div class="form-group">
             @Html.LabelFor(model => model.ConfirmPassword, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.ConfirmPassword, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.ConfirmPassword, new { htmlAttributes = new { @class = "form-control", @id = "txtConfirmPassword" } })
                 @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
             </div>
-        </div>
-
-        
+        </div>        
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" id="btnRegister" value="Create" class="btn btn-default" />
             </div>
         </div>
     </div>
@@ -86,11 +84,33 @@
     @Html.ActionLink("Volver a la Lista", "Index")
 </div>
 
+<div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="successModalLabel">Registro</h4>
+            </div>
+            <div class="modal-body">
+                <h4>El Usuario se Registro con Exito</h4>
+                <div id="divError" class="alert alert-danger" style="display:none">
+                    <a id="linkCLose" class="close" href="#">&times;</a>
+                    <div id="divErrorText"></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <script src="~/Scripts/jquery-1.10.2.min.js"></script>
 <script src="~/Scripts/jquery.validate.min.js"></script>
 <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
 
-<script>
+<script type="text/javascript">
     $(document).ready(function () {
         var dtToday = new Date();
         var month = dtToday.getMonth() + 1;
@@ -102,5 +122,35 @@
             day = '0' + day.toString();
         var maxDate = year + '-' + month + '-' + day;
         $('.datefield').attr('max', maxDate);
+
+        //$('#linkClose').click(function () {
+        //    $('#divError').hidden('fade');
+        //});
+        //$('#btnRegister').click(function () {
+
+        //    $.ajax({
+        //        url: 'http://localhost:50423/api/postulantes',
+        //        method: 'POST',
+        //        data: {
+        //            Cedula: $('#txtCedula').val(),
+        //            Nombre: $('#txtNombre').val(),
+        //            Apellido: $('#txtApellido').val(),
+        //            FechaNac: $('#txtFechaNac').val(),
+        //            Email: $('#txtEmail').val(),
+        //            Pass: $('#txtPass').val(),
+        //            ConfirmPassword: $('#txtConfirmPassword').val(),
+        //        },                
+        //        success: function () {
+        //            debugger;
+        //            $('#successModal').modal('show');
+        //        },
+        //        error: function (jqXHR) {
+        //            $('#divErrorText').text(jqXHR.responseText);
+        //            $('#divError').show('fade');
+        //        }
+        //    });
+        //})
+
+
     });
 </script>

@@ -56,7 +56,14 @@ namespace Presentacion.Controllers
         // GET: Usuarios/Create
         public ActionResult Create()
         {
-            return View();
+            if (Session["rol"].ToString() == "Jefe") //Si esta logeado
+            {
+                return View();
+            }
+            else //Si no esta logeado
+            {
+                return RedirectToAction("../Home");
+            }
         }
 
         // POST: Usuarios/Create
@@ -66,30 +73,36 @@ namespace Presentacion.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(Postulante usu)
         {
-
-            //BUSCA SI HAY UN USUARIO CON EL MISMO EMAIL
-            var existe = repoUsu.FindByCedula(usu.Cedula);
-
-            //SI EL USUARIO YA EXISTE
-            if (existe != null)
+            if (Session["rol"].ToString() == "Jefe") //Si esta logeado
             {
-                ModelState.AddModelError("", "Ya existe un usuario con ese numero de Cedula");
-            }
-            else
-            {
-                usu.Rol = usu.getRol();
-                usu.Salt = usu.generarSalPass();
-                usu.Pass = Usuario.EncriptarPass(usu.Pass, usu.Salt, Usuario.getPimienta());
+                //BUSCA SI HAY UN USUARIO CON EL MISMO EMAIL
+                var existe = repoUsu.FindByCedula(usu.Cedula);
 
-                if (ModelState.IsValid)
+                //SI EL USUARIO YA EXISTE
+                if (existe != null)
                 {
-                    repoUsu.Add(usu);
-                    ModelState.Clear();
-                    //ViewBag.Message = usu.Email + " - " + usu.Pass + " se registro correctamente";
-                    return RedirectToAction("../Home/Index");
+                    ModelState.AddModelError("", "Ya existe un usuario con ese numero de Cedula");
                 }
+                else
+                {
+                    usu.Rol = usu.getRol();
+                    usu.Salt = usu.generarSalPass();
+                    usu.Pass = Usuario.EncriptarPass(usu.Pass, usu.Salt, Usuario.getPimienta());
+
+                    if (ModelState.IsValid)
+                    {
+                        repoUsu.Add(usu);
+                        ModelState.Clear();
+                        //ViewBag.Message = usu.Email + " - " + usu.Pass + " se registro correctamente";
+                        return RedirectToAction("../Home/Index");
+                    }
+                }
+                return View();
             }
-            return View();
+            else //Si no esta logeado
+            {
+                return RedirectToAction("../Home");
+            }
         }
 
         // GET: Usuarios/Edit/5
